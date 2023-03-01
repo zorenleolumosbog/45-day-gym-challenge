@@ -3,7 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\V1\UserProfile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,7 +25,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'remember_token'
+        'remember_token',
+        'is_admin',
+        'logged_in_at'
     ];
 
     /**
@@ -43,4 +48,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the user profile associated with the user.
+     */
+    public function userProfile(): HasOne
+    {
+        return $this->hasOne(UserProfile::class);
+    }
 }

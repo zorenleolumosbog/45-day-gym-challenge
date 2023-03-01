@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\UserRequest;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -38,6 +39,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'remember_token' => Str::random(10),
+            'is_admin' => $request->is_admin
         ]);
 
         return new UserResource($user);
@@ -64,9 +66,32 @@ class UserController extends Controller
     public function update(UserRequest $request, User $user)
     {
         $user->update([
-            'name' => $request->name
+            'name' => $request->name,
+            'is_admin' => $request->is_admin
         ]);
 
         return new UserResource($user);
+    }
+
+    public function loggedInAt(User $user)
+    {
+        $user->update([
+            'logged_in_at' => Carbon::now()
+        ]);
+
+        return new UserResource($user);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $book
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        $user->delete();
+        
+        return response(null, 204);
     }
 }

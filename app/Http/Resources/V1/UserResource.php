@@ -19,6 +19,11 @@ class UserResource extends JsonResource
             'type' => 'users',
             'attributes' => [
                 'name' => $this->name,
+                'is_admin' => $this->is_admin,
+                'user_profile' => $this->userProfile()->first() ? 
+                                    $this->userProfile()->first()->makeHidden(['deleted_at']) :
+                                    null,
+                'logged_in_at' => $this->logged_in_at,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at
             ]
