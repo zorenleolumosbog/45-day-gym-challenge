@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('user_weekly_attachments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->boolean('is_admin')->nullable();
-            $table->string('telegram_link')->nullable();
-            $table->timestamp('logged_in_at')->nullable();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->enum('week_number', [1, 2, 3, 4, 5, 6, 7]);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->unique(['user_id', 'week_number']);
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user_weekly_attachments');
     }
 };

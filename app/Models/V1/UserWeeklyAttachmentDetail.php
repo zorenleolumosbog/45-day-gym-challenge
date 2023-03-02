@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserProfile extends Model
+class UserWeeklyAttachmentDetail extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -16,19 +16,17 @@ class UserProfile extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'age',
-        'height',
-        'weight',
-        'gym_experience',
-        'hours_of_sleep_at_night',
-        'stress_level_out_of_10',
-        'medications_supplements',
-        'injuries_illnesses'
+        'user_weekly_attachment_id',
+        'name',
+        'file_name',
+        'mime_type',
+        'path',
+        'size',
+        'day_number'
     ];
 
     protected $casts = [
         'id' => 'string',
-        'user_id' => 'string',
+        'user_weekly_attachment_id' => 'string',
     ];
 }

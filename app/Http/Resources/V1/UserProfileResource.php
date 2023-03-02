@@ -15,10 +15,10 @@ class UserProfileResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => (string) $this->id,
+            'id' => $this->id,
             'type' => 'user_profiles',
             'attributes' => [
-                'user_id' => (string) $this->user_id,
+                'user_id' => $this->user_id,
                 'age' => $this->age,
                 'height' => $this->height,
                 'weight' => $this->weight,
@@ -28,7 +28,8 @@ class UserProfileResource extends JsonResource
                 'medications_supplements' => $this->medications_supplements,
                 'injuries_illnesses' => $this->injuries_illnesses,
                 'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at
+                'updated_at' => $this->updated_at,
+                'deleted_at' => $this->deleted_at
             ]
         ];
     }

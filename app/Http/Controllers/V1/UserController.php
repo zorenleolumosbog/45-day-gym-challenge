@@ -38,7 +38,6 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'remember_token' => Str::random(10),
             'is_admin' => $request->is_admin
         ]);
 
@@ -67,6 +66,8 @@ class UserController extends Controller
     {
         $user->update([
             'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
             'is_admin' => $request->is_admin
         ]);
 
@@ -85,7 +86,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $book
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)

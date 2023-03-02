@@ -84,7 +84,7 @@ class UserProfileController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\UserProfile  $book
+     * @param  \App\Models\UserProfile  $user_profile
      * @return \Illuminate\Http\Response
      */
     public function destroy(UserProfile $user_profile)

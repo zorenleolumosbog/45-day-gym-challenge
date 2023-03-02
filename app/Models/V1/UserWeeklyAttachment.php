@@ -4,9 +4,10 @@ namespace App\Models\V1;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserProfile extends Model
+class UserWeeklyAttachment extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -17,18 +18,19 @@ class UserProfile extends Model
      */
     protected $fillable = [
         'user_id',
-        'age',
-        'height',
-        'weight',
-        'gym_experience',
-        'hours_of_sleep_at_night',
-        'stress_level_out_of_10',
-        'medications_supplements',
-        'injuries_illnesses'
+        'week_number'
     ];
 
     protected $casts = [
         'id' => 'string',
         'user_id' => 'string',
     ];
+
+    /**
+     * Get the weekly attachment details associated with the weekly attachment.
+     */
+    public function weeklyAttachmentDetails(): HasMany
+    {
+        return $this->hasMany(UserWeeklyAttachmentDetail::class);
+    }
 }
