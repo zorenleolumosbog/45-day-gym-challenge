@@ -22,11 +22,12 @@ class UserWeeklyAttachmentDetail extends Model
         'mime_type',
         'path',
         'size',
-        'day_number'
+        'description'
     ];
 
     protected $casts = [
         'id' => 'string',
         'user_weekly_attachment_id' => 'string',
+        'size' => 'string',
     ];
 }

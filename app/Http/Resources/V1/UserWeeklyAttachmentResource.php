@@ -18,6 +18,8 @@ class UserWeeklyAttachmentResource extends JsonResource
             'id' => $this->id,
             'type' => 'user_weekly_attachments',
             'attributes' => [
+                'weight' => $this->weight,
+                'description' => $this->description,
                 'week_number' => $this->week_number,
                 'user_weekly_attachment_details' => $this->weeklyAttachmentDetails()->get(),
                 'created_at' => $this->created_at,

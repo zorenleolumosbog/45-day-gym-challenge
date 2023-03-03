@@ -23,14 +23,15 @@ class UserProfileRequest extends FormRequest
     {
         return [
             'user_id' => 'sometimes|required|exists:users,id|unique:user_profiles,user_id',
-            'age' => 'sometimes|required|max:255',
-            'height' => 'sometimes|required|max:255',
-            'weight' => 'sometimes|required|max:255',
-            'gym_experience' => 'sometimes|required|max:255',
-            'hours_of_sleep_at_night' => 'sometimes|required|max:255',
-            'stress_level_out_of_10' => 'sometimes|required|max:255',
-            'medications_supplements' => 'sometimes|required|max:255',
-            'injuries_illnesses' => 'sometimes|required|max:255'
+            'age' => 'required|integer',
+            'height' => 'required|max:255',
+            'weight' => 'required|integer',
+            'weight_loss_goal' => 'required|integer',
+            'gym_experience' => 'required|max:255',
+            'hours_of_sleep_at_night' => 'required|integer',
+            'stress_level_out_of_10' => 'required|integer|in:1,2,3,4,5,6,7,8,9,10',
+            'medications_supplements' => 'required|max:255',
+            'injuries_illnesses' => 'required|max:255'
         ];
     }
 }

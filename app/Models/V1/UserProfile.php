@@ -20,6 +20,7 @@ class UserProfile extends Model
         'age',
         'height',
         'weight',
+        'weight_loss_goal',
         'gym_experience',
         'hours_of_sleep_at_night',
         'stress_level_out_of_10',
@@ -30,5 +31,10 @@ class UserProfile extends Model
     protected $casts = [
         'id' => 'string',
         'user_id' => 'string',
+        'age' => 'string',
+        'weight' => 'string',
+        'weight_loss_goal' => 'string',
+        'hours_of_sleep_at_night' => 'string',
+        'stress_level_out_of_10' => 'string',
     ];
 }

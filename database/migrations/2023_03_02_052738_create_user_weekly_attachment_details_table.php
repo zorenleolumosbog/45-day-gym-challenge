@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('mime_type');
             $table->string('path');
             $table->unsignedBigInteger('size');
-            $table->enum('day_number',  [1, 2, 3, 4, 5, 6, 7]);
+            $table->string('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

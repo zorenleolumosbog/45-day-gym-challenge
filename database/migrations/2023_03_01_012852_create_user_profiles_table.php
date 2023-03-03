@@ -17,12 +17,13 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('age');
+            $table->integer('age');
             $table->string('height');
-            $table->string('weight');
+            $table->integer('weight');
+            $table->integer('weight_loss_goal');
             $table->enum('gym_experience', ['less than 12 months', '12-36 months', '36 months and over']);
-            $table->string('hours_of_sleep_at_night');
-            $table->string('stress_level_out_of_10');
+            $table->integer('hours_of_sleep_at_night');
+            $table->enum('stress_level_out_of_10', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
             $table->string('medications_supplements');
             $table->string('injuries_illnesses');
             $table->timestamps();

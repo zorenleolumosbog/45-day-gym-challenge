@@ -34,6 +34,8 @@ class UserWeeklyAttachmentController extends Controller
     {
         $user_weekly_attachment = UserWeeklyAttachment::create([
             'user_id' => $request->user_id,
+            'weight' => $request->weight,
+            'description' => $request->description,
             'week_number' => $request->week_number
         ]);
 
@@ -61,6 +63,8 @@ class UserWeeklyAttachmentController extends Controller
     public function update(UserWeeklyAttachmentRequest $request, UserWeeklyAttachment $user_weekly_attachment)
     {
         $user_weekly_attachment ->update([
+            'weight' => $request->weight,
+            'description' => $request->description,
             'week_number' => $request->week_number
         ]);
 

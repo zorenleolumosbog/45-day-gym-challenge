@@ -37,7 +37,7 @@ class UserWeeklyAttachmentDetailController extends Controller
         $file = $request->file('file_weekly_photo');
         $name = $file->hashName();
 
-        $upload = Storage::disk('public')->put(Carbon::now()->toDateString() . "/{$request->user_weekly_attachment_id}/day-{$request->day_number}", $file);
+        $upload = Storage::disk('public')->put(Carbon::now()->toDateString() . "/{$request->user_weekly_attachment_id}", $file);
 
         $user_weekly_attachment_detail = UserWeeklyAttachmentDetail::create([
             'user_weekly_attachment_id' => $request->user_weekly_attachment_id,
@@ -46,7 +46,7 @@ class UserWeeklyAttachmentDetailController extends Controller
             'mime_type' => $file->getClientMimeType(),
             'path' => $upload,
             'size' => $file->getSize(),
-            'day_number' => $request->day_number
+            'description' => $request->description
         ]);
 
         return new UserWeeklyAttachmentDetailResource($user_weekly_attachment_detail);
@@ -75,7 +75,7 @@ class UserWeeklyAttachmentDetailController extends Controller
         $file = $request->file('file_weekly_photo');
         $name = $file->hashName();
 
-        $upload = Storage::disk('public')->put(Carbon::now()->toDateString() . "/{$user_weekly_attachment_detail->user_weekly_attachment_id}/day-{$request->day_number}", $file);
+        $upload = Storage::disk('public')->put(Carbon::now()->toDateString() . "/{$user_weekly_attachment_detail->user_weekly_attachment_id}", $file);
 
         $user_weekly_attachment_detail->update([
             'name' => $name,
@@ -83,7 +83,7 @@ class UserWeeklyAttachmentDetailController extends Controller
             'mime_type' => $file->getClientMimeType(),
             'path' => $upload,
             'size' => $file->getSize(),
-            'day_number' => $request->day_number
+            'description' => $request->description
         ]);
 
         return new UserWeeklyAttachmentDetailResource($user_weekly_attachment_detail);

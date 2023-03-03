@@ -18,12 +18,16 @@ class UserWeeklyAttachment extends Model
      */
     protected $fillable = [
         'user_id',
+        'weight',
+        'description',
         'week_number'
     ];
 
     protected $casts = [
         'id' => 'string',
         'user_id' => 'string',
+        'weight' => 'string',
+        'week_number' => 'string',
     ];
 
     /**

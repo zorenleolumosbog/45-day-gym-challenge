@@ -23,7 +23,7 @@ class UserWeeklyAttachmentDetailResource extends JsonResource
                 'mime_type' => $this->mime_type,
                 'path' => $this->path,
                 'size' => $this->size,
-                'day_number' => $this->day_number,
+                'description' => $this->description,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
                 'deleted_at' => $this->deleted_at

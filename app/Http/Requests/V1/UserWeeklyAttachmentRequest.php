@@ -32,7 +32,9 @@ class UserWeeklyAttachmentRequest extends FormRequest
                     ->where('week_number', request()->week_number)
                     ->exists())
             ],
-            'week_number' => 'sometimes|required|in:1,2,3,4,5,6,7'
+            'weight' => 'required|integer',
+            'description' => 'nullable|max:255',
+            'week_number' => 'required|in:1,2,3,4,5,6,7'
         ];
     }
 }

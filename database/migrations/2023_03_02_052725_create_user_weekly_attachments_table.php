@@ -17,6 +17,8 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->integer('weight');
+            $table->string('description')->nullable();
             $table->enum('week_number', [1, 2, 3, 4, 5, 6, 7]);
             $table->timestamps();
             $table->softDeletes();
