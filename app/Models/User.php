@@ -67,7 +67,7 @@ class User extends Authenticatable
      */
     public function weeklyAttachments(): HasMany
     {
-        return $this->hasMany(UserWeeklyAttachment::class);
+        return $this->hasMany(UserWeeklyAttachment::class)->orderBy('created_at', 'desc');
     }
 
     /**
