@@ -4,9 +4,12 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\V1\TelegramLink;
 use App\Models\V1\UserProfile;
 use App\Models\V1\UserWeeklyAttachment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -23,10 +26,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'telegram_link_id',
         'name',
         'email',
         'password',
         'is_admin',
+        'telegram_link_url',
         'logged_in_at'
     ];
 
@@ -58,65 +63,18 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the week 1 associated with the user.
+     * Get the weekly attachments associated with the user.
      */
-    public function week1(): HasOne
+    public function weeklyAttachments(): HasMany
     {
-        return $this->hasOne(UserWeeklyAttachment::class)
-                    ->where('week_number', 1);
+        return $this->hasMany(UserWeeklyAttachment::class);
     }
 
     /**
-     * Get the week 2 associated with the user.
+     * Get the telegram link associated with the user.
      */
-    public function week2(): HasOne
+    public function telegramLink(): BelongsTo
     {
-        return $this->hasOne(UserWeeklyAttachment::class)
-                    ->where('week_number', 2);
-    }
-
-    /**
-     * Get the week 3 associated with the user.
-     */
-    public function week3(): HasOne
-    {
-        return $this->hasOne(UserWeeklyAttachment::class)
-                    ->where('week_number', 3);
-    }
-
-    /**
-     * Get the week 4 associated with the user.
-     */
-    public function week4(): HasOne
-    {
-        return $this->hasOne(UserWeeklyAttachment::class)
-                    ->where('week_number', 4);
-    }
-
-    /**
-     * Get the week 5 associated with the user.
-     */
-    public function week5(): HasOne
-    {
-        return $this->hasOne(UserWeeklyAttachment::class)
-                    ->where('week_number', 5);
-    }
-
-    /**
-     * Get the week 6 associated with the user.
-     */
-    public function week6(): HasOne
-    {
-        return $this->hasOne(UserWeeklyAttachment::class)
-                    ->where('week_number', 6);
-    }
-
-    /**
-     * Get the week 7 associated with the user.
-     */
-    public function week7(): HasOne
-    {
-        return $this->hasOne(UserWeeklyAttachment::class)
-                    ->where('week_number', 7);
+        return $this->belongsTo(TelegramLink::class);
     }
 }

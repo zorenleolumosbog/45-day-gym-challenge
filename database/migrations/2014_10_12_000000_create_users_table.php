@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('telegram_link_id')
+                ->nullable()
+                ->constrained();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('is_admin')->nullable();
-            $table->string('telegram_link')->nullable();
+            $table->string('telegram_link_url')->nullable();
             $table->timestamp('logged_in_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

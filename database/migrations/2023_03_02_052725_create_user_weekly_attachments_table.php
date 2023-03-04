@@ -19,11 +19,11 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->integer('weight');
             $table->string('description')->nullable();
-            $table->enum('week_number', [1, 2, 3, 4, 5, 6, 7]);
+            $table->integer('week_number');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unique(['user_id', 'week_number']);
+            $table->unique(['user_id', 'week_number', 'deleted_at']);
         });
     }
 

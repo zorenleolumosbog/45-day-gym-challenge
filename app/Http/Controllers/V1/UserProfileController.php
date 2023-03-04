@@ -32,18 +32,7 @@ class UserProfileController extends Controller
      */
     public function store(UserProfileRequest $request)
     {
-        $user_profile = UserProfile::create([
-            'user_id' => $request->user_id,
-            'age' => $request->age,
-            'height' => $request->height,
-            'weight' => $request->weight,
-            'weight_loss_goal' => $request->weight_loss_goal,
-            'gym_experience' => $request->gym_experience,
-            'hours_of_sleep_at_night' => $request->hours_of_sleep_at_night,
-            'stress_level_out_of_10' => $request->stress_level_out_of_10,
-            'medications_supplements' => $request->medications_supplements,
-            'injuries_illnesses' => $request->injuries_illnesses
-        ]);
+        $user_profile = UserProfile::create($request->all());
 
         return new UserProfileResource($user_profile);
     }
@@ -68,17 +57,7 @@ class UserProfileController extends Controller
      */
     public function update(UserProfileRequest $request, UserProfile $user_profile)
     {
-        $user_profile ->update([
-            'age' => $request->age,
-            'height' => $request->height,
-            'weight' => $request->weight,
-            'weight_loss_goal' => $request->weight_loss_goal,
-            'gym_experience' => $request->gym_experience,
-            'hours_of_sleep_at_night' => $request->hours_of_sleep_at_night,
-            'stress_level_out_of_10' => $request->stress_level_out_of_10,
-            'medications_supplements' => $request->medications_supplements,
-            'injuries_illnesses' => $request->injuries_illnesses
-        ]);
+        $user_profile->update($request->all());
 
         return new UserProfileResource($user_profile);
     }

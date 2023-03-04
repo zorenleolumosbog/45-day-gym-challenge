@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\TelegramLinkController;
 use App\Http\Controllers\V1\UserController;
 use App\Http\Controllers\V1\UserProfileController;
 use App\Http\Controllers\V1\UserWeeklyAttachmentController;
@@ -23,9 +24,10 @@ Route::prefix('v1')->group(function() {
 });
 
 Route::middleware('auth:api')->prefix('v1')->group(function() {
-    Route::patch('/user-logged-in-at/{user}', [UserController::class, 'loggedInAt']);
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/user-profiles', UserProfileController::class);
     Route::apiResource('/user-weekly-attachments', UserWeeklyAttachmentController::class);
     Route::apiResource('/user-weekly-attachment-details', UserWeeklyAttachmentDetailController::class);
+    
+    Route::apiResource('/telegram-links', TelegramLinkController::class);
 });

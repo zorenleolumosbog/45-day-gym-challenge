@@ -3,8 +3,9 @@
 namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UserWeeklyAttachmentDetailRequest extends FormRequest
+class TelegramLinkRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +23,7 @@ class UserWeeklyAttachmentDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_weekly_attachment_id' => 'sometimes|required|exists:user_weekly_attachments,id',
-            'description' => 'sometimes|nullable|max:255',
-            'file_weekly_photo' => 'sometimes|required|image|mimes:jpg,jpeg,png|max:15360', // limit 15mb
+            'link' => 'required|url|max:255|unique:telegram_links,link,' . request()->route('telegram_link')->id
         ];
     }
 }

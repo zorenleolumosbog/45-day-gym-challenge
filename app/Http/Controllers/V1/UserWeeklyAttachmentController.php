@@ -32,12 +32,7 @@ class UserWeeklyAttachmentController extends Controller
      */
     public function store(UserWeeklyAttachmentRequest $request)
     {
-        $user_weekly_attachment = UserWeeklyAttachment::create([
-            'user_id' => $request->user_id,
-            'weight' => $request->weight,
-            'description' => $request->description,
-            'week_number' => $request->week_number
-        ]);
+        $user_weekly_attachment = UserWeeklyAttachment::create($request->all());
 
         return new UserWeeklyAttachmentResource($user_weekly_attachment);
     }
@@ -62,11 +57,7 @@ class UserWeeklyAttachmentController extends Controller
      */
     public function update(UserWeeklyAttachmentRequest $request, UserWeeklyAttachment $user_weekly_attachment)
     {
-        $user_weekly_attachment ->update([
-            'weight' => $request->weight,
-            'description' => $request->description,
-            'week_number' => $request->week_number
-        ]);
+        $user_weekly_attachment ->update($request->all());
 
         return new UserWeeklyAttachmentResource($user_weekly_attachment);
     }

@@ -35,10 +35,12 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $user = User::create([
+            'telegram_link_id' => $request->telegram_link_id,
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'is_admin' => $request->is_admin
+            'is_admin' => $request->is_admin,
+            'telegram_link_url' => $request->telegram_link_url
         ]);
 
         return new UserResource($user);
@@ -64,21 +66,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'is_admin' => $request->is_admin
-        ]);
-
-        return new UserResource($user);
-    }
-
-    public function loggedInAt(User $user)
-    {
-        $user->update([
-            'logged_in_at' => Carbon::now()
-        ]);
+        $user->update($request->all());
 
         return new UserResource($user);
     }
