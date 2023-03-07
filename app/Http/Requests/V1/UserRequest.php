@@ -3,6 +3,9 @@
 namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserRequest extends FormRequest
 {
@@ -28,6 +31,25 @@ class UserRequest extends FormRequest
             'password' => 'sometimes|required_with:email|confirmed|min:8|max:255',
             'is_admin' => 'nullable',
             'telegram_link_url' => 'nullable',
+
+            'current_password' => [
+                'sometimes',
+                'required_with:new_password',
+                function ($attribute, $value, $fail) {
+                    if(!Hash::check(request()->current_password, Auth::user()->password)) {
+                        $fail(__('The :attribute is incorrect.'));
+                    }
+                },
+            ],
+            'new_password' => [
+                'sometimes',
+                'required_with:current_password',
+                'string',
+                'min:8',
+                'max:255',
+                'confirmed',
+                Rule::notIn([request()->current_password]), // ensure the new password is not the same as the current password
+            ],
         ];
     }
 }

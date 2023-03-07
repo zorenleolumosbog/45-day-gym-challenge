@@ -8,6 +8,7 @@ use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -66,16 +67,18 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        $user->update([
-            'telegram_link_id' => $request->telegram_link_id,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'is_admin' => $request->is_admin,
-            'telegram_link_url' => $request->telegram_link_url
-        ]);
+        $user->update($request->all());
 
         return new UserResource($user);
+    }
+
+    public function updatePassword(UserRequest $request)
+    {
+        Auth::user()->update([
+            'password' => bcrypt($request->new_password),
+        ]);
+
+        return new UserResource(Auth::user());
     }
 
     /**
