@@ -66,7 +66,14 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        $user->update($request->all());
+        $user->update([
+            'telegram_link_id' => $request->telegram_link_id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'is_admin' => $request->is_admin,
+            'telegram_link_url' => $request->telegram_link_url
+        ]);
 
         return new UserResource($user);
     }

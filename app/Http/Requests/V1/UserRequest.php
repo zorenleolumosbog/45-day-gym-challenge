@@ -26,6 +26,7 @@ class UserRequest extends FormRequest
             'name' => 'sometimes|required|max:255',
             'email' => 'sometimes|required_with:password|unique:users|max:255',
             'password' => 'sometimes|required_with:email|confirmed|min:8|max:255',
+            'is_admin' => 'nullable',
             'telegram_link_url' => 'nullable',
         ];
     }
