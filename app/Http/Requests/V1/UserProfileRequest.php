@@ -28,7 +28,7 @@ class UserProfileRequest extends FormRequest
             'current_weight' => 'sometimes|required|integer',
             'desired_weight_goal' => 'sometimes|required|integer',
             'gym_experience' => 'sometimes|required|max:255',
-            'hours_of_sleep_at_night' => 'sometimes|required|integer',
+            'hours_of_sleep_at_night' => 'sometimes|required||max:255',
             'stress_level_out_of_10' => 'sometimes|required|integer|in:1,2,3,4,5,6,7,8,9,10',
             'medications_supplements' => 'sometimes|required|max:255',
             'injuries_illnesses' => 'sometimes|required|max:255'

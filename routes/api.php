@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\OptionController;
 use App\Http\Controllers\V1\TelegramLinkController;
 use App\Http\Controllers\V1\UserController;
 use App\Http\Controllers\V1\UserProfileController;
@@ -29,5 +30,6 @@ Route::middleware('auth:api')->prefix('v1')->group(function() {
     Route::apiResource('/user-weekly-attachments', UserWeeklyAttachmentController::class);
     Route::apiResource('/user-weekly-attachment-details', UserWeeklyAttachmentDetailController::class);
     
+    Route::apiResource('/options', OptionController::class);
     Route::apiResource('/telegram-links', TelegramLinkController::class);
 });
