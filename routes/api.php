@@ -32,5 +32,6 @@ Route::middleware('auth:api')->prefix('v1')->group(function() {
     Route::apiResource('/user-weekly-attachment-details', UserWeeklyAttachmentDetailController::class);
     
     Route::apiResource('/options', OptionController::class);
+    Route::patch('option-update-value-by-name', [OptionController::class, 'updateValueByName']);
     Route::apiResource('/telegram-links', TelegramLinkController::class);
 });

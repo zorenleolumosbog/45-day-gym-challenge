@@ -62,6 +62,19 @@ class OptionController extends Controller
         return new OptionResource($option);
     }
 
+    public function updateValueByName(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|max:255|exists:options,name',
+            'value' => 'required'
+        ]);
+        
+        $option = Option::where('name', $request->name)->first();
+        $option->update($validatedData);
+
+        return new OptionResource($option);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
