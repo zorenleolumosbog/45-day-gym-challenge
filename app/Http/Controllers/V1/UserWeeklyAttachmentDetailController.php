@@ -8,6 +8,7 @@ use App\Http\Resources\V1\UserWeeklyAttachmentDetailResource;
 use App\Models\V1\UserWeeklyAttachmentDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class UserWeeklyAttachmentDetailController extends Controller
@@ -37,14 +38,14 @@ class UserWeeklyAttachmentDetailController extends Controller
         $file = $request->file('file_weekly_photo');
         $name = $file->hashName();
 
-        $upload = Storage::disk('public')->put(Carbon::now()->toDateString() . "/{$request->user_weekly_attachment_id}", $file);
+        $path = Storage::disk('public')->put(Carbon::now()->toDateString() . "/" . Auth::user()->id, $file);
 
         $user_weekly_attachment_detail = UserWeeklyAttachmentDetail::create([
             'user_weekly_attachment_id' => $request->user_weekly_attachment_id,
             'name' => $name,
             'file_name' => $file->getClientOriginalName(),
             'mime_type' => $file->getClientMimeType(),
-            'path' => $upload,
+            'path' => $path,
             'size' => $file->getSize(),
             'description' => $request->description
         ]);
@@ -75,13 +76,13 @@ class UserWeeklyAttachmentDetailController extends Controller
         $file = $request->file('file_weekly_photo');
         $name = $file->hashName();
 
-        $upload = Storage::disk('public')->put(Carbon::now()->toDateString() . "/{$user_weekly_attachment_detail->user_weekly_attachment_id}", $file);
+        $path = Storage::disk('public')->put(Carbon::now()->toDateString() . "/" . Auth::user()->id, $file);
 
         $user_weekly_attachment_detail->update([
             'name' => $name,
             'file_name' => $file->getClientOriginalName(),
             'mime_type' => $file->getClientMimeType(),
-            'path' => $upload,
+            'path' => $path,
             'size' => $file->getSize(),
             'description' => $request->description
         ]);
