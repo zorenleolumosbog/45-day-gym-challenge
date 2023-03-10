@@ -6,10 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\UserRequest;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -39,7 +38,7 @@ class UserController extends Controller
             'telegram_link_id' => $request->telegram_link_id,
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
             'is_admin' => $request->is_admin,
             'telegram_link_url' => $request->telegram_link_url
         ]);
@@ -75,7 +74,7 @@ class UserController extends Controller
     public function updatePassword(UserRequest $request)
     {
         Auth::user()->update([
-            'password' => bcrypt($request->new_password),
+            'password' => Hash::make($request->new_password),
         ]);
 
         return new UserResource(Auth::user());
