@@ -25,7 +25,6 @@ Route::prefix('v1')->group(function() {
 });
 
 Route::middleware('auth:api')->prefix('v1')->group(function() {
-    Route::patch('/user-update-password', [UserController::class, 'updatePassword']);
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/user-profiles', UserProfileController::class);
     Route::apiResource('/user-weekly-attachments', UserWeeklyAttachmentController::class);

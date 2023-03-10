@@ -34,14 +34,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $user = User::create([
-            'telegram_link_id' => $request->telegram_link_id,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'is_admin' => $request->is_admin,
-            'telegram_link_url' => $request->telegram_link_url
-        ]);
+        $user = User::create($request->all());
 
         return new UserResource($user);
     }
@@ -69,15 +62,6 @@ class UserController extends Controller
         $user->update($request->all());
 
         return new UserResource($user);
-    }
-
-    public function updatePassword(UserRequest $request)
-    {
-        Auth::user()->update([
-            'password' => Hash::make($request->new_password),
-        ]);
-
-        return new UserResource(Auth::user());
     }
 
     /**
