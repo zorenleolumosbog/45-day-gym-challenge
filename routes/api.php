@@ -21,11 +21,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group(function() {
-    Route::post('/user-registration', [UserController::class, 'store']);
+    Route::apiResource('/users', UserController::class)->only('store');
 });
 
 Route::middleware('auth:api')->prefix('v1')->group(function() {
-    Route::apiResource('/users', UserController::class);
+    Route::apiResource('/users', UserController::class)->except('store');
     Route::apiResource('/user-profiles', UserProfileController::class);
     Route::apiResource('/user-weekly-attachments', UserWeeklyAttachmentController::class);
     Route::apiResource('/user-weekly-attachment-details', UserWeeklyAttachmentDetailController::class);
