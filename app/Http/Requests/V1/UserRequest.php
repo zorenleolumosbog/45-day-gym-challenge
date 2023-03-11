@@ -29,7 +29,14 @@ class UserRequest extends FormRequest
             'name' => 'sometimes|required|max:255',
             'email' => 'sometimes|required_with:password|unique:users|max:255',
             'password' => 'sometimes|required_with:email|confirmed|min:8|max:255',
-            'is_admin' => 'nullable',
+            'is_admin' => [
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    if((!Auth::user() && request()->is_admin) || (!Auth::user()?->is_admin && request()->is_admin)) {
+                        $fail(__('The :attribute is invalid.'));
+                    }
+                },
+            ],
             'telegram_link_url' => 'nullable',
 
             'current_password' => [
