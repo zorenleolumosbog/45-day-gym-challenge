@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group(function() {
-    Route::post('/users-registration', [UserController::class, 'store']);
+    Route::post('/register', [UserController::class, 'store']);
 });
 
 Route::middleware(['auth:api', 'user'])->prefix('v1')->group(function() {
