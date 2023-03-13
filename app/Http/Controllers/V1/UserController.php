@@ -8,7 +8,9 @@ use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Laravel\Passport\Token;
+use Laravel\Passport\TokenRepository;
+use Laravel\Passport\RefreshTokenRepository;
 
 class UserController extends Controller
 {
@@ -74,6 +76,32 @@ class UserController extends Controller
     {
         $user->delete();
         
+        return response(null, 204);
+    }
+
+    /**
+     * Logout the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function logout()
+    {
+        // Get the access token for the current user
+        $access_token = Auth::user()->token();
+
+        // Retrieve the access token ID
+        $token_id = $access_token->id;
+
+        $token_repository = app(TokenRepository::class);
+        $refresh_token_repository = app(RefreshTokenRepository::class);
+        
+        // Revoke an access token...
+        $token_repository->revokeAccessToken($token_id);
+        
+        // Revoke all of the token's refresh tokens...
+        $refresh_token_repository->revokeRefreshTokensByAccessTokenId($token_id);
+
         return response(null, 204);
     }
 }

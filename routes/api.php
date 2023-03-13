@@ -24,6 +24,10 @@ Route::prefix('v1')->group(function() {
     Route::post('/register', [UserController::class, 'store']);
 });
 
+Route::middleware('auth:api')->prefix('v1')->group(function() {
+    Route::post('/logout', [UserController::class, 'logout']);
+});
+
 Route::middleware(['auth:api', 'user'])->prefix('v1')->group(function() {
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/user-profiles', UserProfileController::class);
