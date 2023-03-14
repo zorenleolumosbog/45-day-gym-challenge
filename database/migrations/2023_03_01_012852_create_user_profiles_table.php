@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('injuries_illnesses');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->unique('user_id');
         });
     }
 

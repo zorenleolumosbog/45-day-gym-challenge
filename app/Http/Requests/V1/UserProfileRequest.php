@@ -22,7 +22,6 @@ class UserProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'sometimes|required|exists:users,id|unique:user_profiles,user_id',
             'age' => 'sometimes|required|integer',
             'height' => 'sometimes|required|max:255',
             'current_weight' => 'sometimes|required|integer',

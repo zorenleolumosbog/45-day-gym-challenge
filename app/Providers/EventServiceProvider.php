@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Models\V1\UserProfile;
+use App\Models\V1\UserWeeklyAttachment;
+use App\Observers\UserObserver;
+use App\Observers\UserProfileObserver;
+use App\Observers\UserWeeklyAttachmentObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -25,7 +31,9 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        User::observe(UserObserver::class);
+        UserProfile::observe(UserProfileObserver::class);
+        UserWeeklyAttachment::observe(UserWeeklyAttachmentObserver::class);
     }
 
     /**
