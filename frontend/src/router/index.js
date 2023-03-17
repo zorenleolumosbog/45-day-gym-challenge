@@ -15,6 +15,36 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: () => import('../views/TheRegister.vue')
+    },
+    {
+      path: '/gender',
+      name: 'gender',
+      component: () => import('../views/TheGender.vue')
+    },
+    {
+      path: '/personal-information',
+      name: 'personal-information',
+      component: () => import('../views/ThePersonalInformation.vue')
+    },
+    {
+      path: '/gym-experience',
+      name: 'gym-experience',
+      component: () => import('../views/TheGymExperience.vue')
+    },
+    {
+      path: '/hours-sleep',
+      name: 'hours-sleep',
+      component: () => import('../views/TheHoursSleep.vue')
+    },
+    {
+      path: '/stress-level',
+      name: 'stress-level',
+      component: () => import('../views/TheStressLevel.vue')
+    },
+    {
+      path: '/medical-information',
+      name: 'medical-information',
+      component: () => import('../views/TheMedicalInformation.vue')
     }
   ]
 })

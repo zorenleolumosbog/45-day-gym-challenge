@@ -1,0 +1,163 @@
+<template>
+    <div class="register_page_body questionair_page_body">
+        <div class="questionair_page_main">
+            <div class="questionair_page_header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="qp_logo">
+                                <a href="#"><img src="assets/images/logo.png" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="questionair_page_contents_all">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="questionair_page_contents">
+                                <div class="questionair_page_progressbar">
+                                    <div class="wrap">
+                                        <div class="bar-container">
+                                            <div class="barpro" style="width: 78%;"></div>
+                                        </div>
+                                            <div class="bar-percentage" data-percentage="88"></div>
+
+                                            <div class="qp_progress_text">
+                                            <p>100%</p>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="questionair_main_contents_all_page">
+                                    <div class="questionair_page_choose_gender personal_infor_all">
+                                        <div class="ppcg_title">
+                                            <h3>Stress Level</h3>
+                                        </div>
+                                        <div class="qp_contents_all perinfor_pagem">
+                                            <form action="medical-information.html">
+                                                <div class="gym_experi_contents_main">
+                                                    <div class="gym_experi_cm_shoose stress_pchoose">
+                                                        <div class="gp_gender_vtwo_single">
+                                                            <div class="qp_gender_vtwo_main gymp_vth_main stress_vth_main">
+                                                                <div class="stress_toptext">
+                                                                    <p>Choose from 1 - 10</p>
+                                                                </div>
+                                                                <div class="gp_gender_vtwo_single gym_plabel stress_plabel">
+                                                                    <input 
+                                                                    type="radio" name="emotion" 
+                                                                    id="hs_id1" class="input-hidden" checked />
+                                                                    <label for="hs_id1">
+                                                                        <span class="gpgvts_title">1</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="gp_gender_vtwo_single gym_plabel stress_plabel">
+                                                                    <input 
+                                                                        type="radio" name="emotion"
+                                                                        id="hs_id2" class="input-hidden" />
+                                                                    <label for="hs_id2">
+                                                                        <span class="gpgvts_title">2</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="gp_gender_vtwo_single gym_plabel stress_plabel">
+                                                                    <input 
+                                                                        type="radio" name="emotion"
+                                                                        id="hs_id3" class="input-hidden" />
+                                                                    <label for="hs_id3">
+                                                                        <span class="gpgvts_title">3</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="gp_gender_vtwo_single gym_plabel stress_plabel">
+                                                                    <input 
+                                                                        type="radio" name="emotion"
+                                                                        id="hs_id4" class="input-hidden" />
+                                                                    <label for="hs_id4">
+                                                                        <span class="gpgvts_title">4</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="gp_gender_vtwo_single gym_plabel stress_plabel">
+                                                                    <input 
+                                                                        type="radio" name="emotion"
+                                                                        id="hs_id5" class="input-hidden" />
+                                                                    <label for="hs_id5">
+                                                                        <span class="gpgvts_title">5</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="gp_gender_vtwo_single gym_plabel stress_plabel">
+                                                                    <input 
+                                                                        type="radio" name="emotion"
+                                                                        id="hs_id6" class="input-hidden" />
+                                                                    <label for="hs_id6">
+                                                                        <span class="gpgvts_title">6</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="gp_gender_vtwo_single gym_plabel stress_plabel">
+                                                                    <input 
+                                                                        type="radio" name="emotion"
+                                                                        id="hs_id7" class="input-hidden" />
+                                                                    <label for="hs_id7">
+                                                                        <span class="gpgvts_title">7</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="gp_gender_vtwo_single gym_plabel stress_plabel">
+                                                                    <input 
+                                                                        type="radio" name="emotion"
+                                                                        id="hs_id8" class="input-hidden" />
+                                                                    <label for="hs_id8">
+                                                                        <span class="gpgvts_title">8</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="gp_gender_vtwo_single gym_plabel stress_plabel">
+                                                                    <input 
+                                                                        type="radio" name="emotion"
+                                                                        id="hs_id9" class="input-hidden" />
+                                                                    <label for="hs_id9">
+                                                                        <span class="gpgvts_title">9</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="gp_gender_vtwo_single gym_plabel stress_plabel">
+                                                                    <input 
+                                                                        type="radio" name="emotion"
+                                                                        id="hs_id10" class="input-hidden" />
+                                                                    <label for="hs_id10">
+                                                                        <span class="gpgvts_title">10</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="stress_bottext">
+                                                                    <p>Lowest</p>
+                                                                    <p>HIghest</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="questionair_next_sub_all">
+                                                    <div class="questionair_next_sub">
+                                                        <a href="hours-sleep">PREVIOUS</a>
+                                                    </div>
+                                                    <!-- <div class="qp_previews">
+                                                        <input type="submit" value="PREVIOUS">
+                                                    </div> -->
+                                                    <div class="questionair_next_sub form_next_btnmml">
+                                                        <input type="submit" value="NEXT">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+
+export default {
+}
+</script>
