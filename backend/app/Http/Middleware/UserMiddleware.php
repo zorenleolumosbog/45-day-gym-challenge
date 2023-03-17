@@ -15,15 +15,29 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $resource_id = request()->route('user')?->id;
-
         $user = auth()->user();
         
         if ($user->is_admin) {
             return $next($request);
         }
 
-        if ($user->id !== $resource_id) { // Check user ownership
+        switch (true) {
+            case request()->route('user'):
+                $user_id = request()->route('user')->id;
+                break;
+            case request()->route('user_profile'):
+                $user_id = request()->route('user_profile')->user_id;
+                break;
+            case request()->route('user_weekly_attachment'):
+                $user_id = request()->route('user_weekly_attachment')->user_id;
+                break;
+                
+            default:
+                $user_id = null;
+                break;
+        }
+        
+        if ($user_id && $user->id !== $user_id) { // Check user ownership
             return response()->json(['message' => 'Unauthenticated'], 401);
         }
 

@@ -19,6 +19,7 @@ class UserProfileResource extends JsonResource
             'type' => 'user_profiles',
             'attributes' => [
                 'user_id' => $this->user_id,
+                'gender' => $this->gender,
                 'age' => $this->age,
                 'height' => $this->height,
                 'current_weight' => $this->current_weight,

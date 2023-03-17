@@ -17,6 +17,7 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->enum('gender', ['male', 'female']);
             $table->integer('age');
             $table->string('height');
             $table->integer('current_weight');
