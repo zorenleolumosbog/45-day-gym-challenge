@@ -6,7 +6,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="qp_logo">
-                                <a href="#"><img src="assets/images/logo.png" alt=""></a>
+                                <a href="#"><img src="@/assets/images/logo.png" alt=""></a>
                             </div>
                         </div>
                     </div>

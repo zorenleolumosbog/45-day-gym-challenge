@@ -6,7 +6,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="qp_logo">
-                                <a href="#"><img src="assets/images/logo.png" alt=""></a>
+                                <a href="#"><img src="@/assets/images/logo.png" alt=""></a>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                                                         id="sad" class="input-hidden" checked />
                                                         <label for="sad">
                                                             <!-- <span class="gpgvts_title"></span> -->
-                                                            <span class="gpgvts_img"><img src="assets/images/male.png" alt=""></span>
+                                                            <span class="gpgvts_img"><img src="@/assets/images/male.png" alt=""></span>
                                                         </label>
                                                     </div>
                                                     <div class="gp_gender_vtwo_single">
@@ -54,7 +54,7 @@
                                                             type="radio" name="emotion"
                                                             id="happy" class="input-hidden" />
                                                         <label for="happy">
-                                                            <span class="gpgvts_img"><img src="assets/images/female.png" alt=""></span>
+                                                            <span class="gpgvts_img"><img src="@/assets/images/female.png" alt=""></span>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -64,7 +64,7 @@
                                                             <h4>Male</h4>
                                                         </div>
                                                         <div class="qpg_gender_choose qpg_gc_male qp_gender_male_borderm">
-                                                            <img src="assets/images/male.png" alt="">
+                                                            <img src="@/assets/images/male.png" alt="">
                                                         </div>
                                                     </div>
                                                     <div class="questionair_gender_single qp_gender_female">
@@ -72,7 +72,7 @@
                                                             <h4>Female</h4>
                                                         </div>
                                                         <div class="qpg_gender_choose qpg_gc_female">
-                                                            <img src="assets/images/female.png" alt="">
+                                                            <img src="@/assets/images/female.png" alt="">
                                                         </div>
                                                     </div>
                                                 </div> -->

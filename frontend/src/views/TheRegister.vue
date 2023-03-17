@@ -40,7 +40,7 @@
                             </div>
                             <div class="register_page_form_sec">
                                 <div class="register_page_form_header">
-                                    <a href="#"><img src="assets/images/logo.png" alt=""></a>
+                                    <a href="#"><img src="@/assets/images/logo.png" alt=""></a>
                                     <h3>Register Now for the 45 day contest</h3>
                                 </div>
                                 <div class="register_page_form">
