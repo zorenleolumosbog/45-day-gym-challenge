@@ -524,7 +524,7 @@ h4{
 }
 .wrapper::after {
 	position: absolute;
-	content: "";
+	/* content: ""; */
 	top: 9px;
 	right: 77px;
 	width: 7px;
@@ -544,10 +544,10 @@ h4{
 	bottom: 0px;
 	text-align: center;
 	z-index: 4;
-	animation-name: meterbar;
-	animation-duration: 4s;
+	/* animation-name: meterbar; */
+	/* animation-duration: 4s; */
 /*	animation: 2s ease-in meterbar;*/
-	transform: rotate(0deg);
+	/* transform: rotate(0deg); */
 }
 @keyframes meterbar {
   0%   {transform: rotate(-133deg);}
@@ -1252,6 +1252,30 @@ h4{
 }
 .gp_gender_vtwo_single h4{
 	text-align: center;
+}
+.rsrbc_form_btn input {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	text-align: center;
+	color: #FFF;
+	border-radius: 5px;
+	background-image: -moz-linear-gradient( -180deg, rgb(141,237,200) 0%, rgb(85,165,174) 53%, rgb(29,93,147) 100%) !important;
+  background-image: -webkit-linear-gradient( -180deg, rgb(141,237,200) 0%, rgb(85,165,174) 53%, rgb(29,93,147) 100%) !important;
+  background-image: -ms-linear-gradient( -180deg, rgb(141,237,200) 0%, rgb(85,165,174) 53%, rgb(29,93,147) 100%) !important;
+	font-weight: 500;
+	height: 56px;
+	margin: auto;
+	-webkit-transition: 0.2s;
+	-o-transition: 0.2s;
+	transition: 0.2s;
+	border-radius: 50px;
 }
 .questionair_next_sub_all{
 	display: flex;

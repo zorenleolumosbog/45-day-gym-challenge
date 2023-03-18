@@ -20,11 +20,15 @@
                                         <div class="wrapper_main">
                                             <div class="wrapper">  
                                                 <div class="circle-out">
-                                                    <div id="bar" class="circle" style="transform: rotate(-72deg);"></div>
+                                                    <!-- 180deg is 0% -->
+                                                    <!-- 360deg is 100% -->
+                                                    <div id="bar" class="circle" style="transform: rotate(225deg);"></div>
                                                     <span class="text">Hello</span>
                                                 </div>
                                             </div>
-                                            <div class="wrapper_meter">
+                                            <!-- 0deg is 0% -->
+                                            <!-- 225deg is 100% -->
+                                            <div class="wrapper_meter" style="transform: rotate(45deg);">
                                                 <img src="@/assets/images/meter-bar.png" alt="">
                                             </div>
                                         </div>
