@@ -41,24 +41,16 @@
                             <div class="register_page_form_sec">
                                 <div class="register_page_form_header">
                                     <a href="#"><img src="@/assets/images/logo.png" alt=""></a>
-                                    <h3>Register Now for the 45 day contest</h3>
+                                    <h3>Login for the 45 day contest</h3>
                                 </div>
                                 <div class="register_page_form">
                                     <form>
-                                        <div class="rp_form_single">
-                                            <label for="rpfs1">Full Name</label>
-                                            <input type="text" id="rpfs1" placeholder="Enter full Name">
-                                        </div>
                                         <div class="rp_form_single">
                                             <label for="rpfs2">Email Address</label>
                                             <input type="email" id="rpfs2" placeholder="Enter Email Address">
                                         </div>
                                         <div class="rp_form_single">
                                             <label for="rpfs3">Password</label>
-                                            <input type="password" id="rpfs3" value="password">
-                                        </div>
-                                        <div class="rp_form_single">
-                                            <label for="rpfs3">Confirm Password</label>
                                             <input type="password" id="rpfs3" value="password">
                                         </div>
                                         <div class="register_page_checkbox">
@@ -71,7 +63,7 @@
                                             </div>
                                         </div>
                                         <div class="register_page_form_btn">
-                                            <input type="submit" value="Register NOw!">
+                                            <input type="submit" value="Login NOw!">
                                         </div>
                                     </form>
                                 </div>
