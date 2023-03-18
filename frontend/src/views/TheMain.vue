@@ -270,7 +270,7 @@
                                             <div class="rswi_item_single">
                                                 <div class="rswi_item_single_img">
                                                     <div class="rswi_item_single_img_pos">
-                                                        <img src="https://i.postimg.cc/WbvY0Yp8/female1.png" alt="">
+                                                        <img src="@/assets/images/female1.png" alt="">
                                                     </div>
                                                 </div>
                                                 <div class="rswi_item_single_contents">
@@ -312,7 +312,7 @@
                                             <div class="rswi_item_single">
                                                 <div class="rswi_item_single_img">
                                                     <div class="rswi_item_single_img_pos">
-                                                        <img src="https://i.postimg.cc/WbvY0Yp8/female1.png" alt="">
+                                                        <img src="@/assets/images/female1.png" alt="">
                                                     </div>
                                                 </div>
                                                 <div class="rswi_item_single_contents">

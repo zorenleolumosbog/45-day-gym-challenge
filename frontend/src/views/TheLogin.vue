@@ -44,9 +44,9 @@
                                     <h3>Login for the 45 day contest</h3>
                                 </div>
                                 <div class="register_page_form">
-                                    <div v-if="validation.error" class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        <strong>The user credentials were incorrect.</strong>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <div v-if="validation.error.message" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <strong>{{ validation.error.message }}</strong>
+                                        <button @click="validation.error.message = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -68,7 +68,7 @@
                                         </div>
                                     </div>
                                     <div class="register_page_form_btn">
-                                        <input v-if="!validation.loading" type="submit" @click="login" value="Login Now!">
+                                        <input :disabled="input.email === '' || input.password === ''" v-if="!validation.loading" type="submit" @click="oauth" value="Login Now!">
                                         <button v-if="validation.loading" type="submit" disabled>
                                             <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
                                             Loading...
@@ -86,7 +86,7 @@
 
 <script lang="ts">
 import axios from 'axios';
-import { useTokenStore } from '../stores/token';
+import { userToken, userProfile } from '../stores/index';
 
 export default {
     data() {
@@ -98,16 +98,18 @@ export default {
             },
             validation: {
                 loading: false,
-                error: false
+                error: {
+                    message: null
+                }
             }
         }
     },
     methods: {
-        login() {
+        oauth() {
             let self = this;
 
             self.validation.loading = true;
-            axios.post(`${process.env.API_URL}/oauth/token`, {
+            axios.post(`${process.env.APP_URL}/oauth/token`, {
                 grant_type: process.env.OAUTH_GRANT_TYPE,
                 client_id: process.env.OAUTH_CLIENT_ID,
                 client_secret:process.env.OAUTH_SECRET,
@@ -116,20 +118,42 @@ export default {
                 scope: process.env.OAUTH_SCOPE,
             })
             .then(function (response) {
-                if(self.input.rememberMe) {
-                    localStorage.setItem("access_token", response.data.access_token);
-                } else {
-                    const tokenStore = useTokenStore();
-                    tokenStore.setToken(response.data);
-                }
-
-                self.validation.error = false;
-
-                self.$router.push({ name: 'gender' });
+                self.login(response);
             })
             .catch(function (error) {
                 self.validation.loading = false;
-                self.validation.error = true;
+                self.validation.error.message = error.response.data.message;
+            });
+        },
+        login(data: any) {
+            let self = this;
+            
+            axios.get(`${process.env.API_URL}/login`, {
+                headers: {
+                    Authorization: `Bearer ${data.data.access_token}`,
+                },
+            })
+            .then(response => {
+                if(self.input.rememberMe) {
+                    localStorage.setItem("user_id", response.data.data.id);
+                    localStorage.setItem("access_token", data.data.access_token);
+                } else {
+                    const tokenStore = userToken();
+                    tokenStore.setToken(data.data);
+
+                    const userStore = userProfile();
+                    userStore.setUser(response.data.data);
+                }
+
+                if(response.data.data.profile) {
+                    self.$router.push({ name: 'home' });
+                } else {
+                    self.$router.push({ name: 'gender' });
+                }
+            })
+            .catch(error => {
+                self.validation.loading = false;
+                self.validation.error.message = error.response.data.message;
             });
         }
     }

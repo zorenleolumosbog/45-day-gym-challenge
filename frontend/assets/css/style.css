@@ -1257,7 +1257,7 @@ h4{
 	display: flex;
 	justify-content: space-between;
 }
-.questionair_next_btn a,.questionair_next_sub input,.questionair_next_sub a {
+.questionair_next_btn a,.questionair_next_sub input,.questionair_next_sub button,.questionair_next_sub a {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;

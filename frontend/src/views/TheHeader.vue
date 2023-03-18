@@ -34,9 +34,8 @@
                                     <img src="@/assets/images/profile.png" alt=""><i class="fas fa-angle-down"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#">item 1</a></li>
-                                    <li><a class="dropdown-item" href="#">item 2</a></li>
-                                    <li><a class="dropdown-item" href="#" style="color: #e82222;">log out</a></li>
+                                        <li><a class="dropdown-item text-left" href="#">Change Pass</a></li>
+                                        <li><a class="dropdown-item text-left" href="#" style="color: #e82222;">Log Out</a></li>
                                     </ul>
                                 </div>
                             </div>

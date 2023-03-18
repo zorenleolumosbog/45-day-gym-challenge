@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('current_weight');
             $table->integer('desired_weight_goal');
             $table->enum('gym_experience', ['less than 12 months', '12-36 months', '36 months and over']);
-            $table->enum('hours_of_sleep_at_night', ['4-5 hours', '7-8 hours', '8 hours above']);
+            $table->enum('hours_of_sleep_at_night', ['4-6 hours', '7-8 hours', '8 hours above']);
             $table->enum('stress_level_out_of_10', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
             $table->string('medications_supplements');
             $table->string('injuries_illnesses');

@@ -86,11 +86,11 @@ class UserController extends Controller
      */
     public function login(Request $request)
     {
-        return response()->json(
-            [
-                'data' => $request->user()
-            ]
-        );
+        $user = User::with('profile')->find($request->user()->id);
+        
+        return response()->json([
+            'data' => $user
+        ]);
     }
 
     /**
