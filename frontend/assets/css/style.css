@@ -1144,7 +1144,8 @@ h4{
 .register_page_form_btn{
 	margin-top: 30px;
 }
-.register_page_form_btn input{
+.register_page_form_btn input,
+.register_page_form_btn button{
 	border-radius: 5px;
 	background: #f52e62 !important;
 	width: 100%;
