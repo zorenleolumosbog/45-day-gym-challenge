@@ -6,19 +6,35 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Stripe\Stripe;
+use Stripe\Event;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Registration;
 
 class StripeWebhookController extends Controller
 {
     public function handleWebhook(Request $request)
     {
-        $payload = $request->all();
+        // Set the API key
+        Stripe::setApiKey(config('services.stripe.secret_key'));
+
+        // Verify the Stripe webhook signature
+        $payload = $request->getContent();
+        $sig_header = $request->header('Stripe-Signature');
         $event = null;
 
         try {
-            $event = \Stripe\Event::constructFrom($payload);
-        } catch (\UnexpectedValueException $e) {
+            $event = Event::constructFrom(
+                json_decode($payload, true),
+                $sig_header,
+                config('services.stripe.webhook_secret')
+            );
+        } catch(\UnexpectedValueException $e) {
             // Invalid payload
             return response()->json(['error' => 'Invalid payload'], 400);
+        } catch(\Stripe\Exception\SignatureVerificationException $e) {
+            // Invalid signature
+            return response()->json(['error' => 'Invalid signature'], 400);
         }
 
         // Handle the event based on its type
@@ -32,14 +48,25 @@ class StripeWebhookController extends Controller
                 // Get the customer's name and email
                 $customer->name;
                 $customer->email;
-                $password = Hash::make(Str::random(8));
 
-                User::create([
-                    'name' => $customer->name,
-                    'email' => $customer->email,
-                    'password' => $password,
-                    'password_confirmation' => $password
-                ]);
+                $user = User::where('email', $customer->email)->first();
+                if(!$user) {
+                    $password = Str::random(8);
+    
+                    User::create([
+                        'name' => $customer->name,
+                        'email' => $customer->email,
+                        'password' => Hash::make($password)
+                    ]);
+
+                    $new_user = [
+                        'name' => $customer->name,
+                        'email' => $customer->email,
+                        'password' => $password
+                    ];
+
+                    Mail::to($customer->email)->send(new Registration($new_user));
+                }
 
                 break;
             case 'payment_intent.payment_failed':
