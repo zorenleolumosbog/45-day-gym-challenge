@@ -58,7 +58,7 @@
                                         <label for="rpfs3">Password</label>
                                         <input type="password" v-model="input.password" placeholder="Enter Password">
                                     </div>
-                                    <div class="register_page_checkbox">
+                                    <div @click="input.rememberMe = !input.rememberMe" class="register_page_checkbox">
                                         <div class="hrh2_send_notif_des">
                                             <input type="checkbox" v-model="input.rememberMe">
                                             <label for="html"></label>
@@ -86,6 +86,7 @@
 
 <script lang="ts">
 import axios from 'axios';
+import { useTokenStore } from '../stores/token';
 
 export default {
     data() {
@@ -115,13 +116,18 @@ export default {
                 scope: process.env.OAUTH_SCOPE,
             })
             .then(function (response) {
-                localStorage.setItem("access_token", response.data.access_token);
+                if(self.input.rememberMe) {
+                    localStorage.setItem("access_token", response.data.access_token);
+                } else {
+                    const tokenStore = useTokenStore();
+                    tokenStore.setToken(response.data);
+                }
+
                 self.validation.error = false;
 
                 self.$router.push({ name: 'gender' });
             })
             .catch(function (error) {
-                console.log(error);
                 self.validation.loading = false;
                 self.validation.error = true;
             });

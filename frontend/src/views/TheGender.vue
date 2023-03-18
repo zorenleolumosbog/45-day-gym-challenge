@@ -96,7 +96,12 @@
 </template>
 
 <script lang="ts">
+import { useTokenStore } from '../stores/token';
 
 export default {
+    created() {
+        const tokenStore = useTokenStore();
+        console.log(tokenStore.token)
+    }
 }
 </script>

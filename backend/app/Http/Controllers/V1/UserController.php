@@ -8,7 +8,6 @@ use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Passport\Token;
 use Laravel\Passport\TokenRepository;
 use Laravel\Passport\RefreshTokenRepository;
 
@@ -77,6 +76,21 @@ class UserController extends Controller
         $user->delete();
         
         return response(null, 204);
+    }
+
+    /**
+     * Login the specified resource from storage.
+     *
+     * @param  \App\Models\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function login(Request $request)
+    {
+        return response()->json(
+            [
+                'data' => $request->user()
+            ]
+        );
     }
 
     /**
