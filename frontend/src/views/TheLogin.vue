@@ -44,28 +44,36 @@
                                     <h3>Login for the 45 day contest</h3>
                                 </div>
                                 <div class="register_page_form">
-                                    <form>
-                                        <div class="rp_form_single">
-                                            <label for="rpfs2">Email Address</label>
-                                            <input type="email" id="rpfs2" placeholder="Enter Email Address">
+                                    <div v-if="validation.error" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <strong>The user credentials were incorrect.</strong>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="rp_form_single">
+                                        <label for="rpfs2">Email Address</label>
+                                        <input type="email" v-model="input.email" placeholder="Enter Email Address">
+                                    </div>
+                                    <div class="rp_form_single">
+                                        <label for="rpfs3">Password</label>
+                                        <input type="password" v-model="input.password" placeholder="Enter Password">
+                                    </div>
+                                    <div class="register_page_checkbox">
+                                        <div class="hrh2_send_notif_des">
+                                            <input type="checkbox" v-model="input.rememberMe">
+                                            <label for="html"></label>
                                         </div>
-                                        <div class="rp_form_single">
-                                            <label for="rpfs3">Password</label>
-                                            <input type="password" id="rpfs3" value="password">
+                                        <div class="rpc_lbl">
+                                            <label for="html">Remember Me</label>
                                         </div>
-                                        <div class="register_page_checkbox">
-                                            <div class="hrh2_send_notif_des">
-                                                <input type="checkbox" id="html">
-                                                <label for="html"></label>
-                                            </div>
-                                            <div class="rpc_lbl">
-                                                <label for="html">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </label>
-                                            </div>
-                                        </div>
-                                        <div class="register_page_form_btn">
-                                            <input type="submit" value="Login NOw!">
-                                        </div>
-                                    </form>
+                                    </div>
+                                    <div class="register_page_form_btn">
+                                        <input v-if="!validation.loading" type="submit" @click="login" value="Login Now!">
+                                        <button v-if="validation.loading" type="submit" disabled>
+                                            <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
+                                            Loading...
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -77,7 +85,47 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios';
 
 export default {
+    data() {
+        return {
+            input: {
+                email: '',
+                password: '',
+                rememberMe: true
+            },
+            validation: {
+                loading: false,
+                error: false
+            }
+        }
+    },
+    methods: {
+        login() {
+            let self = this;
+
+            self.validation.loading = true;
+            axios.post(`${process.env.API_URL}/oauth/token`, {
+                grant_type: process.env.OAUTH_GRANT_TYPE,
+                client_id: process.env.OAUTH_CLIENT_ID,
+                client_secret:process.env.OAUTH_SECRET,
+                username: self.input.email,
+                password: self.input.password,
+                scope: process.env.OAUTH_SCOPE,
+            })
+            .then(function (response) {
+                localStorage.setItem("access_token", response.data.access_token);
+                self.validation.error = false;
+
+                self.$router.push({ name: 'gender' });
+            })
+            .catch(function (error) {
+                console.log(error);
+                self.validation.loading = false;
+                self.validation.error = true;
+            });
+        }
+    }
 }
 </script>
