@@ -20,9 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1')->group(function() {
-    Route::post('/register', [UserController::class, 'store']);
-});
+// Route::prefix('v1')->group(function() {
+//     Route::post('/register', [UserController::class, 'store']);
+// });
 
 Route::middleware('auth:api')->prefix('v1')->group(function() {
     Route::get('/login', [UserController::class, 'login']);
@@ -30,7 +30,7 @@ Route::middleware('auth:api')->prefix('v1')->group(function() {
 });
 
 Route::middleware(['auth:api', 'user'])->prefix('v1')->group(function() {
-    Route::apiResource('/users', UserController::class);
+    Route::apiResource('/users', UserController::class)->except(['store', 'destroy']);
     Route::apiResource('/user-profiles', UserProfileController::class);
     Route::apiResource('/user-weekly-attachments', UserWeeklyAttachmentController::class);
     Route::apiResource('/user-weekly-attachment-details', UserWeeklyAttachmentDetailController::class);

@@ -15,12 +15,12 @@ class UserObserver
      */
     public function saving(User $user)
     {
-        if ($user->isDirty('password')) {
+        if (request()->password) {
             $user->password = Hash::make($user->password);
         }
 
-        if ($user->isDirty('new_password')) {
-            $user->password = Hash::make($user->new_password);
+        if (request()->new_password) {
+            $user->password = Hash::make(request()->new_password);
         }
     }
 
