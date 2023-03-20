@@ -46,6 +46,7 @@ class UserWeeklyAttachmentDetailController extends Controller
             'file_name' => $file->getClientOriginalName(),
             'mime_type' => $file->getClientMimeType(),
             'path' => $path,
+            'url' => Storage::disk('public')->url($path),
             'size' => $file->getSize(),
             'description' => $request->description
         ]);
@@ -83,6 +84,7 @@ class UserWeeklyAttachmentDetailController extends Controller
             'file_name' => $file->getClientOriginalName(),
             'mime_type' => $file->getClientMimeType(),
             'path' => $path,
+            'url' => Storage::disk('public')->url($path),
             'size' => $file->getSize(),
             'description' => $request->description
         ]);

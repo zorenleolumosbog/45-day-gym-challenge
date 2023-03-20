@@ -52,7 +52,7 @@
                         <!-- <a href="#"><i class="fab fa-telegram-plane"></i>TELEGRAM</a> -->
                     </div>
                     <div class="header_tele_btn">
-                        <a href="#"><img src="@/assets/images/telegram-btn.png" alt=""></a>
+                        <a target="_blank" :href="user?.attributes.telegram_link ? user?.attributes.telegram_link.link  : user?.attributes.telegram_link_url"><img src="@/assets/images/telegram-btn.png" alt=""></a>
                     </div>
                 </div>
             </div>

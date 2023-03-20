@@ -74,6 +74,13 @@ import { userToken, userProfile } from '../stores/index';
 const tokenStore = userToken();
 const userStore = userProfile();
 
+let accessToken: any;
+if(localStorage.getItem("access_token")) {
+    accessToken = localStorage.getItem("access_token");
+} else {
+    accessToken = tokenStore.token;
+}
+
 import TheHeaderQuestionnaire from './TheHeaderQuestionnaire.vue'
 
 export default {
@@ -100,13 +107,6 @@ export default {
             let self = this;
 
             self.validation.loading = true;
-
-            var accessToken: any;
-            if(localStorage.getItem("access_token")) {
-                accessToken = localStorage.getItem("access_token");
-            } else {
-                accessToken = tokenStore.token;
-            }
 
             axios.post(`${process.env.API_URL}/user-profiles`, {
                 gender: userStore.profile.gender,

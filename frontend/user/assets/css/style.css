@@ -723,6 +723,11 @@ h4{
 	width: 100%;
 	height: 100%;
 }
+.rsup_item_single_img_pos img {
+	height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
 .rsup_item_single_upload p {
 	font-size: 13px;
 }
@@ -818,7 +823,7 @@ h4{
 .rsrbc_form_btn{
 	margin-top: 20px;
 }
-.rsrbc_form_btn input{
+.rsrbc_form_btn input, .rsrbc_form_btn button{
 	border-radius: 5px;
 	background-image: -ms-linear-gradient( -180deg, rgb(141,237,200) 0%, rgb(85,165,174) 53%, rgb(29,93,147) 100%) !important;
 	width: 100%;
@@ -1253,7 +1258,7 @@ h4{
 .gp_gender_vtwo_single h4{
 	text-align: center;
 }
-.rsrbc_form_btn input {
+.rsrbc_form_btn input, .rsrbc_form_btn button {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -1276,6 +1281,7 @@ h4{
 	-o-transition: 0.2s;
 	transition: 0.2s;
 	border-radius: 50px;
+	border: 0;
 }
 .questionair_next_sub_all{
 	display: flex;

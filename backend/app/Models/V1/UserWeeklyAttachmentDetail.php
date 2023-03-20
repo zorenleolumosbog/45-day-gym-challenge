@@ -21,6 +21,7 @@ class UserWeeklyAttachmentDetail extends Model
         'file_name',
         'mime_type',
         'path',
+        'url',
         'size',
         'description'
     ];

@@ -34,6 +34,7 @@ Route::middleware(['auth:api', 'user'])->prefix('v1')->group(function() {
     Route::apiResource('/user-profiles', UserProfileController::class);
     Route::apiResource('/user-weekly-attachments', UserWeeklyAttachmentController::class);
     Route::apiResource('/user-weekly-attachment-details', UserWeeklyAttachmentDetailController::class);
+    Route::get('/option-get-value-by-name', [OptionController::class, 'getValueByName']);
 });
 
 Route::middleware(['auth:api', 'admin'])->prefix('v1')->group(function() {
