@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Models\V1\Option;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -12,7 +14,18 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            $start_datetime = Option::where('name', 'start_datetime')->first()->value;
+            $end_datetime = Option::where('name', 'end_datetime')->first()->value;
+
+            $start_datetime = Carbon::parse($start_datetime);
+            $end_datetime = Carbon::parse($end_datetime);
+
+            if (Carbon::now()->between($start_datetime, $end_datetime)) {
+                Option::where('name', 'current_week')
+                ->increment('value', 1, ['updated_at' => Carbon::now()]);
+            }
+        })->weekly();
     }
 
     /**

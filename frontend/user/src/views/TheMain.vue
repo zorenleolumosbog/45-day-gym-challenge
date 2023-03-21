@@ -8,13 +8,6 @@ import axios from 'axios';
 import { userToken } from '../stores/index';
 const tokenStore = userToken();
 
-let accessToken: any;
-if(localStorage.getItem("access_token")) {
-    accessToken = localStorage.getItem("access_token");
-} else {
-    accessToken = tokenStore.token;
-}
-
 import TheMainHeader from './TheMainHeader.vue'
 import TheMainBody from './TheMainBody.vue'
 
@@ -33,10 +26,10 @@ export default {
     mounted() {
         let self = this;
 
-        if(accessToken) {
+        if(tokenStore.accessToken) {
             axios.get(`${process.env.API_URL}/login`, {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${tokenStore.accessToken}`,
                 },
             })
             .then(response => {
@@ -60,7 +53,7 @@ export default {
             
             axios.get(`${process.env.API_URL}/users/${userId}`, {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${tokenStore.accessToken}`,
                 },
             })
             .then(response => {

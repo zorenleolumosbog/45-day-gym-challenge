@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function () {
 	// Mobile Menu
 	// $('.menu_icon').click(function() {
 	// 	$('.home_page_main_left_site').slideToggle(300);

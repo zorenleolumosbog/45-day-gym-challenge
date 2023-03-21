@@ -74,13 +74,6 @@ import { userToken, userProfile } from '../stores/index';
 const tokenStore = userToken();
 const userStore = userProfile();
 
-let accessToken: any;
-if(localStorage.getItem("access_token")) {
-    accessToken = localStorage.getItem("access_token");
-} else {
-    accessToken = tokenStore.token;
-}
-
 import TheHeaderQuestionnaire from './TheHeaderQuestionnaire.vue'
 
 export default {
@@ -121,7 +114,7 @@ export default {
                 injuries_illnesses: userStore.profile.injuriesIllnesses
             }, {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${tokenStore.accessToken}`,
                 }
             })
             .then(function (response) {

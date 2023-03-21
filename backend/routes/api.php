@@ -20,9 +20,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::prefix('v1')->group(function() {
-//     Route::post('/register', [UserController::class, 'store']);
-// });
+Route::prefix('v1')->group(function() {
+    // Route::post('/register', [UserController::class, 'store']);
+    Route::get('/start-datetime', [OptionController::class, 'showStartDatetime']);
+    Route::get('/end-datetime', [OptionController::class, 'showEndDatetime']);
+});
 
 Route::middleware('auth:api')->prefix('v1')->group(function() {
     Route::get('/login', [UserController::class, 'login']);

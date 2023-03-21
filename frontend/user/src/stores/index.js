@@ -2,11 +2,11 @@ import { defineStore } from 'pinia'
 
 export const userToken = defineStore('token', {
   state: () => ({
-    token: null
+    accessToken: localStorage.getItem("access_token")
   }),
   actions: {
-    setToken(token) {
-      this.token = token
+    setAccessToken(accessToken) {
+      this.accessToken = accessToken
     }
   },
 })

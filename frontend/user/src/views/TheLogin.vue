@@ -10,32 +10,7 @@
                                     <h4>Count Down Until Next Group</h4>
                                 </div>
                                 <div class="rstremaining_treml_time register_page_countdown">
-                                    <div id="countdown">
-                                        <div class="countdown_single">
-                                            <div class="countdown" id="days">00</div>
-                                            <div class="rs_countdown_text_pos">
-                                                <p>Days</p>
-                                            </div>
-                                        </div>
-                                        <div class="countdown_single">
-                                            <div class="countdown" id="hours">00</div>
-                                            <div class="rs_countdown_text_pos">
-                                                <p>Hours</p>
-                                            </div>
-                                        </div>
-                                        <div class="countdown_single">
-                                            <div class="countdown" id="minutes">00</div>
-                                            <div class="rs_countdown_text_pos">
-                                                <p>Minutes</p>
-                                            </div>
-                                        </div>
-                                        <div class="countdown_single">
-                                            <div class="countdown" id="seconds">00</div>
-                                            <div class="rs_countdown_text_pos">
-                                                <p>Seconds</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <the-countdown-timer></the-countdown-timer>
                                 </div>
                             </div>
                             <div class="register_page_form_sec">
@@ -85,10 +60,17 @@
 </template>
 
 <script lang="ts">
+import TheCountdownTimer from './TheCountdownTimer.vue'
+
 import axios from 'axios';
 import { userToken, userProfile } from '../stores/index';
+const tokenStore = userToken();
+const userStore = userProfile();
 
 export default {
+    components: { 
+        TheCountdownTimer
+    },
     data() {
         return {
             input: {
@@ -134,15 +116,12 @@ export default {
                 },
             })
             .then(response => {
+                tokenStore.setAccessToken(data.data.access_token);
+                userStore.setUser(response.data.data);
+
                 if(self.input.rememberMe) {
                     localStorage.setItem("user_id", response.data.data.id);
                     localStorage.setItem("access_token", data.data.access_token);
-                } else {
-                    const tokenStore = userToken();
-                    tokenStore.setToken(data.data);
-
-                    const userStore = userProfile();
-                    userStore.setUser(response.data.data);
                 }
 
                 if(response.data.data.profile) {

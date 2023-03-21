@@ -48,6 +48,20 @@ class OptionController extends Controller
         return new OptionResource($option);
     }
 
+    public function showStartDatetime()
+    {
+        $option = Option::where('name', 'start_datetime')->first();
+
+        return new OptionResource($option);
+    }
+
+    public function showEndDatetime()
+    {
+        $option = Option::where('name', 'end_datetime')->first();
+
+        return new OptionResource($option);
+    }
+
     public function getValueByName(Request $request)
     {
        $request->validate([
