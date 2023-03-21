@@ -4,6 +4,7 @@ namespace App\Http\Requests\V1;
 
 use App\Models\V1\UserWeeklyAttachment;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UserWeeklyAttachmentRequest extends FormRequest
@@ -26,7 +27,15 @@ class UserWeeklyAttachmentRequest extends FormRequest
         return [
             'weight' => 'sometimes|required|integer',
             'description' => 'sometimes|nullable|max:255',
-            'week_number' => 'sometimes|required|integer'
+            'week_number' => [
+                    'sometimes',
+                    'required',
+                    'integer',
+                    Rule::prohibitedIf(UserWeeklyAttachment::where('user_id', Auth::user()->id)
+                    ->where('week_number', request()->week_number)
+                    ->whereNull('deleted_at')
+                    ->exists())
+            ]
         ];
     }
 }
