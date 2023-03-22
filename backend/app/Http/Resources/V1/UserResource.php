@@ -29,8 +29,7 @@ class UserResource extends JsonResource
             'attributes' => [
                 'name' => $this->name,
                 'desired_weight_goal_percentage' => (string) $percentage,
-                'is_admin' => $this->is_admin,
-                'is_admin' => $this->is_admin,
+                'is_admin' => (string) $this->is_admin,
                 'logged_in_at' => $this->logged_in_at,
                 'telegram_link_url' => $this->telegram_link_url,
                 'profile' => $this->profile()->first(),

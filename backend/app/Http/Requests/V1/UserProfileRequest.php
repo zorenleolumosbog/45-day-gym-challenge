@@ -25,7 +25,7 @@ class UserProfileRequest extends FormRequest
             'gender' => 'sometimes|required||in:male,female',
             'age' => 'sometimes|required|integer',
             'height' => 'sometimes|required|max:255',
-            'current_weight' => 'sometimes|required|integer',
+            'current_weight' => 'sometimes|required|integer|gt:desired_weight_goal',
             'desired_weight_goal' => 'sometimes|required|integer',
             'gym_experience' => 'sometimes|required|max:255',
             'hours_of_sleep_at_night' => 'sometimes|required||max:255',

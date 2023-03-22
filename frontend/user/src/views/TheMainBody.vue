@@ -51,12 +51,12 @@
                                             </div>
                                             <!-- 0deg is 0% -->
                                             <!-- 190deg is 100% -->
-                                            <div class="wrapper_meter" v-bind:style="{transform: 'rotate(' + getDesiredWeightGoalPercentage(190) + 'deg)'}">
+                                            <div class="wrapper_meter" v-bind:style="{transform: 'rotate(' + getDesiredWeightGoalPercentage(235) + 'deg)'}">
                                                 <img src="@/assets/images/meter-bar.png" alt="">
                                             </div>
                                         </div>
                                     </div>
-                                    <div v-if="getDesiredWeightGoalPercentage(100) >= 95" class="left_site_meter_content">
+                                    <div v-if="getDesiredWeightGoalPercentage(100) == 100" class="left_site_meter_content">
                                         <p><i class="far fa-check-circle"></i>Good Work, You are on track to weight loss goal.</p>
                                     </div>
                                 </div>
@@ -487,8 +487,14 @@ export default {
         getDesiredWeightGoalPercentage(max: number) {
             let desiredWeightGoalPercentage = 0;
             if(this.currentWeeklyAttachment) {
+                if(this.user.attributes.profile.desired_weight_goal > this.currentWeeklyAttachment.attributes.weight) {
+                    return max;
+                }
                 desiredWeightGoalPercentage = parseFloat(this.currentWeeklyAttachment.attributes.desired_weight_goal_percentage);
             } else {
+                if(this.user.attributes.profile.desired_weight_goal > this.user.attributes.weekly_attachments[0].weight) {
+                    return max;
+                }
                 desiredWeightGoalPercentage = parseFloat(this.user.attributes.desired_weight_goal_percentage);
             }
 
