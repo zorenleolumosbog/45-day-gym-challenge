@@ -467,7 +467,7 @@
                                 <tr>
                                   <td class="attributes_item">
                                     <span class="f-fallback">
-              <strong>Login Page:</strong> <a href="http://join.epictransformationchallenge.com/login">http://join.epictransformationchallenge.com/login</a>
+              <strong>Login Page:</strong> <a href="https://join.epictransformationchallenge.com/login">https://join.epictransformationchallenge.com/login</a>
             </span>
                                   </td>
                                 </tr>

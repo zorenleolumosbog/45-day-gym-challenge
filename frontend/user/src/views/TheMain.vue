@@ -58,9 +58,6 @@ export default {
             })
             .then(response => {
                 self.datum.user = response.data.data;
-            })
-            .catch(error => {
-                alert(error.response.data.message)
             });
         }
     }

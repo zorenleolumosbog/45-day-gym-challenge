@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     {
         User::insert([
             [
-                'name' => 'start_datetime',
+                'name' => 'Admin',
                 'email' => 'info@epictransformationchallenge.com',
                 'password' => Hash::make(']Eb5UOeRLY6bg'),
                 'email_verified_at' => Carbon::now(),
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'end_datetime',
+                'name' => 'Zoren',
                 'email' => 'zorenleolumosbog@gmail.com',
                 'password' => Hash::make(']Eb5UOeRLY6bg'),
                 'email_verified_at' => Carbon::now(),
