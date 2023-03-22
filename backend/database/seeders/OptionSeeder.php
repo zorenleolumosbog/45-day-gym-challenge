@@ -17,7 +17,7 @@ class OptionSeeder extends Seeder
         Option::insert([
             [
                 'name' => 'start_datetime',
-                'created_at' => Carbon::now(),
+                'value' => Carbon::now(),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
