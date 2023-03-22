@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\UserRequest;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\TokenRepository;
@@ -87,6 +88,10 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $user = User::with('profile')->find($request->user()->id);
+
+        $user->update([
+            'logged_in_at' => Carbon::now()
+        ]);
         
         return response()->json([
             'data' => $user

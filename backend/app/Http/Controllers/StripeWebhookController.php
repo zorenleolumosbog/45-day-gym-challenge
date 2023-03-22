@@ -10,6 +10,7 @@ use Stripe\Stripe;
 use Stripe\Event;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Registration;
+use Carbon\Carbon;
 
 class StripeWebhookController extends Controller
 {
@@ -56,6 +57,7 @@ class StripeWebhookController extends Controller
                     User::create([
                         'name' => $customer->name,
                         'email' => $customer->email,
+                        'email_verified_at' => Carbon::now(),
                         'password' => Hash::make($password)
                     ]);
 
