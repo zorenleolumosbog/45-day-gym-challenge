@@ -30,12 +30,11 @@
                             <div class="home_left_site">
                                 <div class="left_site_meter">
                                     <div class="left_site_meter_top">
-                                        <h4>Weigh Loss Goal</h4>
-                                        <p>{{ user?.attributes.weekly_attachments[0]?.weight 
-                                                ? user?.attributes.weekly_attachments[0]?.weight 
-                                                : currentWeeklyAttachment 
-                                                    ? currentWeeklyAttachment?.attributes.weight
-                                                    : 0 }}lbs <span>/ {{ user?.attributes.profile.desired_weight_goal }}lbs</span></p>
+                                        <h4>Weight Loss Goal</h4>
+                                        <p>{{ currentWeeklyAttachment 
+                                                ? currentWeeklyAttachment?.attributes.weight
+                                                : user?.attributes.weekly_attachments[0]?.weight 
+                                                ? user?.attributes.weekly_attachments[0]?.weight : user?.attributes.profile.current_weight }}lbs <span>/ {{ user?.attributes.profile.desired_weight_goal }}lbs</span></p>
                                     </div>
                                     <div class="left_site_meter_progress">
                                         <!-- <div class="left_site_meter_progress_img">
@@ -46,20 +45,19 @@
                                                 <div class="circle-out">
                                                     <!-- 180deg is 0% -->
                                                     <!-- 360deg is 100% -->
-                                                    <div id="bar" class="circle" style="transform: rotate(225deg);"></div>
+                                                    <div id="bar" class="circle" v-bind:style="{transform: 'rotate(' + getDesiredWeightGoalPercentage(360) + 'deg)'}"></div>
                                                     <span class="text">Hello</span>
                                                 </div>
                                             </div>
                                             <!-- 0deg is 0% -->
-                                            <!-- 225deg is 100% -->
-                                            <div class="wrapper_meter" style="transform: rotate(45deg);">
+                                            <!-- 190deg is 100% -->
+                                            <div class="wrapper_meter" v-bind:style="{transform: 'rotate(' + getDesiredWeightGoalPercentage(190) + 'deg)'}">
                                                 <img src="@/assets/images/meter-bar.png" alt="">
                                             </div>
                                         </div>
-                                        
                                     </div>
-                                    <div class="left_site_meter_content">
-                                        <p><i class="far fa-check-circle"></i>Good Work, You are on track to to lose 30kb</p>
+                                    <div v-if="getDesiredWeightGoalPercentage(100) >= 95" class="left_site_meter_content">
+                                        <p><i class="far fa-check-circle"></i>Good Work, You are on track to weight loss goal.</p>
                                     </div>
                                 </div>
 
@@ -254,10 +252,10 @@
                                                     </button>
                                                 </div>
                                                 <div class="rsrbc_form_box">
-                                                    <label for="rsrtc1">Enter Current Weight <span>(Pounds/lb)</span></label>
+                                                    <label for="rsrtc1">Enter Current Weight <span>(Pounds/lbs)</span></label>
                                                     <div class="input_rtext">
                                                         <input v-model="input.weight" type="number" id="rsrtc1">
-                                                        <p>lb</p>
+                                                        <p>lbs</p>
                                                     </div>
                                                 </div>
                                                 <div class="rsrbc_form_box">
@@ -327,7 +325,7 @@
                                     <div class="rs_week_bottom_contents">
                                         <h4>Week {{ currentWeeklyAttachment?.attributes.week_number }}</h4>
                                         <div class="rswbc_parag">
-                                            <p>Weight: {{ currentWeeklyAttachment?.attributes.weight }}LB</p>
+                                            <p>Weight: {{ currentWeeklyAttachment?.attributes.weight }}lbs</p>
                                             <p>{{ currentWeeklyAttachment?.attributes.description }}</p>
                                             <a href="#">More...</a>
                                         </div>
@@ -369,7 +367,7 @@
                                     <div class="rs_week_bottom_contents">
                                         <h4>Week {{ weekly_attachment.week_number }}</h4>
                                         <div class="rswbc_parag">
-                                            <p>Weight: {{ weekly_attachment.weight }}LB</p>
+                                            <p>Weight: {{ weekly_attachment.weight }}lbs</p>
                                             <p>{{ weekly_attachment.description }}</p>
                                             <a href="#">More...</a>
                                         </div>
@@ -486,6 +484,18 @@ export default {
                 self.currentWeek = response.data.data;
             });
         },
+        getDesiredWeightGoalPercentage(max: number) {
+            let desiredWeightGoalPercentage = 0;
+            if(this.currentWeeklyAttachment) {
+                desiredWeightGoalPercentage = parseFloat(this.currentWeeklyAttachment.attributes.desired_weight_goal_percentage);
+            } else {
+                desiredWeightGoalPercentage = parseFloat(this.user.attributes.desired_weight_goal_percentage);
+            }
+
+            let product = max * desiredWeightGoalPercentage;
+
+            return product / 100;
+        },
         getToLocaleDateNowString() {
             localeStore.setToLocaleDateNowString();
 
@@ -566,15 +576,8 @@ export default {
                         self.validation.success.message = 'Successfully added!'
 
                         self.currentWeeklyAttachment = weeklyAttachment;
-                        
-                        self.input.weight = '';
-                        self.input.description = '';
-                        self.input.files.frontPhoto.src = '';
-                        self.input.files.frontPhoto.file = null;
-                        self.input.files.sidePhoto.src = '';
-                        self.input.files.sidePhoto.file = null;
-                        self.input.files.backPhoto.src = '';
-                        self.input.files.backPhoto.file = null;
+
+                        document.getElementById('app')?.scrollIntoView({ behavior: 'smooth' });
                     }
                 })
                 .catch(function (error) {

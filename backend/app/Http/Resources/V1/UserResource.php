@@ -19,6 +19,8 @@ class UserResource extends JsonResource
         $percentage = 0;
         if($this->profile()->first() && $weekly_attachment) {
             $percentage = (floatval($this->profile()->first()->desired_weight_goal) / floatval($weekly_attachment->weight)) * 100;
+        } else {
+            $percentage = (floatval($this->profile()->first()->desired_weight_goal) / floatval($this->profile()->first()->current_weight)) * 100;
         }
 
         return [

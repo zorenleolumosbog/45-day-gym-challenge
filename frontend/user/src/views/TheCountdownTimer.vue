@@ -87,6 +87,13 @@ export default {
                 if (difference < 0) {
                     clearInterval(countdownInterval);
                     this.$emit('displayPosting', false);
+
+                    return this.countdown = {
+                        days: 0,
+                        hours: 0,
+                        minutes: 0,
+                        seconds: 0
+                    }
                 }
             }, 1000);
         }
