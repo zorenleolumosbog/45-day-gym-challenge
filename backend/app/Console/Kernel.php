@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
                 Option::where('name', 'current_week')
                 ->increment('value', 1, ['updated_at' => Carbon::now()]);
             }
-        })->weekly();
+        });
     }
 
     /**

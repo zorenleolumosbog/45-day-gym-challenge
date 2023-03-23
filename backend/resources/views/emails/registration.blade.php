@@ -444,9 +444,6 @@
           <table class="email-content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
             <tr>
               <td class="email-masthead">
-                <a href="https://join.epictransformationchallenge.com/" class="f-fallback email-masthead_name">
-                Epic Transformation Challenge
-              </a>
               </td>
             </tr>
             <!-- Email Body -->
@@ -500,11 +497,6 @@
                 <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
                   <tr>
                     <td class="content-cell" align="center">
-                      <p class="f-fallback sub align-center">
-                        [Company Name, LLC]
-                        <br>1234 Street Rd.
-                        <br>Suite 1234
-                      </p>
                     </td>
                   </tr>
                 </table>

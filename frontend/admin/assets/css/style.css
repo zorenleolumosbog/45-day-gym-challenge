@@ -157,7 +157,7 @@ h4{
 	-webkit-box-pack: end;
 	    -ms-flex-pack: end;
 	        justify-content: flex-end;
-	padding: 7px 0px;
+	padding: 24px 0px;
 	background: url(../images/header-down.png) no-repeat scroll 100% 100% / cover;
 }
 .header_telegram p {
@@ -303,7 +303,7 @@ h4{
 }
 /*################### Start Left Site ###################*/
 .home_left_site{
-	width: 346px;
+	/* width: 346px; */
 	background: #FFF;
 }
 .left_site_bottom_conts {
@@ -363,7 +363,7 @@ h4{
 	color: #8FD1D7;
 }
 .left_site_menu{
-	margin-top: 30px;
+	/* margin-top: 30px; */
 	border-radius: 4px 8px 0px 0px;
 	overflow: hidden;
 }
@@ -598,7 +598,7 @@ h4{
 
 /*################### Start Right Site ###################*/
 .home_right_site{
-	width: 750px;
+	width: 77%;
 /*	background: #ddd;*/
 }
 .right_site_header {

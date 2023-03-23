@@ -24,7 +24,7 @@ class UserWeeklyAttachmentDetailRequest extends FormRequest
         return [
             'user_weekly_attachment_id' => 'sometimes|required|exists:user_weekly_attachments,id',
             'description' => 'sometimes|nullable|max:255',
-            'file_weekly_photo' => 'sometimes|required|image|mimes:jpg,jpeg,png|max:15360', // limit 15mb
+            'file_weekly_photo' => 'sometimes|required|image|mimes:jpg,jpeg,png|max:25600', // limit 25mb
         ];
     }
 }
