@@ -5,8 +5,8 @@
 
 <script lang="ts">
 import axios from 'axios';
-import { userToken } from '../stores/index';
-const tokenStore = userToken();
+import { userAuth } from '../stores/index';
+const authStore = userAuth();
 
 import TheMainHeader from './TheMainHeader.vue'
 import TheMainBody from './TheMainBody.vue'
@@ -26,36 +26,21 @@ export default {
     mounted() {
         let self = this;
 
-        if(tokenStore.accessToken) {
-            axios.get(`${process.env.API_URL}/login`, {
-                headers: {
-                    Authorization: `Bearer ${tokenStore.accessToken}`,
-                },
-            })
-            .then(response => {
-                const userId = response.data.data.id;
-                self.getUser(userId);
-            })
-            .catch(error => {
-                self.$router.push({ name: 'login' });
-            });
-        } else {
-            this.$router.push({ name: 'login' });
-        }
-    },
-    methods: {
-        getUser(userId: any) {
-            let self = this;
-            
-            axios.get(`${process.env.API_URL}/users/${userId}`, {
-                headers: {
-                    Authorization: `Bearer ${tokenStore.accessToken}`,
-                },
-            })
-            .then(response => {
-                self.datum.user = response.data.data;
-            });
-        }
+        axios.get(`${process.env.API_URL}/users/${authStore.userId}`, {
+            headers: {
+                Authorization: `Bearer ${authStore.accessToken}`,
+            },
+        })
+        .then(response => {
+            if(!response.data.data.attributes.profile) {
+                self.$router.push({ name: 'gender' });
+            }
+
+            self.datum.user = response.data.data;
+        })
+        .catch(error => {
+            self.$router.push({ name: 'login' });
+        });
     }
 }
 </script>

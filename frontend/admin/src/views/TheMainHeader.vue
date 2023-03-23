@@ -104,7 +104,7 @@
                             Loading...
                         </button>
                     </div>
-                    <div class="register_page_form_btn">
+                    <div class="register_page_form_btn cancel">
                         <input type="submit" data-dismiss="modal" value="Cancel">
                     </div>
                 </div>
@@ -118,8 +118,8 @@
 <script lang="ts">
 import $ from 'jquery'
 import axios from 'axios';
-import { userToken } from '../stores/index';
-const tokenStore = userToken();
+import { userAuth } from '../stores/index';
+const authStore = userAuth();
 
 export default {
     components: {
@@ -158,7 +158,7 @@ export default {
             
             axios.get(`${process.env.API_URL}/logout`, {
                 headers: {
-                    Authorization: `Bearer ${tokenStore.accessToken}`,
+                    Authorization: `Bearer ${authStore.accessToken}`,
                 },
             })
             .then(response => {
@@ -183,7 +183,7 @@ export default {
                 new_password_confirmation: self.input.newPasswordConfirmation,
             }, {
                 headers: {
-                    Authorization: `Bearer ${tokenStore.accessToken}`,
+                    Authorization: `Bearer ${authStore.accessToken}`,
                 }
             })
             .then(function (response) {

@@ -25,38 +25,7 @@
                         <circle cx="497" cy="107" r="7" />
                     </content-loader>
                     <div v-if="user" class="home_page_section_main">
-                        <!--####################### Start Left Site #######################-->
-                        <div class="home_page_main_left_site">
-                            <div class="home_left_site">
-                                <div class="left_site_bottom_conts">
-                                    <div class="left_site_menu">
-                                        <ul>
-                                            <li><a href="#" class="lsm_active">
-                                                <span class="lsmmw">
-                                                    <img src="@/assets/images/home.png" alt="">
-                                                    <span>Home {{ user?.attributes.name }}</span>
-                                                </span>
-                                            </a></li>
-                                            <li><a href="#">
-                                                <span class="lsmmw">
-                                                    <img src="@/assets/images/weekly.png" alt="">
-                                                    <span>Weekly Photos</span>
-                                                </span>
-                                            </a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="mt-5 left_site_social_link_and_followus">
-                                        <div class="left_site_follow_us_main">
-                                            <div class="left_site_copyright">
-                                                <p>@epictranformationchallenge 2023. All rights reserved</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--####################### End Left Site #######################-->
-
+                        <the-main-sidebar></the-main-sidebar>
                         <!--####################### Start Right Site #######################-->
                         <div class="home_right_site">
                             <div class="right_site_header">
@@ -119,16 +88,18 @@
 </template>
 
 <script lang="ts">
+import TheMainSidebar from './TheMainSidebar.vue'
  import { ContentLoader } from "vue-content-loader"
 
 import 'vue3-carousel/dist/carousel.css'
 import axios from 'axios';
-import { userToken, userLocale } from '../stores/index';
-const tokenStore = userToken();
+import { userAuth, userLocale } from '../stores/index';
+const authStore = userAuth();
 const localeStore = userLocale();
 
 export default {
     components: {
+        TheMainSidebar,
         ContentLoader
     },
     data() {

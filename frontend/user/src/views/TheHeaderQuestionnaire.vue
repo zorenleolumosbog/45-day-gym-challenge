@@ -14,35 +14,30 @@
 
 <script lang="ts">
 import axios from 'axios';
+import { userAuth } from '../stores/index';
+const authStore = userAuth();
 
 export default {
-    created() {
-        const accessToken = localStorage.getItem("access_token"); 
-
-        if(accessToken) {
-            let self = this;
+    mounted() {
+        let self = this;
             
-            axios.get(`${process.env.API_URL}/login`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            })
-            .then(response => {
-                if(response.data.data.profile) {
-                    self.$router.push({ name: 'home' });
-                } else {
-                    if(self.$route.name === 'gender') {
-                        self.$router.push({name: 'gender'});
-                    }
+        axios.get(`${process.env.API_URL}/login`, {
+            headers: {
+                Authorization: `Bearer ${authStore.accessToken}`,
+            },
+        })
+        .then(response => {
+            if(response.data.data.profile) {
+                self.$router.push({ name: 'home' });
+            } else {
+                if(self.$route.name === 'gender') {
+                    self.$router.push({name: 'gender'});
                 }
-            })
-            .catch(error => {
-                self.$router.push({ name: 'login' });
-            });
-        } else {
-            this.$router.push({ name: 'login' });
-        }
-
+            }
+        })
+        .catch(error => {
+            self.$router.push({ name: 'login' });
+        });
     }
 }
 </script>

@@ -30,8 +30,8 @@
 <script lang="ts">
 
 import axios from 'axios';
-import { userToken } from '../stores/index';
-const tokenStore = userToken();
+import { userAuth } from '../stores/index';
+const authStore = userAuth();
 
 export default {
     data() {

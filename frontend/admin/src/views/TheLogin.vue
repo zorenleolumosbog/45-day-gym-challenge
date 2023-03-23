@@ -53,8 +53,8 @@
 
 <script lang="ts">
 import axios from 'axios';
-import { userToken } from '../stores/index';
-const tokenStore = userToken();
+import { userAuth } from '../stores/index';
+const authStore = userAuth();
 
 export default {
     data() {
@@ -102,11 +102,12 @@ export default {
                 },
             })
             .then(response => {
-                tokenStore.setAccessToken(data.data.access_token);
+                authStore.setUserId(response.data.data.id);
+                authStore.setAccessToken(data.data.access_token);
 
                 if(self.input.rememberMe) {
-                    localStorage.setItem("user_id", response.data.data.id);
-                    localStorage.setItem("access_token", data.data.access_token);
+                    localStorage.setItem("userId", response.data.data.id);
+                    localStorage.setItem("accessToken", data.data.access_token);
                 }
 
                 if(response.data.data.is_admin) {

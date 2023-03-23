@@ -69,9 +69,9 @@
 
 <script lang="ts">
 import axios from 'axios';
-import { userToken, userProfile } from '../stores/index';
+import { userAuth, userProfile } from '../stores/index';
 
-const tokenStore = userToken();
+const authStore = userAuth();
 const userStore = userProfile();
 
 import TheHeaderQuestionnaire from './TheHeaderQuestionnaire.vue'
@@ -114,7 +114,7 @@ export default {
                 injuries_illnesses: userStore.profile.injuriesIllnesses
             }, {
                 headers: {
-                    Authorization: `Bearer ${tokenStore.accessToken}`,
+                    Authorization: `Bearer ${authStore.accessToken}`,
                 }
             })
             .then(function (response) {
