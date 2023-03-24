@@ -34,7 +34,8 @@
                                     <img src="@/assets/images/profile.png" alt=""><i class="fas fa-angle-down"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a @click="changePassword" data-toggle="modal" data-target="#changePasswordModal" class="dropdown-item text-left" href="javascript:void(0)">Change Pass</a></li>
+                                        <li><a @click="toggleDropdown(); setProfile();" data-toggle="modal" data-target="#profileModal" class="dropdown-item text-left" href="javascript:void(0)">Profile</a></li>
+                                        <li><a @click="toggleDropdown" data-toggle="modal" data-target="#changePasswordModal" class="dropdown-item text-left" href="javascript:void(0)">Change Pass</a></li>
                                         <li>
                                             <a @click="logout" class="d-flex dropdown-item text-left" href="javascript:void(0)" style="color: #e82222;">
                                                 Log Out
@@ -67,58 +68,115 @@
         <teleport to="body">
             <!-- Modal -->
             <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLongTitle" >Change Password</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="h1">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="register_page_form mx-4">
-                        <div v-if="validation.success.message" class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>{{ validation.success.message }}</strong>
-                            <button @click="validation.success.message = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div v-if="validation.errors" class="mt-4 mb-4 alert alert-danger alert-dismissible fade show" role="alert">
-                            <p v-for="(error, key) in validation.errors" :key="key">
-                                <strong>{{ error[0] }}</strong>
-                            </p>
-                            <button @click="validation.errors = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="rp_form_single">
-                            <label for="rpfs2">Current Password</label>
-                            <input type="password" v-model="input.currentPassword" placeholder="Current Password">
-                        </div>
-                        <div class="rp_form_single">
-                            <label for="rpfs3">New Password</label>
-                            <input type="password" v-model="input.newPassword" placeholder="New Password">
-                        </div>
-                        <div class="rp_form_single">
-                            <label for="rpfs3">Confirm New Password</label>
-                            <input type="password" v-model="input.newPasswordConfirmation" placeholder="Confirm New Password">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="register_page_form_btn">
-                        <input :disabled="input.currentPassword === '' || input.newPassword === ''" v-if="!validation.loading" type="submit" @click="saveNewPassword" value="Save">
-                        <button v-if="validation.loading" type="submit" disabled>
-                            <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
-                            Loading...
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLongTitle" >Change Password</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="h1">&times;</span>
                         </button>
                     </div>
-                    <div class="register_page_form_btn cancel">
-                        <input type="submit" data-dismiss="modal" value="Cancel">
+                    <div class="modal-body">
+                        <div class="register_page_form mx-4">
+                            <div v-if="validation.success.message" class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{ validation.success.message }}</strong>
+                                <button @click="validation.success.message = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div v-if="validation.errors" class="mt-4 mb-4 alert alert-danger alert-dismissible fade show" role="alert">
+                                <p v-for="(error, key) in validation.errors" :key="key">
+                                    <strong>{{ error[0] }}</strong>
+                                </p>
+                                <button @click="validation.errors = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="rp_form_single">
+                                <label for="rpfs2">Current Password</label>
+                                <input type="password" v-model="input.currentPassword" placeholder="Current Password">
+                            </div>
+                            <div class="rp_form_single">
+                                <label for="rpfs3">New Password</label>
+                                <input type="password" v-model="input.newPassword" placeholder="New Password">
+                            </div>
+                            <div class="rp_form_single">
+                                <label for="rpfs3">Confirm New Password</label>
+                                <input type="password" v-model="input.newPasswordConfirmation" placeholder="Confirm New Password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="register_page_form_btn">
+                            <input :disabled="input.currentPassword === '' || input.newPassword === ''" v-if="!validation.loading" type="submit" @click="saveNewPassword" value="Update">
+                            <button v-if="validation.loading" type="submit" disabled>
+                                <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </button>
+                        </div>
+                        <div class="register_page_form_btn cancel">
+                            <input type="submit" data-dismiss="modal" value="Cancel">
+                        </div>
+                    </div>
                     </div>
                 </div>
-                </div>
             </div>
+        </teleport>
+        <teleport to="body">
+            <!-- Modal -->
+            <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLongTitle" >Profile</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="h1">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="register_page_form mx-4">
+                                <div v-if="validation.success.message" class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>{{ validation.success.message }}</strong>
+                                    <button @click="validation.success.message = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div v-if="validation.errors" class="mt-4 mb-4 alert alert-danger alert-dismissible fade show" role="alert">
+                                    <p v-for="(error, key) in validation.errors" :key="key">
+                                        <strong>{{ error[0] }}</strong>
+                                    </p>
+                                    <button @click="validation.errors = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="rp_form_single">
+                                    <label for="rpfs2">Current Password</label>
+                                    <input type="password" v-model="input.currentPassword" placeholder="Current Password">
+                                </div>
+                                <div class="rp_form_single">
+                                    <label for="rpfs3">New Password</label>
+                                    <input type="password" v-model="input.newPassword" placeholder="New Password">
+                                </div>
+                                <div class="rp_form_single">
+                                    <label for="rpfs3">Confirm New Password</label>
+                                    <input type="password" v-model="input.newPasswordConfirmation" placeholder="Confirm New Password">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="register_page_form_btn">
+                                <input :disabled="input.currentPassword === '' || input.newPassword === ''" v-if="!validation.loading" type="submit" @click="updateProfile" value="Update">
+                                <button v-if="validation.loading" type="submit" disabled>
+                                    <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
+                                    Loading...
+                                </button>
+                            </div>
+                            <div class="register_page_form_btn cancel">
+                                <input type="submit" data-dismiss="modal" value="Cancel">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </teleport>
     </header>
@@ -138,6 +196,18 @@ export default {
                 newPassword: '',
                 newPasswordConfirmation: '',
             },
+            inputProfile: {
+                gender: '',
+                age: '',
+                height: '',
+                currentWeight: '',
+                desiredWeightGoal: '',
+                gymExperience: '',
+                hoursOfSleepAtNight: '',
+                stressLevelOutOf10: '',
+                medicationsSupplements: '',
+                injuriesIllnesses: ''
+            },
             validation: {
                 logout: false,
                 loading: false,
@@ -150,15 +220,6 @@ export default {
     },
     props: ['user'],
     methods:{
-        toggleMenuIcon() {
-            $('.home_page_main_left_site').slideToggle(300)
-		    $('.header_mobile_menu').toggleClass('menu_icon_fixed')
-            $('#nav-icon1,#nav-icon2,#nav-icon3,#nav-icon4').toggleClass('open')
-        },
-        toggleDropdown() {
-		    $('.dropdown-toggle').toggleClass('show')
-            $('.dropdown-menu').toggleClass('show')
-        },
         logout() {
             this.validation.logout = true;
             let self = this;
@@ -175,10 +236,6 @@ export default {
             .catch(error => {
                 alert(error.response.data.message)
             });
-        },
-        changePassword() {
-            $('.dropdown-toggle').removeClass('show')
-            $('.dropdown-menu').removeClass('show')
         },
         saveNewPassword() {
 		    let self = this;
@@ -207,6 +264,59 @@ export default {
                 self.validation.success.message = null;
                 self.validation.errors = error.response.data.errors;
             });
+        },
+        setProfile() {
+            this.inputProfile.gender = this.user?.attributes.profile.gender;
+            this.inputProfile.age = this.user?.attributes.profile.age;
+            this.inputProfile.height = this.user?.attributes.profile.height;
+            this.inputProfile.currentWeight = this.user?.attributes.profile.current_weight;
+            this.inputProfile.desiredWeightGoal = this.user?.attributes.profile.desired_weight_goal;
+            this.inputProfile.gymExperience = this.user?.attributes.profile.gym_experience;
+            this.inputProfile.hoursOfSleepAtNight = this.user?.attributes.profile.hours_of_sleep_at_night;
+            this.inputProfile.stressLevelOutOf10 = this.user?.attributes.profile.stress_level_out_of_10;
+            this.inputProfile.medicationsSupplements = this.user?.attributes.profile.medications_supplements;
+            this.inputProfile.injuriesIllnesses = this.user?.attributes.profile.injuries_illnesses
+        },
+        updateProfile() {
+            let self = this;
+
+            self.validation.loading = true;
+
+            axios.put(`${process.env.API_URL}/user-profiles/${self.user.id}`, {
+                gender: self.inputProfile.gender,
+                age: self.inputProfile.age,
+                height: self.inputProfile.height,
+                current_weight: self.inputProfile.currentWeight,
+                desired_weight_goal: self.inputProfile.desiredWeightGoal,
+                gym_experience: self.inputProfile.gymExperience,
+                hours_of_sleep_at_night: self.inputProfile.hoursOfSleepAtNight,
+                stress_level_out_of_10: self.inputProfile.stressLevelOutOf10,
+                medications_supplements: self.inputProfile.medicationsSupplements,
+                injuries_illnesses: self.inputProfile.injuriesIllnesses
+            }, {
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                }
+            })
+            .then(function (response) {
+                self.validation.loading = false;
+                self.validation.errors = null;
+                self.validation.success.message = 'Profile changed successfully!.'
+            })
+            .catch(function (error) {
+                self.validation.loading = false;
+                self.validation.success.message = null;
+                self.validation.errors = error.response.data.errors;
+            });
+        },
+        toggleMenuIcon() {
+            $('.home_page_main_left_site').slideToggle(300)
+		    $('.header_mobile_menu').toggleClass('menu_icon_fixed')
+            $('#nav-icon1,#nav-icon2,#nav-icon3,#nav-icon4').toggleClass('open')
+        },
+        toggleDropdown() {
+		    $('.dropdown-toggle').toggleClass('show')
+            $('.dropdown-menu').toggleClass('show')
         }
     }
 }

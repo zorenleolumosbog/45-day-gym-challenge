@@ -138,11 +138,6 @@
 <script lang="ts">
 
 export default {
-    data() {
-        return {
-
-        }
-    },
     props: ['user', 'currentWeeklyAttachment'],
     methods: {
         getDesiredWeightGoalPercentage(min: number, max: number) {

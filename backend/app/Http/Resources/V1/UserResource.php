@@ -19,6 +19,8 @@ class UserResource extends JsonResource
         $percentage = 0;
         if($this->profile()->first() && $weekly_attachment) {
             $percentage = (floatval($this->profile()->first()->desired_weight_goal) / floatval($weekly_attachment->weight)) * 100;
+        } elseif($this->profile()->first()) {
+            $percentage = (floatval($this->profile()->first()->desired_weight_goal) / floatval($this->profile()->first()->current_weight)) * 100;
         }
 
         return [
@@ -26,6 +28,7 @@ class UserResource extends JsonResource
             'type' => 'users',
             'attributes' => [
                 'name' => $this->name,
+                'email' => $this->email,
                 'desired_weight_goal_percentage' => (string) $percentage,
                 'is_admin' => (string) $this->is_admin,
                 'logged_in_at' => $this->logged_in_at,
