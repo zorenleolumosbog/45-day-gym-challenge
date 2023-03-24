@@ -8,13 +8,33 @@
         <!-- Start Time Remaining Section -->
         <div class="right_site_time_remaining_main">
             <div class="right_site_remaining_bottom_contents">
-                <div class="rsrbc_form_btn add-btn w-25 mb-5">
-                    <input @click="resetRecord" type="submit" value="ADD" data-toggle="modal" data-target="#addModal">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6 rp_form_single mb-4 d-flex align-items-center">
+                                <label for="rpfs3" class="mr-3 mt-3 w-50">Date From</label>
+                                <input type="date" v-model="inputFilter.dateFrom">
+                            </div>
+                            <div class="col-md-6 rp_form_single mb-4 d-flex align-items-center">
+                                <label for="rpfs3" class="mr-3 mt-3 w-50">Date To</label>
+                                <input type="date" v-model="inputFilter.dateTo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="rp_form_single mb-4 d-flex align-items-center">
+                            <label for="rpfs3" class="mr-3 mt-3">Search</label>
+                            <input type="text" placeholder="Search" v-model="inputFilter.search">
+                            <div style="margin-left:-50px">
+                                <img class="pe-auto" src="@/assets/images/telegram.png" @click="search">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div v-if="validation.showTableLoader" style="margin-top: -22px; margin-left: -22px">
                     <table-loader></table-loader>
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive mt-4">
                     <table v-if='!validation.showTableLoader && records' class="table">
                         <thead>
                             <tr>
@@ -25,8 +45,8 @@
                                 <th scope="col">Last Login</th>
                                 <th scope="col">Date Registered</th>
                                 <th scope="col">View</th>
-                                <th scope="col">Edit</th>
-                                <th scope="col">Delete</th>
+                                <th scope="col">Edit Tel. Link</th>
+                                <!-- <th scope="col">Delete</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -34,22 +54,26 @@
                                 <th scope="row">{{ record.id }}</th>
                                 <td>{{ record.attributes.name }}</td>
                                 <td>{{ record.attributes.email }}</td>
-                                <td>{{ record.attributes.telegram_link_id }}</td>
+                                <td>
+                                    <a target="_blank" class="telegram-link" :href="record.attributes.telegram_link ? record.attributes.telegram_link.link : null">
+                                        {{ record.attributes.telegram_link?.link}}
+                                    </a>
+                                </td>
                                 <td>{{ getToLocaleDateString(record.attributes.logged_in_at) }}</td>
                                 <td>{{ getToLocaleDateString(record.attributes.created_at) }}</td>
                                 <td>
-                                    <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#addModal">View</button>
+                                    <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#viewUserModal">View</button>
                                 </td>
                                 <td>
-                                    <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#addModal">Edit</button>
+                                    <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#addUserModal">Edit</button>
                                 </td>
-                                <td>
-                                    <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#deleteModal">Delete</button>
-                                </td>
+                                <!-- <td>
+                                    <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#userDeleteModal">Delete</button>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>
-                    <the-pagination v-if="records" :meta="records.meta" @currentPage="currentPage"></the-pagination>
+                    <the-pagination class="mt-3 mb-3" v-if="records" :meta="records.meta" @currentPage="currentPage"></the-pagination>
                 </div>
             </div>
         </div>
@@ -57,12 +81,126 @@
     <!--####################### End Right Site #######################-->
     <teleport to="body">
         <!-- Modal -->
-        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="viewUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">View User Profile</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="h1">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="register_page_form mx-4">
+                            <div class="row">
+                                <div class="col-md-6 mb-5">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="rp_form_single mb-4">
+                                                <label for="rpfs3">Name</label>
+                                                <input type="text" readonly :value="selectedRecord?.attributes.name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="rp_form_single mb-4">
+                                                <label for="rpfs3">Email</label>
+                                                <input type="text" readonly :value="selectedRecord?.attributes.email">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="rp_form_single mb-4">
+                                                <label for="rpfs3">Telegram Link</label>
+                                                <input type="text" readonly :value="selectedRecord?.attributes.telegram_link?.link">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="rp_form_single mb-4">
+                                                <label for="rpfs3">Gender</label>
+                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.gender">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="rp_form_single mb-4">
+                                                <label for="rpfs3">Height</label>
+                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.height">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="rp_form_single mb-4">
+                                                <label for="rpfs3">Current Weight</label>
+                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.current_weight">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="rp_form_single mb-4">
+                                                <label for="rpfs3">Desired Weight Goal</label>
+                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.desired_weight_goal">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="rp_form_single mb-4">
+                                                <label for="rpfs3">Stress Level</label>
+                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.stress_level_out_of_10">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="rp_form_single mb-4">
+                                                <label for="rpfs3">Hours of Sleep at Night</label>
+                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.hours_of_sleep_at_night">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="rp_form_single mb-4">
+                                                <label for="rpfs3">Gym Experience</label>
+                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.gym_experience">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mic_single mb-4">
+                                                <label for="rpfs3">Medications Supplements</label>
+                                                <textarea readonly :value='selectedRecord?.attributes.profile?.medications_supplements'></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mic_single mb-4">
+                                                <label for="rpfs3">Injuries Illnesses</label>
+                                                <textarea readonly :value="selectedRecord?.attributes.profile?.injuries_illnesses"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <keep-alive>
+                                        <weekly-attachment :weeklyAttachments="selectedRecord?.attributes.weekly_attachments"></weekly-attachment>
+                                    </keep-alive>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="register_page_form_btn cancel">
+                            <input type="submit" data-dismiss="modal" value="Close">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </teleport>
+    <teleport to="body">
+        <!-- Modal -->
+        <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" v-if="selectedRecord">Edit Telegram Link</h4>
-                        <h4 class="modal-title" v-else>Add Telegram Link</h4>
+                        <h4 class="modal-title">Edit User Telegram Link</h4>
                         <button @click="resetRecord" type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true" class="h1">&times;</span>
                         </button>
@@ -84,15 +222,24 @@
                                 </button>
                             </div>
                             <div class="rp_form_single mb-4">
-                                <label for="rpfs3">Enter Link</label>
-                                <input type="text" v-model="input.link" placeholder="Link">
+                                <label for="rpfs3">Name</label>
+                                <input type="text" readonly :value="selectedRecord?.attributes.name">
+                            </div>
+                            <div class="rp_form_single mb-4">
+                                <label for="rpfs3">Email</label>
+                                <input type="text" readonly :value="selectedRecord?.attributes.email">
+                            </div>
+                            <div class="rp_form_single mb-4">
+                                <label for="rpfs3">Enter Telegram Link</label>
+                                <select v-model="input.telegramLinkId">
+                                    <option :value="telegramRecord.id" v-for="telegramRecord in telegramRecords?.data" :key="telegramRecord">{{ telegramRecord.attributes.link }}</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <div class="register_page_form_btn">
-                            <input :disabled="input.link === ''" v-if="!validation.loading && !selectedRecord" type="submit" @click="saveRecord" value="Save">
-                            <input :disabled="input.link === ''" v-if="!validation.loading && selectedRecord" type="submit" @click="updateRecord" value="Update">
+                            <input :disabled="input.telegramLinkId === ''" v-if="!validation.loading && selectedRecord" type="submit" @click="updateRecord" value="Update">
                             <button v-if="validation.loading" type="submit" disabled>
                                 <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
                                 Loading...
@@ -108,11 +255,11 @@
     </teleport>
     <teleport to="body">
         <!-- Modal -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="userDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Delete Telegram Link</h4>
+                        <h4 class="modal-title">Delete User</h4>
                         <button @click="resetRecord" type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true" class="h1">&times;</span>
                         </button>
@@ -134,14 +281,13 @@
                         </div>
                         <div class="register_page_form mx-4">
                             <div class="rp_form_single mb-4">
-                                <p>Are you sure you want to delete this record?</p>
-                                <p>{{ input.link }}</p>
+                                <p>Are you sure you want to delete <strong>{{ selectedRecord?.attributes.name }}</strong>?</p>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <div class="register_page_form_btn">
-                            <input :disabled="input.link === ''" v-if="!validation.loading && selectedRecord" type="submit" @click="deleteRecord" value="Delete">
+                            <input v-if="!validation.loading && selectedRecord" type="submit" @click="deleteRecord" value="Delete">
                             <button v-if="validation.loading" type="submit" disabled>
                                 <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
                                 Loading...
@@ -165,12 +311,15 @@ const authStore = userAuth();
 const selectedRecordStore = userSelectedRecord();
 const localeStore = userLocale();
 
+import WeeklyAttachment from './WeeklyAttachment.vue';
+
 import TableLoader from '../../components/TableLoader.vue';
 import InputLoader from '../../components/InputLoader.vue';
 import ThePagination from '../../components/ThePagination.vue';
 
 export default {
     components: {
+        WeeklyAttachment,
         TableLoader,
         InputLoader,
         ThePagination
@@ -178,9 +327,15 @@ export default {
     data() {
         return {
             input: {
-                link: ''
+                telegramLinkId: ''
+            },
+            inputFilter: {
+                dateFrom: '',
+                dateTo: '',
+                search: ''
             },
             records: null,
+            telegramRecords: null,
             selectedRecord: null,
             pagination: {
                 current: 1,
@@ -198,6 +353,19 @@ export default {
     },
     mounted() {
         this.getRecords();
+        this.getTelegramRecords();
+    },
+    watch: {
+        'inputFilter.dateFrom'(newVal, oldVal) {
+            if(newVal !== oldVal) {
+                this.getRecords();
+            }
+        },
+        'inputFilter.dateTo'(newVal, oldVal) {
+            if(newVal !== oldVal) {
+                this.getRecords();
+            }
+        }
     },
     methods: {
         currentPage(val: number) {
@@ -219,7 +387,7 @@ export default {
             return localeStore.toLocaleDateString;
         },
         resetRecord() {
-            this.input.link = '';
+            this.input.telegramLinkId = '';
             this.validation.success.message = null;
             this.validation.errors = null;
             this.selectedRecord = null;
@@ -227,7 +395,7 @@ export default {
         getRecord(id: number) {
             selectedRecordStore.findRecord('id', this.records.data, id);
             this.selectedRecord = selectedRecordStore.record;
-            this.input.link = this.selectedRecord.attributes.link;
+            this.input.telegramLinkId = this.selectedRecord?.attributes.telegram_link?.id;
         },
         getRecords() {
             let self = this;
@@ -239,7 +407,10 @@ export default {
                 },
                 params: {
                     page: this.pagination.current,
-                    limit: this.pagination.limit
+                    limit: this.pagination.limit,
+                    date_from: this.inputFilter.dateFrom,
+                    date_to: this.inputFilter.dateTo,
+                    search: this.inputFilter.search
                 }
             })
             .then(response => {
@@ -251,29 +422,16 @@ export default {
                 $("[data-dismiss='modal']").trigger({ type: "click" });
             });
         },
-        saveRecord() {
+        getTelegramRecords() {
             let self = this;
-            self.validation.loading = true;
 
-            axios.post(`${process.env.API_URL}/users`, {
-                    link: self.input.link
-            }, {
+            axios.get(`${process.env.API_URL}/telegram-links`, {
                 headers: {
                     Authorization: `Bearer ${authStore.accessToken}`,
                 }
             })
-            .then(function (response) {
-                self.validation.loading = false;
-                self.validation.success.message = 'Successfully added!'
-                self.validation.errors = null;
-                self.input.link = '';
-
-                self.getRecords();
-            })
-            .catch(function (error) {
-                self.validation.loading = false;
-                self.validation.errors = error.response.data.errors;
-                self.validation.success.message = null;
+            .then(response => {
+                self.telegramRecords = response.data;
             });
         },
         updateRecord() {
@@ -281,7 +439,7 @@ export default {
             self.validation.loading = true;
             
             axios.put(`${process.env.API_URL}/users/${self.selectedRecord.id}`, {
-                link: self.input.link
+                telegram_link_id: self.input.telegramLinkId
             }, {
                 headers: {
                     Authorization: `Bearer ${authStore.accessToken}`,
@@ -321,7 +479,20 @@ export default {
                 self.validation.errors = error.response.data.errors;
                 self.validation.success.message = null;
             });
+        },
+        search() {
+            this.getRecords();
         }
     }
 }
 </script>
+
+<style scoped>
+a.telegram-link {
+    display: block;
+    white-space: nowrap; 
+    width: 124px; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>

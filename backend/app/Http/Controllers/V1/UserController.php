@@ -21,8 +21,19 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::
-                orderBy('created_at', 'desc')
+        $users = User::when($request->search, function ($query) use($request) {
+                    $query->where('name', 'LIKE', '%'.$request->search.'%');
+                })
+                ->when($request->date_from && $request->date_to, function ($query) use($request) {
+                    $query->whereDate('created_at', '>=', $request->date_from)
+                            ->whereDate('created_at', '<=', $request->date_to);
+                })
+                ->when($request->search && $request->date_from && $request->date_to, function ($query) use($request) {
+                    $query->where('name', 'LIKE', '%'.$request->search.'%')
+                            ->whereDate('created_at', '>=', $request->date_from)
+                            ->whereDate('created_at', '<=', $request->date_to);
+                })
+                ->orderBy('created_at', 'desc')
                 ->paginate($request->limit ? $request->limit : User::count());
         
         return UserResource::collection($users);

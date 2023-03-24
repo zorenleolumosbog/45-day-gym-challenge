@@ -9,7 +9,7 @@
         <div class="right_site_time_remaining_main">
             <div class="right_site_remaining_bottom_contents">
                 <div class="rsrbc_form_btn add-btn w-25 mb-5">
-                    <input @click="resetRecord" type="submit" value="ADD" data-toggle="modal" data-target="#addModal">
+                    <input @click="resetRecord" type="submit" value="ADD" data-toggle="modal" data-target="#addTelegramLinkModal">
                 </div>
                 <div v-if="validation.showTableLoader" style="margin-top: -22px; margin-left: -22px">
                     <table-loader></table-loader>
@@ -31,10 +31,10 @@
                                 <td>{{ record.attributes.link }}</td>
                                 <td>{{ getToLocaleDateString(record.attributes.created_at) }}</td>
                                 <td>
-                                    <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#addModal">Edit</button>
+                                    <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#addTelegramLinkModal">Edit</button>
                                 </td>
                                 <td>
-                                    <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                                    <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#deleteTelegramLinkModal">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -47,7 +47,7 @@
     <!--####################### End Right Site #######################-->
     <teleport to="body">
         <!-- Modal -->
-        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="addTelegramLinkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -98,7 +98,7 @@
     </teleport>
     <teleport to="body">
         <!-- Modal -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="deleteTelegramLinkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -124,14 +124,13 @@
                         </div>
                         <div class="register_page_form mx-4">
                             <div class="rp_form_single mb-4">
-                                <p>Are you sure you want to delete this record?</p>
-                                <p>{{ input.link }}</p>
+                                <p>Are you sure you want to delete <strong>{{ selectedRecord?.attributes.link }}</strong>?</p>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <div class="register_page_form_btn">
-                            <input :disabled="input.link === ''" v-if="!validation.loading && selectedRecord" type="submit" @click="deleteRecord" value="Delete">
+                            <input v-if="!validation.loading && selectedRecord" type="submit" @click="deleteRecord" value="Delete">
                             <button v-if="validation.loading" type="submit" disabled>
                                 <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
                                 Loading...
@@ -213,7 +212,7 @@ export default {
         getRecord(id: number) {
             selectedRecordStore.findRecord('id', this.records.data, id);
             this.selectedRecord = selectedRecordStore.record;
-            this.input.link = this.selectedRecord.attributes.link;
+            this.input.link = this.selectedRecord?.attributes.link;
         },
         getRecords() {
             let self = this;

@@ -255,7 +255,7 @@
 </template>
 
 <script lang="ts">
- import { ContentLoader } from "vue-content-loader"
+import { ContentLoader } from "vue-content-loader"
 import TheMainSidebar from './TheMainSidebar.vue'
 import TheCountdownTimer from './TheCountdownTimer.vue'
 
