@@ -5,18 +5,30 @@
             <div class="left_site_bottom_conts">
                 <div class="left_site_menu">
                     <ul>
-                        <li><a href="#" class="lsm_active">
-                            <span class="lsmmw">
-                                <img src="@/assets/images/home.png" alt="">
-                                <span>Home</span>
-                            </span>
-                        </a></li>
-                        <li><a href="#">
-                            <span class="lsmmw">
-                                <img src="@/assets/images/weekly.png" alt="">
-                                <span>Weekly Photos</span>
-                            </span>
-                        </a></li>
+                        <li>
+                            <router-link to="/users" @click="setComponent('the-user')">
+                                <span class="lsmmw">
+                                    <img src="@/assets/images/Profile.png" alt="">
+                                    <span>Users</span>
+                                </span> 
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/telegram-links" @click="setComponent('the-telegram-link')">
+                                <span class="lsmmw">
+                                    <img src="@/assets/images/telegram.png" alt="">
+                                    <span>Telegram Links</span>
+                                </span>
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/options" @click="setComponent('the-option')">
+                                <span class="lsmmw">
+                                    <img src="@/assets/images/weight.png" alt="">
+                                    <span>Options</span>
+                                </span>
+                            </router-link>
+                        </li>
                     </ul>
                 </div>
                 <div class="mt-5 left_site_social_link_and_followus">
@@ -33,12 +45,33 @@
 </template>
 
 <script lang="ts">
+import $ from 'jquery'
 
 export default {
-    data() {
-        return {
-
+    mounted() {
+        switch (this.$route.name) {
+            case 'users':
+                this.$emit('component', 'the-user');
+                break;
+            case 'telegram-links':
+                this.$emit('component', 'the-telegram-link');
+                break;
+            case 'options':
+                this.$emit('component', 'the-option');
+                break;
+        
+            default:
+                break;
         }
     },
+    methods: {
+        setComponent(selectedComponent: string) {
+            $('.home_page_main_left_site').slideToggle(300)
+		    $('.header_mobile_menu').toggleClass('menu_icon_fixed')
+            $('#nav-icon1,#nav-icon2,#nav-icon3,#nav-icon4').toggleClass('open')
+
+            this.$emit('component', selectedComponent);
+        }
+    }
 }
 </script>

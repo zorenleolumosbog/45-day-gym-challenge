@@ -378,7 +378,9 @@ h4{
 	position: relative;
 /*	transition: 0.2s;*/
 }
-.left_site_menu ul li a:hover ::after ,.lsm_active::after{
+.left_site_menu ul li a:hover ::after ,
+.lsm_active::after, 
+.router-link-active::after{
 	position: absolute;
 	content: "";
 	top: 0;
@@ -387,7 +389,9 @@ h4{
 	height: 100%;
 	background: #a2d956;
 }
-.left_site_menu ul li a:hover,.lsm_active{
+.left_site_menu ul li a:hover,
+.lsm_active, 
+.router-link-active{
 	background: #0e1441;
 }
 .lsmmw {
@@ -827,6 +831,9 @@ h4{
 }
 .rsrbc_form_btn{
 	margin-top: 20px;
+}
+.rsrbc_form_btn.add-btn input {
+    height: 48px;
 }
 .rsrbc_form_btn input, .rsrbc_form_btn button{
 	border-radius: 5px;
@@ -1309,6 +1316,31 @@ h4{
 	font-weight: 500;
 	height: 56px;
 	margin: auto;
+	-webkit-transition: 0.2s;
+	-o-transition: 0.2s;
+	transition: 0.2s;
+	border-radius: 50px;
+	border: 0;
+}
+.action-btn {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	text-align: center;
+	color: #FFF;
+	border-radius: 5px;
+	background-image: -moz-linear-gradient( -180deg, rgb(141,237,200) 0%, rgb(85,165,174) 53%, rgb(29,93,147) 100%) !important;
+  background-image: -webkit-linear-gradient( -180deg, rgb(141,237,200) 0%, rgb(85,165,174) 53%, rgb(29,93,147) 100%) !important;
+  background-image: -ms-linear-gradient( -180deg, rgb(141,237,200) 0%, rgb(85,165,174) 53%, rgb(29,93,147) 100%) !important;
+	font-weight: 500;
+	height: 30px;
+	width: 78px;
 	-webkit-transition: 0.2s;
 	-o-transition: 0.2s;
 	transition: 0.2s;

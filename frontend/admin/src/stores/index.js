@@ -15,6 +15,21 @@ export const userAuth = defineStore('auth', {
   },
 })
 
+export const userSelectedRecord = defineStore('selectedRecord', {
+  state: () => ({
+    record: null
+  }),
+  actions: {
+    findRecord(key, heystack, needle) {
+      let response = heystack.filter((el) => {
+          return el[key] == needle;
+      })[0];
+
+      this.record = response;
+    }
+  },
+})
+
 export const userLocale = defineStore('locale', {
   state: () => ({
     toLocaleDateNowString: '',

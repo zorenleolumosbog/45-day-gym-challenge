@@ -58,58 +58,58 @@
         <teleport to="body">
             <!-- Modal -->
             <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLongTitle" >Change Password</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="h1">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="register_page_form mx-4">
-                        <div v-if="validation.success.message" class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>{{ validation.success.message }}</strong>
-                            <button @click="validation.success.message = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div v-if="validation.errors" class="mt-4 mb-4 alert alert-danger alert-dismissible fade show" role="alert">
-                            <p v-for="(error, key) in validation.errors" :key="key">
-                                <strong>{{ error[0] }}</strong>
-                            </p>
-                            <button @click="validation.errors = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="rp_form_single">
-                            <label for="rpfs2">Current Password</label>
-                            <input type="password" v-model="input.currentPassword" placeholder="Current Password">
-                        </div>
-                        <div class="rp_form_single">
-                            <label for="rpfs3">New Password</label>
-                            <input type="password" v-model="input.newPassword" placeholder="New Password">
-                        </div>
-                        <div class="rp_form_single">
-                            <label for="rpfs3">Confirm New Password</label>
-                            <input type="password" v-model="input.newPasswordConfirmation" placeholder="Confirm New Password">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="register_page_form_btn">
-                        <input :disabled="input.currentPassword === '' || input.newPassword === ''" v-if="!validation.loading" type="submit" @click="saveNewPassword" value="Save">
-                        <button v-if="validation.loading" type="submit" disabled>
-                            <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
-                            Loading...
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLongTitle" >Change Password</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="h1">&times;</span>
                         </button>
                     </div>
-                    <div class="register_page_form_btn cancel">
-                        <input type="submit" data-dismiss="modal" value="Cancel">
+                    <div class="modal-body">
+                        <div class="register_page_form mx-4">
+                            <div v-if="validation.success.message" class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{ validation.success.message }}</strong>
+                                <button @click="validation.success.message = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div v-if="validation.errors" class="mt-4 mb-4 alert alert-danger alert-dismissible fade show" role="alert">
+                                <p v-for="(error, key) in validation.errors" :key="key">
+                                    <strong>{{ error[0] }}</strong>
+                                </p>
+                                <button @click="validation.errors = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="rp_form_single">
+                                <label for="rpfs2">Current Password</label>
+                                <input type="password" v-model="input.currentPassword" placeholder="Current Password">
+                            </div>
+                            <div class="rp_form_single">
+                                <label for="rpfs3">New Password</label>
+                                <input type="password" v-model="input.newPassword" placeholder="New Password">
+                            </div>
+                            <div class="rp_form_single">
+                                <label for="rpfs3">Confirm New Password</label>
+                                <input type="password" v-model="input.newPasswordConfirmation" placeholder="Confirm New Password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="register_page_form_btn">
+                            <input :disabled="input.currentPassword === '' || input.newPassword === ''" v-if="!validation.loading" type="submit" @click="saveNewPassword" value="Save">
+                            <button v-if="validation.loading" type="submit" disabled>
+                                <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </button>
+                        </div>
+                        <div class="register_page_form_btn cancel">
+                            <input type="submit" data-dismiss="modal" value="Cancel">
+                        </div>
+                    </div>
                     </div>
                 </div>
-                </div>
-            </div>
             </div>
         </teleport>
     </header>

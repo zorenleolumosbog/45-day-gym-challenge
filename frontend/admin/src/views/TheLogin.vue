@@ -111,7 +111,7 @@ export default {
                 }
 
                 if(response.data.data.is_admin) {
-                    self.$router.push({ name: 'home' });
+                    self.$router.push({ name: 'users' });
                 }
 
                 self.validation.error.message = 'Unauthorized access.';

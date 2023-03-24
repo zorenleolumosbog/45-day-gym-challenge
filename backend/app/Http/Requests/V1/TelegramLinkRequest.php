@@ -23,7 +23,15 @@ class TelegramLinkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'link' => 'required|url|max:255|unique:telegram_links,link,' . request()->route('telegram_link')->id
+            'link' => [
+                'required',
+                'url',
+                'max:255',
+                Rule::unique('telegram_links')->where(function ($query) {
+                    $query->where('id', '<>', request()->route('telegram_link')?->id)
+                        ->whereNull('deleted_at');
+                }),
+            ]
         ];
     }
 }

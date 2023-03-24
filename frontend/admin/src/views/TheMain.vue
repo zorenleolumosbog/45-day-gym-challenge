@@ -4,6 +4,7 @@
 </template>
 
 <script lang="ts">
+
 import axios from 'axios';
 import { userAuth } from '../stores/index';
 const authStore = userAuth();
