@@ -173,7 +173,7 @@ class UserController extends Controller
     public function resetPassword(Request $request)
     {
         $validated_data = $request->validate([
-            'password' => 'required|max:255',
+            'password' => 'required|min:8|max:255',
             'token' => 'required|max:255|exists:password_reset_tokens,token',
         ]);
 

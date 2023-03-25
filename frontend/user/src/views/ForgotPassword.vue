@@ -11,7 +11,7 @@
                                     <h3>Forgot Password</h3>
                                 </div>
                                 <div class="register_page_form">
-                                    <div v-if="validation.success.message" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <div v-if="validation.success.message" class="alert alert-success alert-dismissible fade show" role="alert">
                                         <strong>{{ validation.success.message }}</strong>
                                         <button @click="validation.success.message = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>

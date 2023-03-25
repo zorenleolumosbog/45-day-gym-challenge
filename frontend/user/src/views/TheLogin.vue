@@ -46,10 +46,10 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="register_page_checkbox float-right">
+                                            <div class="register_page_checkbox float-md-right float-sm-none">
                                                 <div class="rpc_lbl">
                                                     <label for="html">
-                                                        <a href="javascript:void(0)" @click="this.$router.push({name: 'forgot-password'})">Forgot Password</a>
+                                                        <a href="javascript:void(0)" @click="this.$router.push({name: 'forgot-password'})">Forgot Password?</a>
                                                     </label>
                                                 </div>
                                             </div>

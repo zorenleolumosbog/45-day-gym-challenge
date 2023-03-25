@@ -115,7 +115,7 @@
                             </button>
                         </div>
                         <div class="register_page_form_btn cancel">
-                            <input type="submit" data-dismiss="modal" value="Cancel">
+                            <input type="submit" data-dismiss="modal" value="Close">
                         </div>
                     </div>
                     </div>
@@ -261,7 +261,7 @@
                                 </button>
                             </div>
                             <div class="register_page_form_btn cancel">
-                                <input type="submit" data-dismiss="modal" value="Cancel">
+                                <input type="submit" data-dismiss="modal" value="Close">
                             </div>
                         </div>
                     </div>
@@ -394,7 +394,7 @@ export default {
                 self.validation.success.message = null;
                 self.validation.errors = error.response.data.errors;
                     
-                document.getElementById('profileModal')?.scrollIntoView({ behavior: 'smooth' });
+                $("#profileModal").scrollTop(0);
             });
         },
         updateUserProfile() {
@@ -421,7 +421,7 @@ export default {
                     self.validation.errors = null;
                     self.validation.success.message = 'Profile changed successfully!';
                     
-                    document.getElementById('profileModal')?.scrollIntoView({ behavior: 'smooth' });
+                    $("#profileModal").scrollTop(0);
                 }
                 
             })
@@ -430,7 +430,7 @@ export default {
                 self.validation.success.message = null;
                 self.validation.errors = error.response.data.errors;
                     
-                document.getElementById('profileModal')?.scrollIntoView({ behavior: 'smooth' });
+                $("#profileModal").scrollTop(0);
             });
         },
         toggleMenuIcon() {

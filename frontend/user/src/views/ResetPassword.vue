@@ -11,8 +11,8 @@
                                     <h3>Reset Password</h3>
                                 </div>
                                 <div class="register_page_form">
-                                    <div v-if="validation.success.message" class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        <strong>{{ validation.success.message }}</strong>
+                                    <div v-if="validation.success.message" class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>{{ validation.success.message }} <a href="javascript:void(0)" @click="redirectToLogin">Login here</a></strong>
                                         <button @click="validation.success.message = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -65,6 +65,15 @@ export default {
             }
         }
     },
+    mounted() {
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+
+        let token = params.token;
+
+        this.input.token = token;
+    },
     methods: {
         submit() {
             let self = this;
@@ -84,6 +93,9 @@ export default {
                 self.validation.success.message = null;
                 self.validation.error.message = error.response.data.message;
             });
+        },
+        redirectToLogin() {
+            this.$router.push({name: 'login'});
         }
     }
 }
