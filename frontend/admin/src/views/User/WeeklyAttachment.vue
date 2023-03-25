@@ -93,7 +93,7 @@ export default {
     data() {
         return {
             validation: {
-                showFirstWeek: false,
+                showFirstWeek: true,
                 showLastWeek: false
             },
             

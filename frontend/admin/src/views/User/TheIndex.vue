@@ -62,7 +62,7 @@
                                 <td>{{ getToLocaleDateString(record.attributes.logged_in_at) }}</td>
                                 <td>{{ getToLocaleDateString(record.attributes.created_at) }}</td>
                                 <td>
-                                    <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#viewUserModal">View</button>
+                                    <button @click="getRecord(record.id); validation.showProfile = true;" type="submit" class="action-btn" data-toggle="modal">View</button>
                                 </td>
                                 <td>
                                     <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#addUserModal">Edit</button>
@@ -81,12 +81,12 @@
     <!--####################### End Right Site #######################-->
     <teleport to="body">
         <!-- Modal -->
-        <div class="modal fade" id="viewUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div v-if="validation.showProfile" class="modal fade show" style="display: block; overflow: scroll;" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">View User Profile</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button @click="validation.showProfile = false" type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true" class="h1">&times;</span>
                         </button>
                     </div>
@@ -187,7 +187,7 @@
                     </div>
                     <div class="modal-footer">
                         <div class="register_page_form_btn cancel">
-                            <input type="submit" data-dismiss="modal" value="Close">
+                            <input @click="validation.showProfile = false" type="submit" data-dismiss="modal" value="Close">
                         </div>
                     </div>
                 </div>
@@ -342,6 +342,7 @@ export default {
                 limit: 10
             },
             validation: {
+                showProfile: false,
                 loading: false,
                 showTableLoader: false,
                 success: {
