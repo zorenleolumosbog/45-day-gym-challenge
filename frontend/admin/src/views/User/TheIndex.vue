@@ -81,7 +81,7 @@
     <!--####################### End Right Site #######################-->
     <teleport to="body">
         <!-- Modal -->
-        <div v-if="validation.showProfile" class="modal fade show" style="display: block; overflow: scroll;" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div v-if="validation.showProfile" class="modal fade show profile" style="display: block; overflow: scroll;" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

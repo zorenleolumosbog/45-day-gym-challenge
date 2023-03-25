@@ -33,13 +33,26 @@
                                         <label for="rpfs3">Password</label>
                                         <input type="password" v-model="input.password" placeholder="Enter Password">
                                     </div>
-                                    <div @click="input.rememberMe = !input.rememberMe" class="register_page_checkbox">
-                                        <div class="hrh2_send_notif_des">
-                                            <input type="checkbox" v-model="input.rememberMe">
-                                            <label for="html"></label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div @click="input.rememberMe = !input.rememberMe" class="register_page_checkbox">
+                                                <div class="hrh2_send_notif_des">
+                                                    <input type="checkbox" v-model="input.rememberMe">
+                                                    <label for="html"></label>
+                                                </div>
+                                                <div class="rpc_lbl">
+                                                    <label for="html">Remember Me</label>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="rpc_lbl">
-                                            <label for="html">Remember Me</label>
+                                        <div class="col-md-6">
+                                            <div class="register_page_checkbox float-right">
+                                                <div class="rpc_lbl">
+                                                    <label for="html">
+                                                        <a href="javascript:void(0)" @click="this.$router.push({name: 'forgot-password'})">Forgot Password</a>
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="register_page_form_btn">

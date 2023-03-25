@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\UserRequest;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
+use App\Models\V1\PasswordResetToken;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -133,5 +134,45 @@ class UserController extends Controller
         $refresh_token_repository->revokeRefreshTokensByAccessTokenId($token_id);
 
         return response(null, 204);
+    }
+
+    /**
+     * Forgot the specified resource from storage.
+     *
+     * @param  \App\Models\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|max:255|exists:users,email',
+        ]);
+
+        $token = PasswordResetToken::create([
+            'email' => $request->email,
+            'token' => '',
+            'created_at' => Carbon::now()
+        ]);
+
+        //TODO: Send email reset password link with token
+    }
+
+    /**
+     * Reset password the specified resource from storage.
+     *
+     * @param  \App\Models\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function resetPassword(Request $request)
+    {
+        $user = User::with('profile')->find($request->user()->id);
+
+        $user->update([
+            'logged_in_at' => Carbon::now()
+        ]);
+        
+        return response()->json([
+            'data' => $user
+        ]);
     }
 }

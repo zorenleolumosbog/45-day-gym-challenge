@@ -24,6 +24,9 @@ Route::prefix('v1')->group(function() {
     // Route::post('/register', [UserController::class, 'store']);
     Route::get('/start-datetime', [OptionController::class, 'showStartDatetime']);
     Route::get('/end-datetime', [OptionController::class, 'showEndDatetime']);
+    
+    Route::post('/forgot-password', [UserController::class, 'forgotPassword']);
+    Route::post('/reset-password', [UserController::class, 'resetPassword']);
 });
 
 Route::middleware('auth:api')->prefix('v1')->group(function() {

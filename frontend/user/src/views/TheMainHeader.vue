@@ -149,23 +149,112 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="rp_form_single">
-                                    <label for="rpfs2">Current Password</label>
-                                    <input type="password" v-model="input.currentPassword" placeholder="Current Password">
-                                </div>
-                                <div class="rp_form_single">
-                                    <label for="rpfs3">New Password</label>
-                                    <input type="password" v-model="input.newPassword" placeholder="New Password">
-                                </div>
-                                <div class="rp_form_single">
-                                    <label for="rpfs3">Confirm New Password</label>
-                                    <input type="password" v-model="input.newPasswordConfirmation" placeholder="Confirm New Password">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="rp_form_single mb-4">
+                                                    <label for="rpfs3">Name</label>
+                                                    <input type="text" v-model="input.name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="rp_form_single mb-4">
+                                                    <label for="rpfs3">Email</label>
+                                                    <input type="text" readonly :value="user?.attributes.email">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="rp_form_single mb-4">
+                                                    <label for="rpfs3">Gender</label>
+                                                    <select v-model="input.gender">
+                                                        <option v-for="gender in selectOptions.gender" :key="gender" :value="gender">
+                                                            {{ gender }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="rp_form_single mb-4">
+                                                    <label for="rpfs3">Height(cm)</label>
+                                                    <input type="number" v-model="input.height">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="rp_form_single mb-4">
+                                                    <label for="rpfs3">Current Weight(lbs)</label>
+                                                    <input type="number" v-model="input.currentWeight">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="rp_form_single mb-4">
+                                                    <label for="rpfs3">Desired Weight Goal(lbs)</label>
+                                                    <input type="number" v-model="input.desiredWeightGoal">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="rp_form_single mb-4">
+                                                    <label for="rpfs3">Stress Level</label>
+                                                    <select v-model="input.stressLevelOutOf10">
+                                                        <option v-for="stressLevelOutOf10 in selectOptions.stressLevelOutOf10" :key="stressLevelOutOf10" :value="stressLevelOutOf10">
+                                                            {{ stressLevelOutOf10 }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="rp_form_single mb-4">
+                                                    <label for="rpfs3">Hours of Sleep at Night</label>
+                                                    <select v-model="input.hoursOfSleepAtNight">
+                                                        <option v-for="hoursOfSleepAtNight in selectOptions.hoursOfSleepAtNight" :key="hoursOfSleepAtNight" :value="hoursOfSleepAtNight">
+                                                            {{ hoursOfSleepAtNight }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="rp_form_single mb-4">
+                                                    <label for="rpfs3">Gym Experience</label>
+                                                    <select v-model="input.gymExperience">
+                                                        <option v-for="gymExperience in selectOptions.gymExperience" :key="gymExperience" :value="gymExperience">
+                                                            {{ gymExperience }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mic_single mb-4">
+                                                    <label for="rpfs3">Medications Supplements</label>
+                                                    <textarea v-model="input.medicationsSupplements"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mic_single mb-4">
+                                                    <label for="rpfs3">Injuries Illnesses</label>
+                                                    <textarea v-model="input.injuriesIllnesses"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <keep-alive>
+                                            <weekly-attachment :weeklyAttachments="selectedRecord?.attributes.weekly_attachments"></weekly-attachment>
+                                        </keep-alive>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <div class="register_page_form_btn">
-                                <input :disabled="input.currentPassword === '' || input.newPassword === ''" v-if="!validation.loading" type="submit" @click="updateProfile" value="Update">
+                                <input v-if="!validation.loading" type="submit" @click="update" value="Update">
                                 <button v-if="validation.loading" type="submit" disabled>
                                     <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
                                     Loading...
@@ -195,8 +284,7 @@ export default {
                 currentPassword: '',
                 newPassword: '',
                 newPasswordConfirmation: '',
-            },
-            inputProfile: {
+                name: '',
                 gender: '',
                 age: '',
                 height: '',
@@ -207,6 +295,12 @@ export default {
                 stressLevelOutOf10: '',
                 medicationsSupplements: '',
                 injuriesIllnesses: ''
+            },
+            selectOptions : {
+                gender: ['male', 'female'],
+                stressLevelOutOf10: [1,2,3,4,5,6,7,8,9,10],
+                hoursOfSleepAtNight: ['4-6 hours', '7-8 hours', '8 hours above'],
+                gymExperience: ['less than 12 months', '12-36 months', '36 months and over']
             },
             validation: {
                 logout: false,
@@ -253,7 +347,7 @@ export default {
             .then(function (response) {
                 self.validation.loading = false;
                 self.validation.errors = null;
-                self.validation.success.message = 'Password changed successfully!.'
+                self.validation.success.message = 'Password changed successfully!'
 
                 self.input.currentPassword = '';
                 self.input.newPassword = '';
@@ -266,47 +360,77 @@ export default {
             });
         },
         setProfile() {
-            this.inputProfile.gender = this.user?.attributes.profile.gender;
-            this.inputProfile.age = this.user?.attributes.profile.age;
-            this.inputProfile.height = this.user?.attributes.profile.height;
-            this.inputProfile.currentWeight = this.user?.attributes.profile.current_weight;
-            this.inputProfile.desiredWeightGoal = this.user?.attributes.profile.desired_weight_goal;
-            this.inputProfile.gymExperience = this.user?.attributes.profile.gym_experience;
-            this.inputProfile.hoursOfSleepAtNight = this.user?.attributes.profile.hours_of_sleep_at_night;
-            this.inputProfile.stressLevelOutOf10 = this.user?.attributes.profile.stress_level_out_of_10;
-            this.inputProfile.medicationsSupplements = this.user?.attributes.profile.medications_supplements;
-            this.inputProfile.injuriesIllnesses = this.user?.attributes.profile.injuries_illnesses
+            this.input.name = this.user?.attributes.name;
+            this.input.gender = this.user?.attributes.profile.gender;
+            this.input.age = this.user?.attributes.profile.age;
+            this.input.height = this.user?.attributes.profile.height;
+            this.input.currentWeight = this.user?.attributes.profile.current_weight;
+            this.input.desiredWeightGoal = this.user?.attributes.profile.desired_weight_goal;
+            this.input.gymExperience = this.user?.attributes.profile.gym_experience;
+            this.input.hoursOfSleepAtNight = this.user?.attributes.profile.hours_of_sleep_at_night;
+            this.input.stressLevelOutOf10 = this.user?.attributes.profile.stress_level_out_of_10;
+            this.input.medicationsSupplements = this.user?.attributes.profile.medications_supplements;
+            this.input.injuriesIllnesses = this.user?.attributes.profile.injuries_illnesses
         },
-        updateProfile() {
+        update() {
             let self = this;
 
             self.validation.loading = true;
-
-            axios.put(`${process.env.API_URL}/user-profiles/${self.user.id}`, {
-                gender: self.inputProfile.gender,
-                age: self.inputProfile.age,
-                height: self.inputProfile.height,
-                current_weight: self.inputProfile.currentWeight,
-                desired_weight_goal: self.inputProfile.desiredWeightGoal,
-                gym_experience: self.inputProfile.gymExperience,
-                hours_of_sleep_at_night: self.inputProfile.hoursOfSleepAtNight,
-                stress_level_out_of_10: self.inputProfile.stressLevelOutOf10,
-                medications_supplements: self.inputProfile.medicationsSupplements,
-                injuries_illnesses: self.inputProfile.injuriesIllnesses
+            self.validation.errors = null;
+            
+            Promise.all([self.updateUser(), self.updateUserProfile()]);
+        },
+        updateUser() {
+            let self = this;
+            axios.put(`${process.env.API_URL}/users/${self.user.id}`, {
+                name: self.input.name
+            }, {
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                }
+            })
+            .catch(function (error) {
+                self.validation.loading = false;
+                self.validation.success.message = null;
+                self.validation.errors = error.response.data.errors;
+                    
+                document.getElementById('profileModal')?.scrollIntoView({ behavior: 'smooth' });
+            });
+        },
+        updateUserProfile() {
+            let self = this;
+            axios.put(`${process.env.API_URL}/user-profiles/${self.user.attributes.profile.id}`, {
+                gender: self.input.gender,
+                age: self.input.age,
+                height: self.input.height,
+                current_weight: self.input.currentWeight,
+                desired_weight_goal: self.input.desiredWeightGoal,
+                gym_experience: self.input.gymExperience,
+                hours_of_sleep_at_night: self.input.hoursOfSleepAtNight,
+                stress_level_out_of_10: self.input.stressLevelOutOf10,
+                medications_supplements: self.input.medicationsSupplements,
+                injuries_illnesses: self.input.injuriesIllnesses
             }, {
                 headers: {
                     Authorization: `Bearer ${authStore.accessToken}`,
                 }
             })
             .then(function (response) {
-                self.validation.loading = false;
-                self.validation.errors = null;
-                self.validation.success.message = 'Profile changed successfully!.'
+                if(!self.validation.errors) {
+                    self.validation.loading = false;
+                    self.validation.errors = null;
+                    self.validation.success.message = 'Profile changed successfully!';
+                    
+                    document.getElementById('profileModal')?.scrollIntoView({ behavior: 'smooth' });
+                }
+                
             })
             .catch(function (error) {
                 self.validation.loading = false;
                 self.validation.success.message = null;
                 self.validation.errors = error.response.data.errors;
+                    
+                document.getElementById('profileModal')?.scrollIntoView({ behavior: 'smooth' });
             });
         },
         toggleMenuIcon() {
@@ -317,6 +441,9 @@ export default {
         toggleDropdown() {
 		    $('.dropdown-toggle').toggleClass('show')
             $('.dropdown-menu').toggleClass('show')
+
+            this.validation.errors = null;
+            this.validation.success.message = null;
         }
     }
 }
