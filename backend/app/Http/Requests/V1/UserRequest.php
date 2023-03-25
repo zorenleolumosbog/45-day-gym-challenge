@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
         return [
             'telegram_link_id' => 'nullable|exists:telegram_links,id',
             'name' => 'sometimes|required|max:255',
-            'email' => 'sometimes|required_with:password|unique:users|max:255',
+            'email' => 'sometimes|email|required_with:password|unique:users|max:255',
             'password' => 'sometimes|required_with:email|confirmed|min:8|max:255',
             'is_admin' => [
                 'nullable',

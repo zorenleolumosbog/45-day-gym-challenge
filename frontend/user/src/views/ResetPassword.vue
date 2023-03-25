@@ -51,7 +51,8 @@ export default {
     data() {
         return {
             input: {
-                password: ''
+                password: '',
+                token: ''
             },
             validation: {
                 loading: false,
@@ -70,7 +71,8 @@ export default {
 
             self.validation.loading = true;
             axios.post(`${process.env.API_URL}/reset-password`, {
-                password: self.input.password
+                password: self.input.password,
+                token: self.input.token
             })
             .then(function (response) {
                 self.validation.loading = false;

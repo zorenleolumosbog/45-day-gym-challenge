@@ -5,13 +5,16 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\UserRequest;
 use App\Http\Resources\V1\UserResource;
+use App\Mail\ResetPassword;
 use App\Models\User;
 use App\Models\V1\PasswordResetToken;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Passport\TokenRepository;
 use Laravel\Passport\RefreshTokenRepository;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -145,16 +148,20 @@ class UserController extends Controller
     public function forgotPassword(Request $request)
     {
         $request->validate([
-            'email' => 'required|max:255|exists:users,email',
+            'email' => 'required|email|max:255|exists:users,email',
         ]);
 
-        $token = PasswordResetToken::create([
+        PasswordResetToken::where('email', $request->email)->delete();
+        
+        $password_reset_token = PasswordResetToken::create([
             'email' => $request->email,
-            'token' => '',
+            'token' => Str::random(64),
             'created_at' => Carbon::now()
         ]);
 
-        //TODO: Send email reset password link with token
+        $name = User::where('email', $request->email)->first()->name;
+
+        Mail::to($request->email)->send(new ResetPassword($name, $password_reset_token->token));
     }
 
     /**
@@ -165,14 +172,16 @@ class UserController extends Controller
      */
     public function resetPassword(Request $request)
     {
-        $user = User::with('profile')->find($request->user()->id);
+        $validated_data = $request->validate([
+            'password' => 'required|max:255',
+            'token' => 'required|max:255|exists:password_reset_tokens,token',
+        ]);
 
-        $user->update([
-            'logged_in_at' => Carbon::now()
-        ]);
+        $email = PasswordResetToken::where('token', $request->token)->first()->email;
         
-        return response()->json([
-            'data' => $user
-        ]);
+        $user = User::where('email', $email)->first();
+        $user->update($validated_data);
+
+        PasswordResetToken::where('email', $email)->delete();
     }
 }

@@ -89,13 +89,13 @@ class OptionController extends Controller
 
     public function updateValueByName(Request $request)
     {
-        $validatedData = $request->validate([
+        $validated_data = $request->validate([
             'name' => 'required|max:255|exists:options,name',
             'value' => 'required'
         ]);
         
         $option = Option::where('name', $request->name)->first();
-        $option->update($validatedData);
+        $option->update($validated_data);
 
         return new OptionResource($option);
     }
