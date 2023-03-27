@@ -22,8 +22,6 @@ return new class extends Migration
             $table->integer('week_number');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->unique(['user_id', 'week_number', 'deleted_at']);
         });
     }
 

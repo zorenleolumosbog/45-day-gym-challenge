@@ -27,15 +27,7 @@ class UserWeeklyAttachmentRequest extends FormRequest
         return [
             'weight' => 'sometimes|required|integer',
             'description' => 'sometimes|nullable|max:255',
-            'week_number' => [
-                    'sometimes',
-                    'required',
-                    'integer',
-                    Rule::prohibitedIf(UserWeeklyAttachment::where('user_id', Auth::user()->id)
-                    ->where('week_number', request()->week_number)
-                    ->whereNull('deleted_at')
-                    ->exists())
-            ]
+            'week_number' => 'sometimes|required|integer'
         ];
     }
 }

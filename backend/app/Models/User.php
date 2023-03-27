@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\V1\Option;
 use App\Models\V1\TelegramLink;
 use App\Models\V1\UserProfile;
 use App\Models\V1\UserWeeklyAttachment;
@@ -68,7 +69,15 @@ class User extends Authenticatable
      */
     public function weeklyAttachments(): HasMany
     {
-        return $this->hasMany(UserWeeklyAttachment::class)->orderBy('created_at', 'desc');
+        $start_datetime = Option::where('name', 'start_datetime')->first()?->value;
+        $end_datetime = Option::where('name', 'end_datetime')->first()?->value;
+
+        return $this->hasMany(UserWeeklyAttachment::class)
+                    ->when($start_datetime && $end_datetime, function ($query) use($start_datetime, $end_datetime) {
+                        $query->whereDate('created_at', '>=', $start_datetime)
+                                ->whereDate('created_at', '<=', $end_datetime);
+                    })
+                    ->orderBy('created_at', 'desc');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Models\V1\Option;
 use App\Models\V1\UserWeeklyAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -15,8 +16,19 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $weekly_attachment = UserWeeklyAttachment::where('user_id', $this->id)->latest()->first();
+        $start_datetime = Option::where('name', 'start_datetime')->first()?->value;
+        $end_datetime = Option::where('name', 'end_datetime')->first()?->value;
+
+        $weekly_attachment = UserWeeklyAttachment::where('user_id', $this->id)
+                            ->when($start_datetime && $end_datetime, function ($query) use($start_datetime, $end_datetime) {
+                                $query->whereDate('created_at', '>=', $start_datetime)
+                                        ->whereDate('created_at', '<=', $end_datetime);
+                            })
+                            ->latest()
+                            ->first();
+
         $percentage = 0;
+
         if($this->profile()->first() && $weekly_attachment) {
             $percentage = (floatval($this->profile()->first()->desired_weight_goal) / floatval($weekly_attachment->weight)) * 100;
         } elseif($this->profile()->first()) {
