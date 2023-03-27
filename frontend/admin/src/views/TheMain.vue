@@ -33,8 +33,8 @@ export default {
             },
         })
         .then(response => {
-            if(!response.data.data.attributes.profile) {
-                self.$router.push({ name: 'gender' });
+            if(!response.data.data.attributes.is_admin) {
+                self.$router.push({ name: 'login' });
             }
 
             self.datum.user = response.data.data;

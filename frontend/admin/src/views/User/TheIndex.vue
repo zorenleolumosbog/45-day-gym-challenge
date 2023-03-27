@@ -50,27 +50,29 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="record in records.data" :key="record">
-                                <th scope="row">{{ record.id }}</th>
-                                <td>{{ record.attributes.name }}</td>
-                                <td>{{ record.attributes.email }}</td>
-                                <td>
-                                    <a target="_blank" class="telegram-link" :href="record.attributes.telegram_link ? record.attributes.telegram_link.link : null">
-                                        {{ record.attributes.telegram_link?.link}}
-                                    </a>
-                                </td>
-                                <td>{{ getToLocaleDateString(record.attributes.logged_in_at) }}</td>
-                                <td>{{ getToLocaleDateString(record.attributes.created_at) }}</td>
-                                <td>
-                                    <button @click="getRecord(record.id); validation.showProfile = true;" type="submit" class="action-btn" data-toggle="modal">View</button>
-                                </td>
-                                <td>
-                                    <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#addUserModal">Edit</button>
-                                </td>
-                                <!-- <td>
-                                    <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#userDeleteModal">Delete</button>
-                                </td> -->
-                            </tr>
+                            <template v-for="record in records.data" :key="record">
+                                <tr v-if="!record.attributes.is_admin">
+                                    <th scope="row">{{ record.id }}</th>
+                                    <td>{{ record.attributes.name }}</td>
+                                    <td>{{ record.attributes.email }}</td>
+                                    <td>
+                                        <a target="_blank" class="telegram-link" :href="record.attributes.telegram_link ? record.attributes.telegram_link.link : null">
+                                            {{ record.attributes.telegram_link?.link}}
+                                        </a>
+                                    </td>
+                                    <td>{{ getToLocaleDateString(record.attributes.logged_in_at) }}</td>
+                                    <td>{{ getToLocaleDateString(record.attributes.created_at) }}</td>
+                                    <td>
+                                        <button @click="getRecord(record.id); validation.showProfile = true;" type="submit" class="action-btn" data-toggle="modal">View</button>
+                                    </td>
+                                    <td>
+                                        <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#addUserModal">Edit</button>
+                                    </td>
+                                    <!-- <td>
+                                        <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#userDeleteModal">Delete</button>
+                                    </td> -->
+                                </tr>
+                            </template>
                         </tbody>
                     </table>
                     <the-pagination class="mt-3 mb-3" v-if="records" :meta="records.meta" @currentPage="currentPage"></the-pagination>
@@ -380,12 +382,16 @@ export default {
         },
         getToLocaleDateString(dateString: string) {
             if(!dateString) {
-                return null;
+                return '';
             }
 
-            localeStore.setToLocaleDateString(dateString);
-
-            return localeStore.toLocaleDateString;
+            const event = new Date(dateString);
+            
+            return event.toLocaleDateString(undefined, {  
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
         },
         resetRecord() {
             this.input.telegramLinkId = '';
@@ -407,14 +413,14 @@ export default {
                     Authorization: `Bearer ${authStore.accessToken}`,
                 },
                 params: {
-                    page: this.pagination.current,
-                    limit: this.pagination.limit,
-                    date_from: this.inputFilter.dateFrom,
-                    date_to: this.inputFilter.dateTo,
-                    search: this.inputFilter.search
+                    page: self.pagination.current,
+                    limit: self.pagination.limit,
+                    date_from: self.inputFilter.dateFrom,
+                    date_to: self.inputFilter.dateTo,
+                    search: self.inputFilter.search
                 }
             })
-            .then(response => {
+            .then(function (response) {
                 self.records = response.data;
                 self.validation.success.message = null;
                 self.validation.errors = null;
@@ -431,7 +437,7 @@ export default {
                     Authorization: `Bearer ${authStore.accessToken}`,
                 }
             })
-            .then(response => {
+            .then(function (response) {
                 self.telegramRecords = response.data;
             });
         },

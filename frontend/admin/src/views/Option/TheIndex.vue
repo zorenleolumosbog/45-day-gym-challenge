@@ -90,7 +90,7 @@ export default {
     mounted() {
         let self = this;
 
-        Promise.all([this.getStartDatetime(), this.getEndDatetime(), this.getCurrentWeek()])
+        Promise.all([self.getStartDatetime(), self.getEndDatetime(), self.getCurrentWeek()])
         .then(function ([startDateTime, endDateTime, currentWeek]) {
             self.input.startDateTime = startDateTime.data.data.attributes.value;
             self.input.endDateTime = endDateTime.data.data.attributes.value;

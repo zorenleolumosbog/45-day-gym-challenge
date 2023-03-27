@@ -463,7 +463,7 @@
                                 <tr>
                                   <td class="attributes_item">
                                     <span class="f-fallback">
-                                      <a href="https://join.epictransformationchallenge.com/reset-password?token="{{ $token }}>https://join.epictransformationchallenge.com/reset-password?token={{ $token }}</a>
+                                      <a href="https://join.epictransformationchallenge.com/reset-password?token={{ $token }}">https://join.epictransformationchallenge.com/reset-password?token={{ $token }}</a>
                                     </span>
                                   </td>
                                 </tr>

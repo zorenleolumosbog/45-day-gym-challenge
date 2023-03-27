@@ -378,52 +378,15 @@ export default {
             self.validation.loading = true;
             self.validation.errors = null;
             
-            Promise.all([self.updateUser(), self.updateUserProfile()]);
-        },
-        updateUser() {
-            let self = this;
-            axios.put(`${process.env.API_URL}/users/${self.user.id}`, {
-                name: self.input.name
-            }, {
-                headers: {
-                    Authorization: `Bearer ${authStore.accessToken}`,
-                }
-            })
-            .catch(function (error) {
-                self.validation.loading = false;
-                self.validation.success.message = null;
-                self.validation.errors = error.response.data.errors;
-                    
-                $("#profileModal").scrollTop(0);
-            });
-        },
-        updateUserProfile() {
-            let self = this;
-            axios.put(`${process.env.API_URL}/user-profiles/${self.user.attributes.profile.id}`, {
-                gender: self.input.gender,
-                age: self.input.age,
-                height: self.input.height,
-                current_weight: self.input.currentWeight,
-                desired_weight_goal: self.input.desiredWeightGoal,
-                gym_experience: self.input.gymExperience,
-                hours_of_sleep_at_night: self.input.hoursOfSleepAtNight,
-                stress_level_out_of_10: self.input.stressLevelOutOf10,
-                medications_supplements: self.input.medicationsSupplements,
-                injuries_illnesses: self.input.injuriesIllnesses
-            }, {
-                headers: {
-                    Authorization: `Bearer ${authStore.accessToken}`,
-                }
-            })
-            .then(function (response) {
-                if(!self.validation.errors) {
+            Promise.all([self.updateUser(), self.updateUserProfile()])
+            .then(function ([user, userProfile]) {
+                if(userProfile && !self.validation.errors) {
                     self.validation.loading = false;
                     self.validation.errors = null;
                     self.validation.success.message = 'Profile changed successfully!';
                     
                     $("#profileModal").scrollTop(0);
                 }
-                
             })
             .catch(function (error) {
                 self.validation.loading = false;
@@ -432,6 +395,35 @@ export default {
                     
                 $("#profileModal").scrollTop(0);
             });
+        },
+        updateUser() {
+            let self = this;
+            return axios.put(`${process.env.API_URL}/users/${self.user.id}`, {
+                    name: self.input.name
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${authStore.accessToken}`,
+                    }
+                });
+        },
+        updateUserProfile() {
+            let self = this;
+            return axios.put(`${process.env.API_URL}/user-profiles/${self.user.attributes.profile.id}`, {
+                    gender: self.input.gender,
+                    age: self.input.age,
+                    height: self.input.height,
+                    current_weight: self.input.currentWeight,
+                    desired_weight_goal: self.input.desiredWeightGoal,
+                    gym_experience: self.input.gymExperience,
+                    hours_of_sleep_at_night: self.input.hoursOfSleepAtNight,
+                    stress_level_out_of_10: self.input.stressLevelOutOf10,
+                    medications_supplements: self.input.medicationsSupplements,
+                    injuries_illnesses: self.input.injuriesIllnesses
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${authStore.accessToken}`,
+                    }
+                });
         },
         toggleMenuIcon() {
             $('.home_page_main_left_site').slideToggle(300)

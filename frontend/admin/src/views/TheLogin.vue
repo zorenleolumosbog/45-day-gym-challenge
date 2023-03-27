@@ -112,10 +112,10 @@ export default {
 
                 if(response.data.data.is_admin) {
                     self.$router.push({ name: 'users' });
+                } else {
+                    self.validation.error.message = 'Unauthorized access.';
+                    self.validation.loading = false;
                 }
-
-                self.validation.error.message = 'Unauthorized access.';
-                self.validation.loading = false;
             })
             .catch(error => {
                 self.validation.loading = false;
