@@ -38,7 +38,7 @@ class UserWeeklyAttachmentDetailController extends Controller
         $file = $request->file('file_weekly_photo');
         $name = $file->hashName();
 
-        $path = Storage::disk('public')->put(Carbon::now()->toDateString() . "/" . Auth::user()->id, $file);
+        $path = Storage::disk('public')->put("upload/" . Carbon::now()->toDateString() . "/" . Auth::user()->id, $file);
 
         $user_weekly_attachment_detail = UserWeeklyAttachmentDetail::create([
             'user_weekly_attachment_id' => $request->user_weekly_attachment_id,
@@ -82,7 +82,7 @@ class UserWeeklyAttachmentDetailController extends Controller
             //Update new file
             $name = $file->hashName();
     
-            $path = Storage::disk('public')->put(Carbon::now()->toDateString() . "/" . Auth::user()->id, $file);
+            $path = Storage::disk('public')->put("upload/" . Carbon::now()->toDateString() . "/" . Auth::user()->id, $file);
     
             $user_weekly_attachment_detail->update([
                 'name' => $name,
@@ -110,6 +110,8 @@ class UserWeeklyAttachmentDetailController extends Controller
      */
     public function destroy(UserWeeklyAttachmentDetail $user_weekly_attachment_detail)
     {
+        Storage::disk('public')->delete($user_weekly_attachment_detail->path);
+        
         $user_weekly_attachment_detail->delete();
         
         return response(null, 204);

@@ -44,31 +44,31 @@
                                 <span>Home</span>
                             </span>
                         </a></li>
-                        <li><a href="#">
+                        <li><a :href="linkWeeklyPhotos">
                             <span class="lsmmw">
                                 <img src="@/assets/images/weekly.png" alt="">
                                 <span>Weekly Photos</span>
                             </span>
                         </a></li>
-                        <li><a href="#">
+                        <li><a :href="linkDailyRoutine">
                             <span class="lsmmw">
                                 <img src="@/assets/images/daily.png" alt="">
                                 <span>Daily Routine</span>
                             </span>
                         </a></li>
-                        <li><a href="#">
+                        <li><a :href="linkWeightCalculator">
                             <span class="lsmmw">
                                 <img src="@/assets/images/weight.png" alt="">
                                 <span>Weight Calculator</span>
                             </span>
                         </a></li>
-                        <li><a href="#">
+                        <li><a :href="linkTelegram">
                             <span class="lsmmw">
                                 <img src="@/assets/images/telegram.png" alt="">
                                 <span>Telegram</span>
                             </span>
                         </a></li>
-                        <li><a href="#">
+                        <li><a :href="linkBlog">
                             <span class="lsmmw">
                                 <img src="@/assets/images/blog.png" alt="">
                                 <span>Blog</span>
@@ -107,10 +107,10 @@
                 <div class="left_site_social_link_and_followus">
                     <div class="left_site_social_links">
                         <ul>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Telegram Link</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Faq</a></li>
+                            <li><a :href="linkAbout">About</a></li>
+                            <li><a :href="linkTelegram">Telegram Link</a></li>
+                            <li><a :href="linkBlog">Blog</a></li>
+                            <li><a :href="linkFaq">Faq</a></li>
                         </ul>
                     </div>
 
@@ -118,10 +118,10 @@
                         <div class="left_site_follow_us">
                             <p>Follow Us</p>
                             <ul>
-                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                <li><a :href="linkFacebook"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a :href="linkTwitter"><i class="fab fa-twitter"></i></a></li>
+                                <li><a :href="linkYoutube"><i class="fab fa-youtube"></i></a></li>
+                                <li><a :href="linkLinkedin"><i class="fab fa-linkedin-in"></i></a></li>
                             </ul>
                         </div>
                         <div class="left_site_copyright">
@@ -136,10 +136,180 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios';
+import { userAuth } from '../stores/index';
+const authStore = userAuth();
 
 export default {
+    data() {
+        return {
+            linkWeeklyPhotos: '',
+            linkDailyRoutine: '',
+            linkWeightCalculator: '',
+            linkTelegram: '',
+            linkBlog: '',
+            linkAbout: '',
+            linkFaq: '',
+            linkFacebook: '',
+            linkTwitter: '',
+            linkYoutube: '',
+            linkLinkedin: ''
+        }
+    },
     props: ['user', 'currentWeeklyAttachment'],
+    mounted() {
+        let self = this;
+
+        Promise.all([
+            self.getLinkWeeklyPhotos(), 
+            self.getLinkDailyRoutine(), 
+            self.getLinkWeightCalculator(), 
+            self.getLinkTelegram(), 
+            self.getBlog(), 
+            self.getAbout(), 
+            self.getFaq(),
+            self.getFacebook(),
+            self.getTwitter(),
+            self.getYoutube(),
+            self.getLinkedin()
+        ])
+        .then(function ([
+            linkWeeklyPhotos, 
+            linkDailyRoutine, 
+            linkWeightCalculator, 
+            linkTelegram, 
+            linkBlog, 
+            linkAbout,
+            linkFaq,
+            linkFacebook,
+            linkTwitter,
+            linkYoutube,
+            linkLinkedin
+        ]) {
+            self.linkWeeklyPhotos = linkWeeklyPhotos.data.data.value;
+            self.linkDailyRoutine = linkDailyRoutine.data.data.value;
+            self.linkWeightCalculator = linkWeightCalculator.data.data.value;
+            self.linkTelegram = linkTelegram.data.data.value;
+            self.linkBlog = linkBlog.data.data.value;
+            self.linkAbout = linkAbout.data.data.value;
+            self.linkFaq = linkFaq.data.data.value;
+            self.linkFacebook = linkFacebook.data.data.value;
+            self.linkTwitter = linkTwitter.data.data.value;
+            self.linkYoutube = linkYoutube.data.data.value;
+            self.linkLinkedin = linkLinkedin.data.data.value;
+        });
+    },
     methods: {
+        getLinkWeeklyPhotos() {
+            return axios.get(`${process.env.API_URL}/option-get-value-by-name`, {
+                params: { 
+                    name: 'link_weekly_photos' 
+                }, 
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                },
+            })
+        },
+        getLinkDailyRoutine() {
+            return axios.get(`${process.env.API_URL}/option-get-value-by-name`, {
+                params: { 
+                    name: 'link_daily_routine' 
+                }, 
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                },
+            })
+        },
+        getLinkWeightCalculator() {
+            return axios.get(`${process.env.API_URL}/option-get-value-by-name`, {
+                params: { 
+                    name: 'link_weight_calculator' 
+                }, 
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                },
+            })
+        },
+        getLinkTelegram() {
+            return axios.get(`${process.env.API_URL}/option-get-value-by-name`, {
+                params: { 
+                    name: 'link_telegram' 
+                }, 
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                },
+            })
+        },
+        getBlog() {
+            return axios.get(`${process.env.API_URL}/option-get-value-by-name`, {
+                params: { 
+                    name: 'link_blog' 
+                }, 
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                },
+            })
+        },
+        getAbout() {
+            return axios.get(`${process.env.API_URL}/option-get-value-by-name`, {
+                params: { 
+                    name: 'link_about' 
+                }, 
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                },
+            })
+        },
+        getFaq() {
+            return axios.get(`${process.env.API_URL}/option-get-value-by-name`, {
+                params: { 
+                    name: 'link_faq' 
+                }, 
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                },
+            })
+        },
+        getFacebook() {
+            return axios.get(`${process.env.API_URL}/option-get-value-by-name`, {
+                params: { 
+                    name: 'link_facebook' 
+                }, 
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                },
+            })
+        },
+        getTwitter() {
+            return axios.get(`${process.env.API_URL}/option-get-value-by-name`, {
+                params: { 
+                    name: 'link_twitter' 
+                }, 
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                },
+            })
+        },
+        getYoutube() {
+            return axios.get(`${process.env.API_URL}/option-get-value-by-name`, {
+                params: { 
+                    name: 'link_youtube' 
+                }, 
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                },
+            })
+        },
+        getLinkedin() {
+            return axios.get(`${process.env.API_URL}/option-get-value-by-name`, {
+                params: { 
+                    name: 'link_linkedin' 
+                }, 
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                },
+            })
+        },
         getDesiredWeightGoalPercentage(min: number, max: number) {
             let desiredWeightGoalPercentage = 0;
             if(this.currentWeeklyAttachment) {

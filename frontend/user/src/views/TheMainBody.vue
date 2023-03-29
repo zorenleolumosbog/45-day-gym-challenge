@@ -70,7 +70,7 @@
                             <!-- Start Posting Section -->
                             <template v-if="validation.displayPosting">
                                 <template v-if="parseInt(currentWeek?.value) > parseInteger(user?.latest_weekly_attachments?.week_number) 
-                                                && parseInt(currentWeek?.value) > parseInteger(weeklyAttachments?.data[0].week_number)
+                                                && parseInt(currentWeek?.value) > parseInteger(weeklyAttachments?.data[0]?.week_number)
                                                 || validation.editPosting">
                                     <div class="right_site_time_remaining_main">
                                         <div class="right_site_upload_photo">

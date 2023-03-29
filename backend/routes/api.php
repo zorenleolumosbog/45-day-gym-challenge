@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\OptionController;
+use App\Http\Controllers\V1\SidebarLinkController;
 use App\Http\Controllers\V1\TelegramLinkController;
 use App\Http\Controllers\V1\UserController;
 use App\Http\Controllers\V1\UserProfileController;
@@ -46,4 +47,5 @@ Route::middleware(['auth:api', 'admin'])->prefix('v1')->group(function() {
     Route::apiResource('/options', OptionController::class);
     Route::patch('option-update-value-by-name', [OptionController::class, 'updateValueByName']);
     Route::apiResource('/telegram-links', TelegramLinkController::class);
+    Route::apiResource('/sidebar-links', SidebarLinkController::class);
 });
