@@ -4,9 +4,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="home_page_section_main">
-                        <keep-alive>
-                            <the-main-sidebar @component="(val) => component = val"></the-main-sidebar>
-                        </keep-alive>
+                        <the-main-sidebar @component="(val) => component = val"></the-main-sidebar>
                         <keep-alive>
                             <component :is="component" />
                         </keep-alive>

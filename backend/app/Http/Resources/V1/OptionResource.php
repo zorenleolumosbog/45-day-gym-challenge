@@ -16,15 +16,12 @@ class OptionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => 'options',
-            'attributes' => [
-                'name' => $this->name,
-                'value' => $this->value,
-                'autoload' => $this->autoload,
-                'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at,
-                'deleted_at' => $this->deleted_at
-            ]
+            'name' => $this->name,
+            'value' => $this->value,
+            'autoload' => $this->autoload,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'deleted_at' => $this->deleted_at
         ];
     }
 }

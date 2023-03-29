@@ -16,13 +16,10 @@ class TelegramLinkResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => 'telegram_links',
-            'attributes' => [
-                'link' => $this->link,
-                'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at,
-                'deleted_at' => $this->deleted_at
-            ]
+            'link' => $this->link,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'deleted_at' => $this->deleted_at
         ];
     }
 }

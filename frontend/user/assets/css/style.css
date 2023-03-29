@@ -146,7 +146,7 @@ h4{
 	width: 22px;
 }
 .dropdown-menu.show {
-    margin-left: -60px;
+    margin-left: -100px;
     margin-top: 8px;
 }
 
@@ -930,11 +930,11 @@ h4{
 	margin-top: 18px;
 }
 .rs_week_bottom_contents p{
-	font-size: 13px;
+	font-size: 15px;
 	color: #334150;
 }
 .rs_week_bottom_contents p:first-child{
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: 600;
 	margin: 18px 0px 5px 0px;
 }
@@ -1609,6 +1609,9 @@ h4{
 	padding: 10px;
 	font-size: 14px;
 	color: #839cb5;
+}
+.right_site_upload_photo {
+    margin-top: -28px;
 }
 
 

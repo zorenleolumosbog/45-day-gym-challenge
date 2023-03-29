@@ -48,7 +48,7 @@
                                                     <a href="javascript: void(0)" @click="this.$router.push({ name: 'stress-level' })">PREVIOUS</a>
                                                 </div>
                                                 <div class="questionair_next_sub form_next_btnmml">
-                                                    <input v-if="!validation.loading" type="submit" value="NEXT" @click="next">
+                                                    <input v-if="!validation.loading" type="submit" value="SAVE" @click="next">
                                                     <button v-if="validation.loading" type="submit" disabled>
                                                         <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
                                                         Loading...

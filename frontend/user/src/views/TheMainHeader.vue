@@ -35,15 +35,8 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li><a @click="toggleDropdown(); setProfile();" data-toggle="modal" data-target="#profileModal" class="dropdown-item text-left" href="javascript:void(0)">Profile</a></li>
-                                        <li><a @click="toggleDropdown" data-toggle="modal" data-target="#changePasswordModal" class="dropdown-item text-left" href="javascript:void(0)">Change Pass</a></li>
-                                        <li>
-                                            <a @click="logout" class="d-flex dropdown-item text-left" href="javascript:void(0)" style="color: #e82222;">
-                                                Log Out
-                                                <div v-if="validation.logout" class="mt-2 spinner-grow spinner-grow-sm" role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                            </a>
-                                        </li>
+                                        <li><a @click="toggleDropdown" data-toggle="modal" data-target="#changePasswordModal" class="dropdown-item text-left" href="javascript:void(0)">Change Password</a></li>
+                                        <li><a @click="logout" class="d-flex dropdown-item text-left" href="javascript:void(0)" style="color: #e82222;">Log Out</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -60,7 +53,7 @@
                         <!-- <a href="#"><i class="fab fa-telegram-plane"></i>TELEGRAM</a> -->
                     </div>
                     <div class="header_tele_btn">
-                        <a target="_blank" :href="user?.attributes.telegram_link ? user?.attributes.telegram_link.link  : user?.attributes.telegram_link_url"><img src="@/assets/images/telegram-btn.png" alt=""></a>
+                        <a target="_blank" :href="user?.telegram_link ? user?.telegram_link.link  : user?.telegram_link_url"><img src="@/assets/images/telegram-btn.png" alt=""></a>
                     </div>
                 </div>
             </div>
@@ -161,7 +154,7 @@
                                             <div class="col-md-6">
                                                 <div class="rp_form_single mb-4">
                                                     <label for="rpfs3">Email</label>
-                                                    <input type="text" readonly :value="user?.attributes.email">
+                                                    <input type="text" readonly :value="user?.email">
                                                 </div>
                                             </div>
                                         </div>
@@ -178,8 +171,8 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="rp_form_single mb-4">
-                                                    <label for="rpfs3">Height(cm)</label>
-                                                    <input type="number" v-model="input.height">
+                                                    <label for="rpfs3">Height(ft)</label>
+                                                    <input type="text" v-model="input.height">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -244,11 +237,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <keep-alive>
-                                            <weekly-attachment :weeklyAttachments="selectedRecord?.attributes.weekly_attachments"></weekly-attachment>
-                                        </keep-alive>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -303,7 +291,6 @@ export default {
                 gymExperience: ['less than 12 months', '12-36 months', '36 months and over']
             },
             validation: {
-                logout: false,
                 loading: false,
                 success: {
                     message: null
@@ -315,8 +302,9 @@ export default {
     props: ['user'],
     methods:{
         logout() {
-            this.validation.logout = true;
             let self = this;
+
+            self.$router.push({ name: 'login' });
             
             axios.get(`${process.env.API_URL}/logout`, {
                 headers: {
@@ -325,11 +313,7 @@ export default {
             })
             .then(response => {
                 localStorage.clear();
-                self.$router.push({ name: 'login' });
             })
-            .catch(error => {
-                alert(error.response.data.message)
-            });
         },
         saveNewPassword() {
 		    let self = this;
@@ -360,17 +344,17 @@ export default {
             });
         },
         setProfile() {
-            this.input.name = this.user?.attributes.name;
-            this.input.gender = this.user?.attributes.profile.gender;
-            this.input.age = this.user?.attributes.profile.age;
-            this.input.height = this.user?.attributes.profile.height;
-            this.input.currentWeight = this.user?.attributes.profile.current_weight;
-            this.input.desiredWeightGoal = this.user?.attributes.profile.desired_weight_goal;
-            this.input.gymExperience = this.user?.attributes.profile.gym_experience;
-            this.input.hoursOfSleepAtNight = this.user?.attributes.profile.hours_of_sleep_at_night;
-            this.input.stressLevelOutOf10 = this.user?.attributes.profile.stress_level_out_of_10;
-            this.input.medicationsSupplements = this.user?.attributes.profile.medications_supplements;
-            this.input.injuriesIllnesses = this.user?.attributes.profile.injuries_illnesses
+            this.input.name = this.user?.name;
+            this.input.gender = this.user?.profile.gender;
+            this.input.age = this.user?.profile.age;
+            this.input.height = this.user?.profile.height;
+            this.input.currentWeight = this.user?.profile.current_weight;
+            this.input.desiredWeightGoal = this.user?.profile.desired_weight_goal;
+            this.input.gymExperience = this.user?.profile.gym_experience;
+            this.input.hoursOfSleepAtNight = this.user?.profile.hours_of_sleep_at_night;
+            this.input.stressLevelOutOf10 = this.user?.profile.stress_level_out_of_10;
+            this.input.medicationsSupplements = this.user?.profile.medications_supplements;
+            this.input.injuriesIllnesses = this.user?.profile.injuries_illnesses
         },
         update() {
             let self = this;
@@ -408,7 +392,7 @@ export default {
         },
         updateUserProfile() {
             let self = this;
-            return axios.put(`${process.env.API_URL}/user-profiles/${self.user.attributes.profile.id}`, {
+            return axios.put(`${process.env.API_URL}/user-profiles/${self.user.profile.id}`, {
                     gender: self.input.gender,
                     age: self.input.age,
                     height: self.input.height,

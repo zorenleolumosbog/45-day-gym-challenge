@@ -33,7 +33,7 @@ export default {
             },
         })
         .then(response => {
-            if(!response.data.data.attributes.is_admin) {
+            if(!response.data.data.is_admin) {
                 self.$router.push({ name: 'login' });
             }
 

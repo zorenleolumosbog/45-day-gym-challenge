@@ -28,8 +28,8 @@
                         <tbody>
                             <tr v-for="record in records.data" :key="record">
                                 <th scope="row">{{ record.id }}</th>
-                                <td>{{ record.attributes.link }}</td>
-                                <td>{{ getToLocaleDateString(record.attributes.created_at) }}</td>
+                                <td>{{ record.link }}</td>
+                                <td>{{ getToLocaleDateString(record.created_at) }}</td>
                                 <td>
                                     <button @click="getRecord(record.id)" type="submit" class="action-btn" data-toggle="modal" data-target="#addTelegramLinkModal">Edit</button>
                                 </td>
@@ -124,7 +124,7 @@
                         </div>
                         <div class="register_page_form mx-4">
                             <div class="rp_form_single mb-4">
-                                <p>Are you sure you want to delete <strong>{{ selectedRecord?.attributes.link }}</strong>?</p>
+                                <p>Are you sure you want to delete <strong>{{ selectedRecord?.link }}</strong>?</p>
                             </div>
                         </div>
                     </div>
@@ -212,7 +212,7 @@ export default {
         getRecord(id: number) {
             selectedRecordStore.findRecord('id', this.records.data, id);
             this.selectedRecord = selectedRecordStore.record;
-            this.input.link = this.selectedRecord?.attributes.link;
+            this.input.link = this.selectedRecord?.link;
         },
         getRecords() {
             let self = this;

@@ -34,15 +34,8 @@
                                     <img src="@/assets/images/profile.png" alt=""><i class="fas fa-angle-down"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a @click="changePassword" data-toggle="modal" data-target="#changePasswordModal" class="dropdown-item text-left" href="javascript:void(0)">Change Pass</a></li>
-                                        <li>
-                                            <a @click="logout" class="d-flex dropdown-item text-left" href="javascript:void(0)" style="color: #e82222;">
-                                                Log Out
-                                                <div v-if="validation.logout" class="mt-2 spinner-grow spinner-grow-sm" role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                            </a>
-                                        </li>
+                                        <li><a @click="changePassword" data-toggle="modal" data-target="#changePasswordModal" class="dropdown-item text-left" href="javascript:void(0)">Change Password</a></li>
+                                        <li><a @click="logout" class="d-flex dropdown-item text-left" href="javascript:void(0)" style="color: #e82222;">Log Out</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -132,7 +125,6 @@ export default {
                 newPasswordConfirmation: '',
             },
             validation: {
-                logout: false,
                 loading: false,
                 success: {
                     message: null
@@ -153,8 +145,9 @@ export default {
             $('.dropdown-menu').toggleClass('show')
         },
         logout() {
-            this.validation.logout = true;
             let self = this;
+
+            self.$router.push({ name: 'login' });
             
             axios.get(`${process.env.API_URL}/logout`, {
                 headers: {
@@ -163,11 +156,7 @@ export default {
             })
             .then(response => {
                 localStorage.clear();
-                self.$router.push({ name: 'login' });
             })
-            .catch(error => {
-                alert(error.response.data.message)
-            });
         },
         changePassword() {
             $('.dropdown-toggle').removeClass('show')

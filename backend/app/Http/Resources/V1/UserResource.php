@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\V1;
 
-use App\Models\V1\Option;
 use App\Models\V1\UserWeeklyAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,19 +15,9 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $start_datetime = Option::where('name', 'start_datetime')->first()?->value;
-        $end_datetime = Option::where('name', 'end_datetime')->first()?->value;
-
-        $weekly_attachment = UserWeeklyAttachment::where('user_id', $this->id)
-                            ->when($start_datetime && $end_datetime, function ($query) use($start_datetime, $end_datetime) {
-                                $query->whereDate('created_at', '>=', $start_datetime)
-                                        ->whereDate('created_at', '<=', $end_datetime);
-                            })
-                            ->latest()
-                            ->first();
+        $weekly_attachment = UserWeeklyAttachment::where('user_id', $this->id)->latest()->first();
 
         $percentage = 0;
-
         if($this->profile()->first() && $weekly_attachment) {
             $percentage = (floatval($this->profile()->first()->desired_weight_goal) / floatval($weekly_attachment->weight)) * 100;
         } elseif($this->profile()->first()) {
@@ -37,21 +26,18 @@ class UserResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'type' => 'users',
-            'attributes' => [
-                'name' => $this->name,
-                'email' => $this->email,
-                'desired_weight_goal_percentage' => (string) $percentage,
-                'is_admin' => (string) $this->is_admin,
-                'logged_in_at' => $this->logged_in_at,
-                'telegram_link_url' => $this->telegram_link_url,
-                'profile' => $this->profile()->first(),
-                'weekly_attachments' => $this->weeklyAttachments()->with('weeklyAttachmentDetails')->get(),
-                'telegram_link' => $this->telegramLink()->first(),
-                'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at,
-                'deleted_at' => $this->deleted_at
-            ]
+            'name' => $this->name,
+            'email' => $this->email,
+            'desired_weight_goal_percentage' => (string) $percentage,
+            'is_admin' => (string) $this->is_admin,
+            'logged_in_at' => $this->logged_in_at,
+            'telegram_link_url' => $this->telegram_link_url,
+            'profile' => $this->profile()->first(),
+            'latest_weekly_attachments' => $this->latestWeeklyAttachment()->with('weeklyAttachmentDetails')->first(),
+            'telegram_link' => $this->telegramLink()->first(),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'deleted_at' => $this->deleted_at
         ];
     }
 }

@@ -58,7 +58,7 @@ export default {
         },
         getCoundownTimer(dateTimeString: any) {
             // Set the date and time to countdown to
-            let countdownDate = new Date(dateTimeString.attributes.value).getTime();
+            let countdownDate = new Date(dateTimeString.value).getTime();
 
             // Update the countdown every second
             let countdownInterval = setInterval(() => {

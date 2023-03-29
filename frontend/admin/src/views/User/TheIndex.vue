@@ -51,17 +51,17 @@
                         </thead>
                         <tbody>
                             <template v-for="record in records.data" :key="record">
-                                <tr v-if="!record.attributes.is_admin">
+                                <tr v-if="!record.is_admin">
                                     <th scope="row">{{ record.id }}</th>
-                                    <td>{{ record.attributes.name }}</td>
-                                    <td>{{ record.attributes.email }}</td>
+                                    <td>{{ record.name }}</td>
+                                    <td>{{ record.email }}</td>
                                     <td>
-                                        <a target="_blank" class="telegram-link" :href="record.attributes.telegram_link ? record.attributes.telegram_link.link : null">
-                                            {{ record.attributes.telegram_link?.link}}
+                                        <a target="_blank" class="telegram-link" :href="record.telegram_link ? record.telegram_link.link : null">
+                                            {{ record.telegram_link?.link}}
                                         </a>
                                     </td>
-                                    <td>{{ getToLocaleDateString(record.attributes.logged_in_at) }}</td>
-                                    <td>{{ getToLocaleDateString(record.attributes.created_at) }}</td>
+                                    <td>{{ getToLocaleDateString(record.logged_in_at) }}</td>
+                                    <td>{{ getToLocaleDateString(record.created_at) }}</td>
                                     <td>
                                         <button @click="getRecord(record.id); validation.showProfile = true;" type="submit" class="action-btn" data-toggle="modal">View</button>
                                     </td>
@@ -100,13 +100,13 @@
                                         <div class="col-md-6">
                                             <div class="rp_form_single mb-4">
                                                 <label for="rpfs3">Name</label>
-                                                <input type="text" readonly :value="selectedRecord?.attributes.name">
+                                                <input type="text" readonly :value="selectedRecord?.name">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="rp_form_single mb-4">
                                                 <label for="rpfs3">Email</label>
-                                                <input type="text" readonly :value="selectedRecord?.attributes.email">
+                                                <input type="text" readonly :value="selectedRecord?.email">
                                             </div>
                                         </div>
                                     </div>
@@ -114,19 +114,19 @@
                                         <div class="col-md-4">
                                             <div class="rp_form_single mb-4">
                                                 <label for="rpfs3">Telegram Link</label>
-                                                <input type="text" readonly :value="selectedRecord?.attributes.telegram_link?.link">
+                                                <input type="text" readonly :value="selectedRecord?.telegram_link?.link">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="rp_form_single mb-4">
                                                 <label for="rpfs3">Gender</label>
-                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.gender">
+                                                <input type="text" readonly :value="selectedRecord?.profile?.gender">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="rp_form_single mb-4">
                                                 <label for="rpfs3">Height</label>
-                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.height">
+                                                <input type="text" readonly :value="selectedRecord?.profile?.height">
                                             </div>
                                         </div>
                                     </div>
@@ -134,19 +134,19 @@
                                         <div class="col-md-4">
                                             <div class="rp_form_single mb-4">
                                                 <label for="rpfs3">Current Weight</label>
-                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.current_weight">
+                                                <input type="text" readonly :value="selectedRecord?.profile?.current_weight">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="rp_form_single mb-4">
                                                 <label for="rpfs3">Desired Weight Goal</label>
-                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.desired_weight_goal">
+                                                <input type="text" readonly :value="selectedRecord?.profile?.desired_weight_goal">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="rp_form_single mb-4">
                                                 <label for="rpfs3">Stress Level</label>
-                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.stress_level_out_of_10">
+                                                <input type="text" readonly :value="selectedRecord?.profile?.stress_level_out_of_10">
                                             </div>
                                         </div>
                                     </div>
@@ -154,13 +154,13 @@
                                         <div class="col-md-6">
                                             <div class="rp_form_single mb-4">
                                                 <label for="rpfs3">Hours of Sleep at Night</label>
-                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.hours_of_sleep_at_night">
+                                                <input type="text" readonly :value="selectedRecord?.profile?.hours_of_sleep_at_night">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="rp_form_single mb-4">
                                                 <label for="rpfs3">Gym Experience</label>
-                                                <input type="text" readonly :value="selectedRecord?.attributes.profile?.gym_experience">
+                                                <input type="text" readonly :value="selectedRecord?.profile?.gym_experience">
                                             </div>
                                         </div>
                                     </div>
@@ -168,20 +168,20 @@
                                         <div class="col-md-6">
                                             <div class="mic_single mb-4">
                                                 <label for="rpfs3">Medications Supplements</label>
-                                                <textarea readonly :value='selectedRecord?.attributes.profile?.medications_supplements'></textarea>
+                                                <textarea readonly :value='selectedRecord?.profile?.medications_supplements'></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mic_single mb-4">
                                                 <label for="rpfs3">Injuries Illnesses</label>
-                                                <textarea readonly :value="selectedRecord?.attributes.profile?.injuries_illnesses"></textarea>
+                                                <textarea readonly :value="selectedRecord?.profile?.injuries_illnesses"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <keep-alive>
-                                        <weekly-attachment :weeklyAttachments="selectedRecord?.attributes.weekly_attachments"></weekly-attachment>
+                                        <weekly-attachment :weeklyAttachments="selectedRecord?.weekly_attachments"></weekly-attachment>
                                     </keep-alive>
                                 </div>
                             </div>
@@ -225,16 +225,16 @@
                             </div>
                             <div class="rp_form_single mb-4">
                                 <label for="rpfs3">Name</label>
-                                <input type="text" readonly :value="selectedRecord?.attributes.name">
+                                <input type="text" readonly :value="selectedRecord?.name">
                             </div>
                             <div class="rp_form_single mb-4">
                                 <label for="rpfs3">Email</label>
-                                <input type="text" readonly :value="selectedRecord?.attributes.email">
+                                <input type="text" readonly :value="selectedRecord?.email">
                             </div>
                             <div class="rp_form_single mb-4">
                                 <label for="rpfs3">Enter Telegram Link</label>
                                 <select v-model="input.telegramLinkId">
-                                    <option :value="telegramRecord.id" v-for="telegramRecord in telegramRecords?.data" :key="telegramRecord">{{ telegramRecord.attributes.link }}</option>
+                                    <option :value="telegramRecord.id" v-for="telegramRecord in telegramRecords?.data" :key="telegramRecord">{{ telegramRecord.link }}</option>
                                 </select>
                             </div>
                         </div>
@@ -283,7 +283,7 @@
                         </div>
                         <div class="register_page_form mx-4">
                             <div class="rp_form_single mb-4">
-                                <p>Are you sure you want to delete <strong>{{ selectedRecord?.attributes.name }}</strong>?</p>
+                                <p>Are you sure you want to delete <strong>{{ selectedRecord?.name }}</strong>?</p>
                             </div>
                         </div>
                     </div>
@@ -402,7 +402,7 @@ export default {
         getRecord(id: number) {
             selectedRecordStore.findRecord('id', this.records.data, id);
             this.selectedRecord = selectedRecordStore.record;
-            this.input.telegramLinkId = this.selectedRecord?.attributes.telegram_link?.id;
+            this.input.telegramLinkId = this.selectedRecord?.telegram_link?.id;
         },
         getRecords() {
             let self = this;

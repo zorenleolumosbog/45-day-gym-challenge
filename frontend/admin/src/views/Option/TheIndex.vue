@@ -29,13 +29,13 @@
                     <div class="rsrbc_form_box">
                         <label for="start_datetime"><span>Start Date Time</span></label>
                         <div class="input_rtext">
-                            <input type="datetime-local" v-model="input.startDateTime" id="start_datetime">
+                            <input type="date" v-model="input.startDateTime" id="start_datetime">
                         </div>
                     </div>
                     <div class="rsrbc_form_box">
                         <label for="end_datetime"><span>End Date Time</span></label>
                         <div class="input_rtext">
-                            <input type="datetime-local" v-model="input.endDateTime" id="end_datetime">
+                            <input type="date" v-model="input.endDateTime" id="end_datetime">
                         </div>
                     </div>
                     <div class="rsrbc_form_box">
@@ -92,9 +92,9 @@ export default {
 
         Promise.all([self.getStartDatetime(), self.getEndDatetime(), self.getCurrentWeek()])
         .then(function ([startDateTime, endDateTime, currentWeek]) {
-            self.input.startDateTime = startDateTime.data.data.attributes.value;
-            self.input.endDateTime = endDateTime.data.data.attributes.value;
-            self.input.currentWeek = currentWeek.data.data.attributes.value;
+            self.input.startDateTime = startDateTime.data.data.value;
+            self.input.endDateTime = endDateTime.data.data.value;
+            self.input.currentWeek = currentWeek.data.data.value;
         });
     },
     methods: {

@@ -75,19 +75,29 @@ class UserWeeklyAttachmentDetailController extends Controller
     public function update(UserWeeklyAttachmentDetailRequest $request, UserWeeklyAttachmentDetail $user_weekly_attachment_detail)
     {
         $file = $request->file('file_weekly_photo');
-        $name = $file->hashName();
+        if($file) {
+            //Remove existing file
+            Storage::disk('public')->delete($user_weekly_attachment_detail->path);
 
-        $path = Storage::disk('public')->put(Carbon::now()->toDateString() . "/" . Auth::user()->id, $file);
-
-        $user_weekly_attachment_detail->update([
-            'name' => $name,
-            'file_name' => $file->getClientOriginalName(),
-            'mime_type' => $file->getClientMimeType(),
-            'path' => $path,
-            'url' => Storage::disk('public')->url($path),
-            'size' => $file->getSize(),
-            'description' => $request->description
-        ]);
+            //Update new file
+            $name = $file->hashName();
+    
+            $path = Storage::disk('public')->put(Carbon::now()->toDateString() . "/" . Auth::user()->id, $file);
+    
+            $user_weekly_attachment_detail->update([
+                'name' => $name,
+                'file_name' => $file->getClientOriginalName(),
+                'mime_type' => $file->getClientMimeType(),
+                'path' => $path,
+                'url' => Storage::disk('public')->url($path),
+                'size' => $file->getSize(),
+                'description' => $request->description
+            ]);
+        } else {
+            $user_weekly_attachment_detail->update([
+                'description' => $request->description
+            ]);
+        }
 
         return new UserWeeklyAttachmentDetailResource($user_weekly_attachment_detail);
     }

@@ -114,7 +114,7 @@
                                                             </div>
                                                             <div class="stress_bottext">
                                                                 <p>Lowest</p>
-                                                                <p>HIghest</p>
+                                                                <p>Highest</p>
                                                             </div>
                                                         </div>
                                                     </div>

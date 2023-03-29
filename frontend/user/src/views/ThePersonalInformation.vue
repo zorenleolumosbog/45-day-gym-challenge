@@ -38,9 +38,9 @@
                                                 </div>
                                                 <div class="pi_content_single">
                                                     <label for="">Height</label>
-                                                    <input v-model="input.height" type="number" placeholder="Enter Height">
+                                                    <input v-model="input.height" type="text" placeholder="Enter Height">
                                                     <div class="pi_content_single_text">
-                                                        <p>cm</p>
+                                                        <p>ft</p>
                                                     </div>
                                                 </div>
                                                 <div class="pi_content_single">

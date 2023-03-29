@@ -6,9 +6,9 @@
                 <div class="left_site_meter_top">
                     <h4>Weight Loss Goal</h4>
                     <p>{{ currentWeeklyAttachment 
-                            ? currentWeeklyAttachment?.attributes.weight
-                            : user?.attributes.weekly_attachments[0]?.weight 
-                            ? user?.attributes.weekly_attachments[0]?.weight : user?.attributes.profile.current_weight }}lbs <span>/ {{ user?.attributes.profile.desired_weight_goal }}lbs</span></p>
+                            ? currentWeeklyAttachment?.weight
+                            : user?.latest_weekly_attachments?.weight 
+                            ? user?.latest_weekly_attachments?.weight : user?.profile.current_weight }}lbs <span>/ {{ user?.profile.desired_weight_goal }}lbs</span></p>
                 </div>
                 <div class="left_site_meter_progress">
                     <!-- <div class="left_site_meter_progress_img">
@@ -41,7 +41,7 @@
                         <li><a href="#" class="lsm_active">
                             <span class="lsmmw">
                                 <img src="@/assets/images/home.png" alt="">
-                                <span>Home {{ user?.attributes.name }}</span>
+                                <span>Home</span>
                             </span>
                         </a></li>
                         <li><a href="#">
@@ -59,7 +59,7 @@
                         <li><a href="#">
                             <span class="lsmmw">
                                 <img src="@/assets/images/weight.png" alt="">
-                                <span>Weigh Calculator</span>
+                                <span>Weight Calculator</span>
                             </span>
                         </a></li>
                         <li><a href="#">
@@ -71,7 +71,7 @@
                         <li><a href="#">
                             <span class="lsmmw">
                                 <img src="@/assets/images/blog.png" alt="">
-                                <span>BLog</span>
+                                <span>Blog</span>
                             </span>
                         </a></li>
                     </ul>
@@ -108,7 +108,7 @@
                     <div class="left_site_social_links">
                         <ul>
                             <li><a href="#">About</a></li>
-                            <li><a target="_blank" :href="user?.attributes.telegram_link ? user?.attributes.telegram_link.link  : user?.attributes.telegram_link_url">Telegram Link</a></li>
+                            <li><a href="#">Telegram Link</a></li>
                             <li><a href="#">Blog</a></li>
                             <li><a href="#">Faq</a></li>
                         </ul>
@@ -143,15 +143,15 @@ export default {
         getDesiredWeightGoalPercentage(min: number, max: number) {
             let desiredWeightGoalPercentage = 0;
             if(this.currentWeeklyAttachment) {
-                if(this.user.attributes.profile.desired_weight_goal > this.currentWeeklyAttachment.attributes.weight) {
+                if(this.user.profile.desired_weight_goal > this.currentWeeklyAttachment.weight) {
                     return max;
                 }
-                desiredWeightGoalPercentage = parseFloat(this.currentWeeklyAttachment.attributes.desired_weight_goal_percentage);
+                desiredWeightGoalPercentage = parseFloat(this.currentWeeklyAttachment.desired_weight_goal_percentage);
             } else {
-                if(this.user.attributes.profile.desired_weight_goal > this.user?.attributes.weekly_attachments[0]?.weight) {
+                if(this.user.profile.desired_weight_goal > this.user?.latest_weekly_attachments?.weight) {
                     return max;
                 }
-                desiredWeightGoalPercentage = parseFloat(this.user.attributes.desired_weight_goal_percentage);
+                desiredWeightGoalPercentage = parseFloat(this.user.desired_weight_goal_percentage);
             }
 
             return (desiredWeightGoalPercentage / 100) * (max - min) + min;

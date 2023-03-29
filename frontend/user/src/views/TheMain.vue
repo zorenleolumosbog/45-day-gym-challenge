@@ -19,7 +19,7 @@ export default {
     data() {
         return {
             datum: {
-                user: null
+                user: null,
             }
         }
     },
@@ -32,11 +32,11 @@ export default {
             },
         })
         .then(response => {
-            if(!response.data.data.attributes.profile) {
+            if(!response.data.data.profile) {
                 self.$router.push({ name: 'gender' });
+            } else {
+                self.datum.user = response.data.data;
             }
-
-            self.datum.user = response.data.data;
         })
         .catch(error => {
             self.$router.push({ name: 'login' });

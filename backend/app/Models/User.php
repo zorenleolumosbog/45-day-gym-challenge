@@ -66,19 +66,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the weekly attachments associated with the user.
+     * Get the latest weekly attachments associated with the user.
      */
-    public function weeklyAttachments(): HasMany
+    public function latestWeeklyAttachment(): HasOne
     {
-        $start_datetime = Option::where('name', 'start_datetime')->first()?->value;
-        $end_datetime = Option::where('name', 'end_datetime')->first()?->value;
-
-        return $this->hasMany(UserWeeklyAttachment::class)
-                    ->when($start_datetime && $end_datetime, function ($query) use($start_datetime, $end_datetime) {
-                        $query->whereDate('created_at', '>=', $start_datetime)
-                                ->whereDate('created_at', '<=', $end_datetime);
-                    })
-                    ->orderBy('created_at', 'desc');
+        return $this->hasOne(UserWeeklyAttachment::class)->latest();
     }
 
     /**

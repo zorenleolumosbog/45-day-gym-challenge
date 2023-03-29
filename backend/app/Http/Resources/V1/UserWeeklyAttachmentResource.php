@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Models\V1\Option;
+use App\Models\V1\UserWeeklyAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
@@ -22,19 +24,27 @@ class UserWeeklyAttachmentResource extends JsonResource
             $percentage = (floatval($user_profile->desired_weight_goal) / floatval($this->weight)) * 100;
         }
 
+        $start_datetime = Option::where('name', 'start_datetime')->first()?->value;
+        $end_datetime = Option::where('name', 'end_datetime')->first()?->value;
+
+        $status = UserWeeklyAttachment::when($start_datetime && $end_datetime, function ($query) use($start_datetime, $end_datetime) {
+                    $query->whereDate('created_at', '>=', $start_datetime)
+                            ->whereDate('created_at', '<=', $end_datetime);
+                })
+                ->where('id', $this->id)
+                ->first();
+
         return [
             'id' => $this->id,
-            'type' => 'user_weekly_attachments',
-            'attributes' => [
-                'weight' => $this->weight,
-                'description' => $this->description,
-                'week_number' => $this->week_number,
-                'desired_weight_goal_percentage' => (string) $percentage,
-                'user_weekly_attachment_details' => $this->weeklyAttachmentDetails()->get(),
-                'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at,
-                'deleted_at' => $this->deleted_at
-            ]
+            'lock' => $status ? false : true,
+            'weight' => $this->weight,
+            'description' => $this->description,
+            'week_number' => $this->week_number,
+            'desired_weight_goal_percentage' => (string) $percentage,
+            'weekly_attachment_details' => UserWeeklyAttachmentDetailResource::collection($this->weeklyAttachmentDetails),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'deleted_at' => $this->deleted_at
         ];
     }
 }
