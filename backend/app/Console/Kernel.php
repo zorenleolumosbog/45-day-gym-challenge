@@ -17,12 +17,12 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $start_datetime = Option::where('name', 'start_datetime')->first();
             $start_datetime->update([
-                'value' => Carbon::today()->startOfDay()
+                'value' => Carbon::today()->toDateString()
             ]);
             
             $end_datetime = Option::where('name', 'end_datetime')->first();
             $end_datetime->update([
-                'value' => Carbon::today()->addDays(7)->startOfDay()
+                'value' => Carbon::today()->addDays(7)->toDateString()
             ]);
 
             Option::where('name', 'current_week')

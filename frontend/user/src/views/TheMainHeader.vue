@@ -19,7 +19,7 @@
                                 <div class="header_top_link">
                                     <ul>
                                         <li><a href="mailto:info@epictransformation.com"><i class="fas fa-envelope"></i>info@epictransformation.com</a></li>
-                                        <li><a href="#"><i class="fab fa-telegram"></i>epictransformationchallenge</a></li>
+                                        <li><a :href="telegram?.value"><i class="fab fa-telegram"></i>epictransformationchallenge</a></li>
                                     </ul>
                                 </div>
                                 <div class="header_top_dropdown">
@@ -284,6 +284,7 @@ export default {
                 medicationsSupplements: '',
                 injuriesIllnesses: ''
             },
+            telegram: null,
             selectOptions : {
                 gender: ['male', 'female'],
                 stressLevelOutOf10: [1,2,3,4,5,6,7,8,9,10],
@@ -300,6 +301,21 @@ export default {
         }
     },
     props: ['user'],
+    mounted() {
+        let self = this;
+            
+        axios.get(`${process.env.API_URL}/option-get-value-by-name`, {
+            params: { 
+                name: 'link_telegram' 
+            }, 
+            headers: {
+                Authorization: `Bearer ${authStore.accessToken}`,
+            },
+        })
+        .then(response => {
+            self.telegram = response.data.data;
+        });
+    },
     methods:{
         logout() {
             let self = this;

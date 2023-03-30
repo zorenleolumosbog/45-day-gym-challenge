@@ -41,7 +41,7 @@
                                             <h4>You Have  </h4>
                                         </div>
                                         <div class="rstremaining_treml_time">
-                                            <the-countdown-timer @displayPosting="(val) => validation.displayPosting = val"></the-countdown-timer>
+                                            <the-countdown-timer @resetPosting="resetPosting()"></the-countdown-timer>
                                         </div>
                                     </div>
                                     <div class="rstremaining_trem_right">
@@ -326,8 +326,7 @@ export default {
     },
     props: ['user'],
     mounted() {
-        this.getCurrentWeek();
-        this.getUserWeeklyAttachments();
+        this.resetPosting();
     },
     methods: {
         getCurrentWeek() {
@@ -384,9 +383,13 @@ export default {
             return localeStore.toLocaleDateNowString;
         },
         getToLocaleDateString(dateString: string) {
-            localeStore.setToLocaleDateString(dateString);
-
-            return localeStore.toLocaleDateString;
+            const event = new Date(dateString);
+            
+            return event.toLocaleDateString(undefined, {  
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
         },
         handleFileFrontPhotoAttachment(event: any) {
             const file = event.target.files[0];
@@ -409,6 +412,10 @@ export default {
             }
 
             return 0;
+        },
+        resetPosting() {
+            this.getCurrentWeek();
+            this.getUserWeeklyAttachments();
         },
         storeWeeklyAttachments() {
             let self = this;

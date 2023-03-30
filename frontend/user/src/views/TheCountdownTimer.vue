@@ -28,10 +28,7 @@
 </template>
 
 <script lang="ts">
-
 import axios from 'axios';
-import { userAuth } from '../stores/index';
-const authStore = userAuth();
 
 export default {
     data() {
@@ -45,28 +42,27 @@ export default {
         }
     },
     mounted() {
-        this.getCurrentEndDateTime();
+        this.getCurrentEndDateTime();  
     },
     methods: {
         getCurrentEndDateTime() {
             let self = this;
-            
             axios.get(`${process.env.API_URL}/end-datetime`)
-            .then(response => {
-                self.getCoundownTimer(response.data.data);
-            });
+            .then(function (response) {
+                self.getCoundownTimer(response.data.data.value);
+            })
         },
-        getCoundownTimer(dateTimeString: any) {
+        getCoundownTimer(endDate: string) {
             // Set the date and time to countdown to
-            let countdownDate = new Date(dateTimeString.value).getTime();
+            let countdownEnd = new Date(endDate).getTime();
 
             // Update the countdown every second
             let countdownInterval = setInterval(() => {
-                // Get the current date and time
+                // Get the start date and time
                 let now = new Date().getTime();
 
                 // Calculate the difference between the countdown date and the current date
-                let difference = countdownDate - now;
+                let difference = countdownEnd - now;
 
                 // Calculate the days, hours, minutes, and seconds until the countdown date
                 let days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -86,14 +82,15 @@ export default {
                 // If the countdown is over, clear the interval
                 if (difference < 0) {
                     clearInterval(countdownInterval);
-                    this.$emit('displayPosting', false);
-
-                    return this.countdown = {
+                    this.countdown = {
                         days: 0,
                         hours: 0,
                         minutes: 0,
                         seconds: 0
                     }
+
+                    this.getCurrentEndDateTime();
+                    this.$emit('resetPosting');
                 }
             }, 1000);
         }

@@ -80,7 +80,7 @@
                 <div class="left_site_items_all">
                     <template v-for="sidebarLink in sidebarLinks?.data" :key="sidebarLink">
                         <a :href="sidebarLink.link">
-                            <div class="left_site_item_single">
+                            <div class="left_site_item_single" v-bind:style="{'background-color': sidebarLink.bg_color ? sidebarLink.bg_color : null}">
                                 <span><img :src="sidebarLink.url" alt=""></span>
                                 <p>{{ sidebarLink.title }}</p>
                             </div>
@@ -189,15 +189,9 @@ export default {
     },
     methods: {
         getSidebarLinks() {
-            let self = this;
-
-            return axios.get(`${process.env.API_URL}/sidebar-links`, {
+            return axios.get(`${process.env.API_URL}/extra-links`, {
                 headers: {
                     Authorization: `Bearer ${authStore.accessToken}`,
-                },
-                params: {
-                    page: self.pagination.current,
-                    limit: self.pagination.limit
                 }
             })
         },

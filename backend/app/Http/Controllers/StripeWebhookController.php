@@ -52,7 +52,7 @@ class StripeWebhookController extends Controller
 
                 $user = User::where('email', $customer->email)->first();
                 if(!$user) {
-                    $password = Str::random(8);
+                    $password = Str::random(12);
     
                     User::create([
                         'name' => $customer->name,

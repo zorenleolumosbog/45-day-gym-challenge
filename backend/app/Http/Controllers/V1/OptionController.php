@@ -48,6 +48,13 @@ class OptionController extends Controller
         return new OptionResource($option);
     }
 
+    public function getGoogleTrackingId(Option $option)
+    {
+        $option = Option::where('name', 'google_analytics_id')->first();
+
+        return new OptionResource($option);
+    }
+
     public function showStartDatetime()
     {
         $option = Option::where('name', 'start_datetime')->first();

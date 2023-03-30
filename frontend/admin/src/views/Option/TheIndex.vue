@@ -7,9 +7,9 @@
         </div>
         <!-- Start Time Remaining Section -->
         <div class="right_site_time_remaining_main">
-            <div class="right_site_remaining_bottom_contents">
+            <div class="right_site_remaining_bottom_contents pt-4">
                 <div style="margin-left: -22px" v-if="input.start_datetime === '' || input.end_datetime === '' || input.current_week === ''">
-                    <input-loader :width="676"></input-loader>
+                    <input-loader :width="400"></input-loader>
                 </div>
                 <div v-else class="rsrbc_form">
                     <div v-if="validation.success.message" class="mt-4 alert alert-success alert-dismissible fade show" role="alert">
@@ -49,7 +49,7 @@
                             </div>
                             <h4 class="mt-5">Google Analytics</h4>
                             <div class="rsrbc_form_box">
-                                <label for="google_analytics_id"><span>Google Analytics ID</span></label>
+                                <label for="google_analytics_id"><span>Google Analytics Tracking ID</span></label>
                                 <div class="input_rtext">
                                     <input type="text" v-model="input.google_analytics_id" id="google_analytics_id">
                                 </div>
@@ -298,12 +298,13 @@ export default {
             return localeStore.toLocaleDateString;
         },
         updateOption() {
-            this.validation.loading = true;
+            let self = this;
+            let counter = 0;
+            self.validation.loading = true;
 
-            const object = this.input;
+            const object = self.input;
             for (const index in object) {
-                let self = this.
-
+                counter++;
                 axios.patch(`${process.env.API_URL}/option-update-value-by-name`, {
                         name: index,
                         value: object[index]
@@ -312,6 +313,14 @@ export default {
                         Authorization: `Bearer ${authStore.accessToken}`,
                     },
                 })
+                .then(response => {
+                    if(counter === 22) {
+                        self.validation.loading = false;
+                        self.validation.success.message = 'Successfully updated!';
+
+                        document.getElementById('app')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                })
                 .catch(error => {
                     self.validation.loading = false;
                     self.validation.errors = error.response.data.errors;
@@ -319,9 +328,6 @@ export default {
                     return true;
                 });
             }
-            
-            this.validation.loading = false;
-            this.validation.success.message = 'Successfully updated!'
         }
     }
 }

@@ -28,6 +28,8 @@ Route::prefix('v1')->group(function() {
     
     Route::post('/forgot-password', [UserController::class, 'forgotPassword']);
     Route::post('/reset-password', [UserController::class, 'resetPassword']);
+    
+    Route::get('/google-tracking-id', [OptionController::class, 'getGoogleTrackingId']);
 });
 
 Route::middleware('auth:api')->prefix('v1')->group(function() {
@@ -40,6 +42,7 @@ Route::middleware(['auth:api', 'user'])->prefix('v1')->group(function() {
     Route::apiResource('/user-profiles', UserProfileController::class);
     Route::apiResource('/user-weekly-attachments', UserWeeklyAttachmentController::class);
     Route::apiResource('/user-weekly-attachment-details', UserWeeklyAttachmentDetailController::class);
+    Route::get('/extra-links', [SidebarLinkController::class, 'index']);
     Route::get('/option-get-value-by-name', [OptionController::class, 'getValueByName']);
 });
 
