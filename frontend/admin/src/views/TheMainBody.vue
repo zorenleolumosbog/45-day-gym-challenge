@@ -19,6 +19,7 @@
 import TheMainSidebar from './TheMainSidebar.vue'
 import TheUser from './User/TheIndex.vue'
 import TheTelegramLink from './TelegramLink/TheIndex.vue'
+import TheSidebarLink from './SidebarLink/TheIndex.vue'
 import TheOption from './Option/TheIndex.vue'
 
 export default {
@@ -26,6 +27,7 @@ export default {
         TheMainSidebar,
         TheUser,
         TheTelegramLink,
+        TheSidebarLink,
         TheOption
     },
     data() {

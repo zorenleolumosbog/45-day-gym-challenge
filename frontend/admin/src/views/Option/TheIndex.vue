@@ -8,7 +8,7 @@
         <!-- Start Time Remaining Section -->
         <div class="right_site_time_remaining_main">
             <div class="right_site_remaining_bottom_contents">
-                <div style="margin-left: -22px" v-if="input.startDateTime === '' || input.endDateTime === '' || input.currentWeek === ''">
+                <div style="margin-left: -22px" v-if="input.start_datetime === '' || input.end_datetime === '' || input.current_week === ''">
                     <input-loader :width="676"></input-loader>
                 </div>
                 <div v-else class="rsrbc_form">
@@ -26,30 +26,166 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="rsrbc_form_box">
-                        <label for="start_datetime"><span>Start Date Time</span></label>
-                        <div class="input_rtext">
-                            <input type="date" v-model="input.startDateTime" id="start_datetime">
+                    <div class="row">
+                        <div class="col-md-3 mb-5">
+                            <h4>Current Timer</h4>
+                            <div class="rsrbc_form_box">
+                                <label for="start_datetime"><span>Start Date Time</span></label>
+                                <div class="input_rtext">
+                                    <input type="date" v-model="input.start_datetime" id="start_datetime">
+                                </div>
+                            </div>
+                            <div class="rsrbc_form_box">
+                                <label for="end_datetime"><span>End Date Time</span></label>
+                                <div class="input_rtext">
+                                    <input type="date" v-model="input.end_datetime" id="end_datetime">
+                                </div>
+                            </div>
+                            <div class="rsrbc_form_box">
+                                <label for="current_week"><span>Current Week</span></label>
+                                <div class="input_rtext">
+                                    <input type="number" v-model="input.current_week" id="current_week">
+                                </div>
+                            </div>
+                            <h4 class="mt-5">Google Analytics</h4>
+                            <div class="rsrbc_form_box">
+                                <label for="google_analytics_id"><span>Google Analytics ID</span></label>
+                                <div class="input_rtext">
+                                    <input type="text" v-model="input.google_analytics_id" id="google_analytics_id">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-5">
+                            <h4>Weeks Description</h4>
+                            <div class="rsrbc_form_box">
+                                <label for="week1_description"><span>Week 1</span></label>
+                                <div class="input_rtext">
+                                    <input type="text" v-model="input.week1_description" id="week1_description">
+                                </div>
+                            </div>
+                            <div class="rsrbc_form_box">
+                                <label for="week2_description"><span>Week 2</span></label>
+                                <div class="input_rtext">
+                                    <input type="text" v-model="input.week2_description" id="week2_description">
+                                </div>
+                            </div>
+                            <div class="rsrbc_form_box">
+                                <label for="week3_description"><span>Week 3</span></label>
+                                <div class="input_rtext">
+                                    <input type="text" v-model="input.week3_description" id="week3_description">
+                                </div>
+                            </div>
+                            <div class="rsrbc_form_box">
+                                <label for="week4_description"><span>Week 41</span></label>
+                                <div class="input_rtext">
+                                    <input type="text" v-model="input.week4_description" id="week4_description">
+                                </div>
+                            </div>
+                            <div class="rsrbc_form_box">
+                                <label for="week5_description"><span>Week 5</span></label>
+                                <div class="input_rtext">
+                                    <input type="text" v-model="input.week5_description" id="week5_description">
+                                </div>
+                            </div>
+                            <div class="rsrbc_form_box">
+                                <label for="week6_description"><span>Week 6</span></label>
+                                <div class="input_rtext">
+                                    <input type="text" v-model="input.week6_description" id="week6_description">
+                                </div>
+                            </div>
+                            <div class="rsrbc_form_box">
+                                <label for="week7_description"><span>Week 7</span></label>
+                                <div class="input_rtext">
+                                    <input type="text" v-model="input.week7_description" id="week7_description">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Links</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="rsrbc_form_box">
+                                        <label for="link_weekly_photos"><span>Weekly Photos</span></label>
+                                        <div class="input_rtext">
+                                            <input type="text" v-model="input.link_weekly_photos" id="link_weekly_photos">
+                                        </div>
+                                    </div>
+                                    <div class="rsrbc_form_box">
+                                        <label for="link_daily_routine"><span>Daily Routine</span></label>
+                                        <div class="input_rtext">
+                                            <input type="text" v-model="input.link_daily_routine" id="link_daily_routine">
+                                        </div>
+                                    </div>
+                                    <div class="rsrbc_form_box">
+                                        <label for="link_weight_calculator"><span>Weight Calculator</span></label>
+                                        <div class="input_rtext">
+                                            <input type="text" v-model="input.link_weight_calculator" id="link_weight_calculator">
+                                        </div>
+                                    </div>
+                                    <div class="rsrbc_form_box">
+                                        <label for="link_telegram"><span>Telegram</span></label>
+                                        <div class="input_rtext">
+                                            <input type="text" v-model="input.link_telegram" id="link_telegram">
+                                        </div>
+                                    </div>
+                                    <div class="rsrbc_form_box">
+                                        <label for="link_blog"><span>Blog</span></label>
+                                        <div class="input_rtext">
+                                            <input type="text" v-model="input.link_blog" id="link_blog">
+                                        </div>
+                                    </div>
+                                    <div class="rsrbc_form_box">
+                                        <label for="link_about"><span>About</span></label>
+                                        <div class="input_rtext">
+                                            <input type="text" v-model="input.link_about" id="link_about">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="rsrbc_form_box">
+                                        <label for="link_faq"><span>Faq</span></label>
+                                        <div class="input_rtext">
+                                            <input type="text" v-model="input.link_faq" id="link_faq">
+                                        </div>
+                                    </div>
+                                    <div class="rsrbc_form_box">
+                                        <label for="link_facebook"><span>Facebook</span></label>
+                                        <div class="input_rtext">
+                                            <input type="text" v-model="input.link_facebook" id="link_facebook">
+                                        </div>
+                                    </div>
+                                    <div class="rsrbc_form_box">
+                                        <label for="link_twitter"><span>Twitter</span></label>
+                                        <div class="input_rtext">
+                                            <input type="text" v-model="input.link_twitter" id="link_twitter">
+                                        </div>
+                                    </div>
+                                    <div class="rsrbc_form_box">
+                                        <label for="link_youtube"><span>Youtube</span></label>
+                                        <div class="input_rtext">
+                                            <input type="text" v-model="input.link_youtube" id="link_youtube">
+                                        </div>
+                                    </div>
+                                    <div class="rsrbc_form_box">
+                                        <label for="link_linkedin"><span>Linkedin</span></label>
+                                        <div class="input_rtext">
+                                            <input type="text" v-model="input.link_linkedin" id="link_linkedin">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="rsrbc_form_box">
-                        <label for="end_datetime"><span>End Date Time</span></label>
-                        <div class="input_rtext">
-                            <input type="date" v-model="input.endDateTime" id="end_datetime">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="rsrbc_form_btn w-25 float-right">
+                                <input v-if="!validation.loading" type="submit" value="SAVE" @click="updateOption">
+                                <button v-if="validation.loading" type="submit" disabled>
+                                    <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
+                                    Loading...
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="rsrbc_form_box">
-                        <label for="current_week"><span>Current Week</span></label>
-                        <div class="input_rtext">
-                            <input type="number" v-model="input.currentWeek" id="current_week">
-                        </div>
-                    </div>
-                    <div class="rsrbc_form_btn w-25">
-                        <input v-if="!validation.loading" type="submit" value="SAVE" @click="updateOption">
-                        <button v-if="validation.loading" type="submit" disabled>
-                            <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
-                            Loading...
-                        </button>
                     </div>
                 </div>
             </div>
@@ -74,9 +210,28 @@ export default {
     data() {
         return {
             input: {
-                startDateTime: '',
-                endDateTime: '',
-                currentWeek:''
+                google_analytics_id: '',
+                start_datetime: '',
+                end_datetime: '',
+                current_week:'',
+                week1_description:'',
+                week2_description:'',
+                week3_description:'',
+                week4_description:'',
+                week5_description:'',
+                week6_description:'',
+                week7_description:'',
+                link_weekly_photos: '',
+                link_daily_routine: '',
+                link_weight_calculator: '',
+                link_telegram: '',
+                link_blog: '',
+                link_about: '',
+                link_faq: '',
+                link_facebook: '',
+                link_twitter: '',
+                link_youtube: '',
+                link_linkedin: ''
             },
             validation: {
                 loading: false,
@@ -90,34 +245,47 @@ export default {
     mounted() {
         let self = this;
 
-        Promise.all([self.getStartDatetime(), self.getEndDatetime(), self.getCurrentWeek()])
-        .then(function ([startDateTime, endDateTime, currentWeek]) {
-            self.input.startDateTime = startDateTime.data.data.value;
-            self.input.endDateTime = endDateTime.data.data.value;
-            self.input.currentWeek = currentWeek.data.data.value;
+        axios.get(`${process.env.API_URL}/options`, {
+            headers: {
+                Authorization: `Bearer ${authStore.accessToken}`,
+            },
+        })
+        .then(response => {
+            self.setOptions(response.data.data);
+            self.validation.loading = false;
         });
     },
     methods: {
-        getStartDatetime() {
-            return axios.get(`${process.env.API_URL}/option-get-value-by-name?name=start_datetime`, {
-                        headers: {
-                            Authorization: `Bearer ${authStore.accessToken}`,
-                        },
-                    });
+        setOptions(data: any) {
+            this.input.google_analytics_id = this.findRecord('name', data, 'google_analytics_id')?.value;
+            this.input.start_datetime = this.findRecord('name', data, 'start_datetime')?.value;
+            this.input.end_datetime = this.findRecord('name', data, 'end_datetime')?.value;
+            this.input.current_week = this.findRecord('name', data, 'current_week')?.value;
+            this.input.week1_description = this.findRecord('name', data, 'week1_description')?.value;
+            this.input.week2_description = this.findRecord('name', data, 'week2_description')?.value;
+            this.input.week3_description = this.findRecord('name', data, 'week3_description')?.value;
+            this.input.week4_description = this.findRecord('name', data, 'week4_description')?.value;
+            this.input.week5_description = this.findRecord('name', data, 'week5_description')?.value;
+            this.input.week6_description = this.findRecord('name', data, 'week6_description')?.value;
+            this.input.week7_description = this.findRecord('name', data, 'week7_description')?.value;
+            this.input.link_weekly_photos = this.findRecord('name', data, 'link_weekly_photos')?.value;
+            this.input.link_daily_routine = this.findRecord('name', data, 'link_daily_routine')?.value;
+            this.input.link_weight_calculator = this.findRecord('name', data, 'link_weight_calculator')?.value;
+            this.input.link_telegram = this.findRecord('name', data, 'link_telegram')?.value;
+            this.input.link_blog = this.findRecord('name', data, 'link_blog')?.value;
+            this.input.link_about = this.findRecord('name', data, 'link_about')?.value;
+            this.input.link_faq = this.findRecord('name', data, 'link_faq')?.value;
+            this.input.link_facebook = this.findRecord('name', data, 'link_facebook')?.value;
+            this.input.link_twitter = this.findRecord('name', data, 'link_twitter')?.value;
+            this.input.link_youtube = this.findRecord('name', data, 'link_youtube')?.value;
+            this.input.link_linkedin = this.findRecord('name', data, 'link_linkedin')?.value;
         },
-        getEndDatetime() {
-            return axios.get(`${process.env.API_URL}/option-get-value-by-name?name=end_datetime`, {
-                        headers: {
-                            Authorization: `Bearer ${authStore.accessToken}`,
-                        },
-                    });
-        },
-        getCurrentWeek() {
-            return axios.get(`${process.env.API_URL}/option-get-value-by-name?name=current_week`, {
-                        headers: {
-                            Authorization: `Bearer ${authStore.accessToken}`,
-                        },
-                    });
+        findRecord(key: string, heystack: any, needle: string) {
+            let response = heystack.filter((el: any) => {
+                return el[key] == needle;
+            })[0];
+
+            return response;
         },
         getToLocaleDateNowString() {
             localeStore.setToLocaleDateNowString();
@@ -130,52 +298,38 @@ export default {
             return localeStore.toLocaleDateString;
         },
         updateOption() {
-            let self = this;
-            self.validation.loading = true;
+            this.validation.loading = true;
 
-            Promise.all([this.updateStartDatetime(), this.updateEndDatetime(), this.updateCurrentWeek()])
-            .then(function ([startDateTime, endDateTime, currentWeek]) {
-                self.validation.loading = false;
-                self.validation.success.message = 'Successfully updated!'
-            })
-            .catch(error => {
-                self.validation.loading = false;
-                self.validation.errors = error.response.data.errors;
-            });
-        },
-        updateStartDatetime() {
-            let self = this;
-            return axios.patch(`${process.env.API_URL}/option-update-value-by-name`, {
-                        name: "start_datetime",
-                        value: self.input.startDateTime
+            const object = this.input;
+            for (const index in object) {
+                let self = this.
+
+                axios.patch(`${process.env.API_URL}/option-update-value-by-name`, {
+                        name: index,
+                        value: object[index]
                     }, {
-                        headers: {
-                            Authorization: `Bearer ${authStore.accessToken}`,
-                        },
-                    });
-        },
-        updateEndDatetime() {
-            let self = this;
-            return axios.patch(`${process.env.API_URL}/option-update-value-by-name`, {
-                        name: "end_datetime",
-                        value: self.input.endDateTime
-                    }, {
-                        headers: {
-                            Authorization: `Bearer ${authStore.accessToken}`,
-                        },
-                    });
-        },
-        updateCurrentWeek() {
-            let self = this;
-            return axios.patch(`${process.env.API_URL}/option-update-value-by-name`, {
-                        name: "current_week",
-                        value: self.input.currentWeek
-                    }, {
-                        headers: {
-                            Authorization: `Bearer ${authStore.accessToken}`,
-                        },
-                    });
-        },
+                    headers: {
+                        Authorization: `Bearer ${authStore.accessToken}`,
+                    },
+                })
+                .catch(error => {
+                    self.validation.loading = false;
+                    self.validation.errors = error.response.data.errors;
+                    
+                    return true;
+                });
+            }
+            
+            this.validation.loading = false;
+            this.validation.success.message = 'Successfully updated!'
+        }
     }
 }
 </script>
+
+<style scoped>
+    .rsrbc_form_box input {
+        width: 100%;
+        height: 44px;
+    }
+</style>

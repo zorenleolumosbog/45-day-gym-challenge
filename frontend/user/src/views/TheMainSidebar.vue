@@ -78,30 +78,14 @@
                 </div>
 
                 <div class="left_site_items_all">
-                    <div class="left_site_item_single">
-                        <span><img src="@/assets/images/healthy.png" alt=""></span>
-                        <p>Healthy Diet Plan</p>
-                    </div>
-                    <div class="left_site_item_single lsis2">
-                        <span><img src="@/assets/images/fitness.png" alt=""></span>
-                        <p>Fitness Habit Tracker</p>
-                    </div>
-                    <div class="left_site_item_single lsis3">
-                        <span><img src="@/assets/images/wake.png" alt=""></span>
-                        <p>Wake up Alarm</p>
-                    </div>
-                    <div class="left_site_item_single lsis4">
-                        <span><img src="@/assets/images/daily2.png" alt=""></span>
-                        <p>Daily Sleep Schedule</p>
-                    </div>
-                    <div class="left_site_item_single lsis5">
-                        <span><img src="@/assets/images/water.png" alt=""></span>
-                        <p>Water Intake Plan</p>
-                    </div>
-                    <div class="left_site_item_single lsis6">
-                        <span><img src="@/assets/images/health.png" alt=""></span>
-                        <p>Health Tips & Tricks</p>
-                    </div>
+                    <template v-for="sidebarLink in sidebarLinks?.data" :key="sidebarLink">
+                        <a :href="sidebarLink.link">
+                            <div class="left_site_item_single">
+                                <span><img :src="sidebarLink.url" alt=""></span>
+                                <p>{{ sidebarLink.title }}</p>
+                            </div>
+                        </a>
+                    </template>
                 </div>
 
                 <div class="left_site_social_link_and_followus">
@@ -153,7 +137,8 @@ export default {
             linkFacebook: '',
             linkTwitter: '',
             linkYoutube: '',
-            linkLinkedin: ''
+            linkLinkedin: '',
+            sidebarLinks: null,
         }
     },
     props: ['user', 'currentWeeklyAttachment'],
@@ -171,7 +156,8 @@ export default {
             self.getFacebook(),
             self.getTwitter(),
             self.getYoutube(),
-            self.getLinkedin()
+            self.getLinkedin(),
+            self.getSidebarLinks()
         ])
         .then(function ([
             linkWeeklyPhotos, 
@@ -184,7 +170,8 @@ export default {
             linkFacebook,
             linkTwitter,
             linkYoutube,
-            linkLinkedin
+            linkLinkedin,
+            sidebarLinks
         ]) {
             self.linkWeeklyPhotos = linkWeeklyPhotos.data.data.value;
             self.linkDailyRoutine = linkDailyRoutine.data.data.value;
@@ -197,9 +184,23 @@ export default {
             self.linkTwitter = linkTwitter.data.data.value;
             self.linkYoutube = linkYoutube.data.data.value;
             self.linkLinkedin = linkLinkedin.data.data.value;
+            self.sidebarLinks = sidebarLinks.data;
         });
     },
     methods: {
+        getSidebarLinks() {
+            let self = this;
+
+            return axios.get(`${process.env.API_URL}/sidebar-links`, {
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                },
+                params: {
+                    page: self.pagination.current,
+                    limit: self.pagination.limit
+                }
+            })
+        },
         getLinkWeeklyPhotos() {
             return axios.get(`${process.env.API_URL}/option-get-value-by-name`, {
                 params: { 

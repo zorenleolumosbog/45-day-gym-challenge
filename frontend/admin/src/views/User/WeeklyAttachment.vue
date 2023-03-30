@@ -1,102 +1,74 @@
 <template>
-    <ul class="nav nav-pills mb-3" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button @click="showFirstWeek" class="nav-link" :class="{active: validation.showFirstWeek}" type="button" role="tab">First Week</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button @click="showLastWeek" class="nav-link" :class="{active: validation.showLastWeek}"  type="button" role="tab">Last Week</button>
-        </li>
-    </ul>
-    <div class="tab-content px-4 py-4">
-        <div class="tab-pane fade show active" v-if="validation.showFirstWeek">
-            <div v-if="weeklyAttachments?.length > 0" class="right_site_week_carousel_main">
-                <div class="rs_week_items_all_carousel">
-                    <div class="rswiac_header">
-                        <h4><img src="@/assets/images/lock.png" alt="">{{ getToLocaleDateString(weeklyAttachments[weeklyAttachments.length - 1].created_at) }}</h4>
-                    </div>
-                    <carousel :settings="settings" :breakpoints="breakpoints">
-                        <slide v-for="weekly_attachment_detail in weeklyAttachments[weeklyAttachments.length - 1].weekly_attachment_details" :key="weekly_attachment_detail">
-                            <div class="rswi_item_single">
-                                <div class="rswi_item_single_img">
-                                    <div class="rswi_item_single_img_pos">
-                                        <img :src="weekly_attachment_detail.url" alt="">
-                                    </div>
-                                </div>
-                                <div class="rswi_item_single_contents">
-                                    <p>{{ weekly_attachment_detail.description  }}</p>
+    <input-loader :width="300" v-if="validation.loading"></input-loader>
+    <template v-else>
+        <div v-for="weeklyAttachment in weeklyAttachments?.data" :key="weeklyAttachment" class="right_site_week_carousel_main">
+            <div class="rs_week_items_all_carousel">
+                <div class="rswiac_header">
+                    <h4 :class="{ 'mb-3' : !weeklyAttachment.lock, 'ml-2' : !weeklyAttachment.lock }">
+                        <img v-if="weeklyAttachment.lock" src="@/assets/images/lock.png" alt="">
+                        {{ getToLocaleDateString(weeklyAttachment.created_at) }}
+                    </h4>
+                </div>
+                <carousel :settings="settings" :breakpoints="breakpoints">
+                    <slide v-for="weeklyAttachmentDetail in weeklyAttachment.weekly_attachment_details" :key="weeklyAttachmentDetail">
+                        <div class="rswi_item_single">
+                            <div class="rswi_item_single_img">
+                                <div class="rswi_item_single_img_pos">
+                                    <img :src="weeklyAttachmentDetail.url" alt="">
                                 </div>
                             </div>
-                        </slide>
-                        <template #addons>
-                            <pagination />
-                        </template>
-                    </carousel>
-                    <div class="rs_week_bottom_contents">
-                        <h4>Week {{ weeklyAttachments[weeklyAttachments.length - 1].week_number }}</h4>
-                        <div class="rswbc_parag">
-                            <p>Weight: {{ weeklyAttachments[weeklyAttachments.length - 1].weight }}lbs</p>
-                            <p>{{ weeklyAttachments[weeklyAttachments.length - 1].description }}</p>
+                            <div class="rswi_item_single_contents">
+                                <p>{{ weeklyAttachmentDetail.description  }}</p>
+                            </div>
                         </div>
+                    </slide>
+                    <template #addons>
+                        <pagination />
+                    </template>
+                </carousel>
+                <div class="rs_week_bottom_contents">
+                    <h4>Week {{ weeklyAttachment.week_number }}</h4>
+                    <div class="rswbc_parag">
+                        <p>Weight: {{ weeklyAttachment.weight }}lbs</p>
+                        <p>{{ weeklyAttachment.description }}</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade show active" v-if="validation.showLastWeek">
-            <div v-if="weeklyAttachments?.length > 0" class="right_site_week_carousel_main">
-                <div class="rs_week_items_all_carousel">
-                    <div class="rswiac_header">
-                        <h4><img src="@/assets/images/lock.png" alt="">{{ getToLocaleDateString(weeklyAttachments[0].created_at) }}</h4>
-                    </div>
-                    <carousel :settings="settings" :breakpoints="breakpoints">
-                        <slide v-for="weekly_attachment_detail in weeklyAttachments[0].weekly_attachment_details" :key="weekly_attachment_detail">
-                            <div class="rswi_item_single">
-                                <div class="rswi_item_single_img">
-                                    <div class="rswi_item_single_img_pos">
-                                        <img :src="weekly_attachment_detail.url" alt="">
-                                    </div>
-                                </div>
-                                <div class="rswi_item_single_contents">
-                                    <p>{{ weekly_attachment_detail.description  }}</p>
-                                </div>
-                            </div>
-                        </slide>
-                        <template #addons>
-                            <pagination />
-                        </template>
-                    </carousel>
-                    <div class="rs_week_bottom_contents">
-                        <h4>Week {{ weeklyAttachments[0].week_number }}</h4>
-                        <div class="rswbc_parag">
-                            <p>Weight: {{ weeklyAttachments[0].weight }}lbs</p>
-                            <p>{{ weeklyAttachments[0].description }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </template>
+    <the-pagination class="mt-5 mb-3" v-if="weeklyAttachments?.data.length > 0" :meta="weeklyAttachments.meta" @currentPage="currentPage"></the-pagination>
 </template>
 <script lang="ts">
-import { userLocale } from '../../stores/index';
+import axios from 'axios';
+import { userAuth, userLocale } from '../../stores/index';
+const authStore = userAuth();
 const localeStore = userLocale();
 
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+
+import InputLoader from '../../components/InputLoader.vue';
+import ThePagination from '../../components/ThePagination.vue';
 
 export default {
     components: {
         Carousel,
         Slide,
         Pagination,
-        Navigation
+        Navigation,
+        ThePagination,
+        InputLoader
     },
     data() {
         return {
-            validation: {
-                showFirstWeek: true,
-                showLastWeek: false
+            weeklyAttachments: null,
+            pagination: {
+                current: 1,
+                limit: 1
             },
-            
+            validation: {
+                loading: false
+            },
             // carousel settings
             settings: {
                 itemsToShow: 2.4,
@@ -120,8 +92,17 @@ export default {
             },
         }
     },
-    props: ['weeklyAttachments'],
+    props: ['selectedRecord'],
+    mounted() {
+        this.validation.loading = true;
+        this.getUserWeeklyAttachments();
+    },
     methods: {
+        currentPage(val: number) {
+            this.validation.loading = true;
+            this.pagination.current = val;
+            this.getUserWeeklyAttachments();
+        },
         getToLocaleDateString(dateString: string) {
             if(!dateString) {
                 return null;
@@ -131,13 +112,23 @@ export default {
 
             return localeStore.toLocaleDateString;
         },
-        showFirstWeek() {
-            this.validation.showFirstWeek = true;
-            this.validation.showLastWeek = false;
-        },
-        showLastWeek() {
-            this.validation.showLastWeek = true;
-            this.validation.showFirstWeek = false;
+        getUserWeeklyAttachments() {
+            let self = this;
+
+            axios.get(`${process.env.API_URL}/user-weekly-attachments`, {
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`,
+                },
+                params: {
+                    page: self.pagination.current,
+                    limit: self.pagination.limit,
+                    user_id: self.selectedRecord?.id
+                }
+            })
+            .then(response => {
+                self.weeklyAttachments = response.data;
+                self.validation.loading = false;
+            })
         }
     }
 }

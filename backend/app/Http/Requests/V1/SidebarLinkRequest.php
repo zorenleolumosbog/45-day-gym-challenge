@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SidebarLinkRequest extends FormRequest
 {
@@ -23,9 +24,18 @@ class SidebarLinkRequest extends FormRequest
     {
         return [
             'title' => 'sometimes|required|max:255',
-            'link' => 'sometimes|required|max:255',
+            'link' => [
+                'sometimes',
+                'required',
+                'url',
+                'max:255',
+                Rule::unique('sidebar_links')->where(function ($query) {
+                    $query->where('id', '<>', request()->route('sidebar_link')?->id)
+                        ->whereNull('deleted_at');
+                }),
+            ],
             'bg_color' => 'sometimes|required|max:255',
-            'file_icon' => 'sometimes|required|image|mimes:jpg,jpeg,png|max:5120', // limit 5mb
+            'file_icon' => 'sometimes|required|image|mimes:jpg,jpeg,png|dimensions:max_width=80,max_height=80|max:5120', // limit 5mb
         ];
     }
 }

@@ -22,6 +22,14 @@
                             </router-link>
                         </li>
                         <li>
+                            <router-link to="/sidebar-links" @click="setComponent('the-sidebar-link')">
+                                <span class="lsmmw">
+                                    <img src="@/assets/images/weight.png" alt="">
+                                    <span>Sidebar Links</span>
+                                </span>
+                            </router-link>
+                        </li>
+                        <li>
                             <router-link to="/options" @click="setComponent('the-option')">
                                 <span class="lsmmw">
                                     <img src="@/assets/images/weight.png" alt="">
@@ -55,6 +63,9 @@ export default {
                 break;
             case 'telegram-links':
                 this.$emit('component', 'the-telegram-link');
+                break;
+            case 'sidebar-links':
+                this.$emit('component', 'the-sidebar-link');
                 break;
             case 'options':
                 this.$emit('component', 'the-option');

@@ -474,7 +474,7 @@ export default {
                 });
             }
         },
-        findWeeklyAttachmentDetailsRecord(key: string, heystack: any, needle: string) {
+        findRecord(key: string, heystack: any, needle: string) {
             let response = heystack.filter((el: any) => {
                 return el[key] == needle;
             })[0];
@@ -487,22 +487,22 @@ export default {
             this.validation.displayPosting = true;
             this.validation.editPosting = true;
 
-            let selectedWeeklyAttachment = this.findWeeklyAttachmentDetailsRecord('id', this.weeklyAttachments.data, id);
+            let selectedWeeklyAttachment = this.findRecord('id', this.weeklyAttachments.data, id);
             this.selectedWeeklyAttachmentId = selectedWeeklyAttachment.id;
             this.input.weight = selectedWeeklyAttachment.weight;
             this.input.description = selectedWeeklyAttachment.description;
             
             let weeklyAttachmentDetails = selectedWeeklyAttachment.weekly_attachment_details;
 
-            let selectedFrontPhoto = this.findWeeklyAttachmentDetailsRecord('description', weeklyAttachmentDetails, 'Front');
+            let selectedFrontPhoto = this.findRecord('description', weeklyAttachmentDetails, 'Front');
             this.input.files.frontPhoto.id = selectedFrontPhoto.id;
             this.input.files.frontPhoto.src = selectedFrontPhoto.url;
 
-            let selectedSidePhoto = this.findWeeklyAttachmentDetailsRecord('description', weeklyAttachmentDetails, 'Side');
+            let selectedSidePhoto = this.findRecord('description', weeklyAttachmentDetails, 'Side');
             this.input.files.sidePhoto.id = selectedSidePhoto.id;
             this.input.files.sidePhoto.src = selectedSidePhoto.url;
 
-            let selectedBackPhoto = this.findWeeklyAttachmentDetailsRecord('description', weeklyAttachmentDetails, 'Back');
+            let selectedBackPhoto = this.findRecord('description', weeklyAttachmentDetails, 'Back');
             this.input.files.backPhoto.id = selectedBackPhoto.id;
             this.input.files.backPhoto.src = selectedBackPhoto.url;
 

@@ -181,7 +181,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <keep-alive>
-                                        <weekly-attachment :weeklyAttachments="selectedRecord?.weekly_attachments"></weekly-attachment>
+                                        <weekly-attachment :selectedRecord="selectedRecord"></weekly-attachment>
                                     </keep-alive>
                                 </div>
                             </div>
