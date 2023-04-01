@@ -33,7 +33,7 @@ class Registration extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'User Registration',
+            subject: 'Epic Transformation Challenge - User Registration',
         );
     }
 

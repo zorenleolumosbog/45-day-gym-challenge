@@ -24,7 +24,7 @@ export const userProfile = defineStore('user', {
       height: '',
       currentWeight: '',
       desiredWeightGoal: '',
-      gymExperience: 'less than 12 months',
+      howActiveAreYou: 'i dont exercise',
       hoursOfSleepAtNight: '4-6 hours',
       stressLevelOutOf10: '1',
       medicationsSupplements: '',
@@ -50,8 +50,8 @@ export const userProfile = defineStore('user', {
     setDesiredWeightGoal(desiredWeightGoal) {
       this.profile.desiredWeightGoal = desiredWeightGoal;
     },
-    setGymExperience(gymExperience) {
-      this.profile.gymExperience = gymExperience;
+    setHowActiveAreYou(howActiveAreYou) {
+      this.profile.howActiveAreYou = howActiveAreYou;
     },
     setHoursOfSleepAtNight(hoursOfSleepAtNight) {
       this.profile.hoursOfSleepAtNight = hoursOfSleepAtNight;

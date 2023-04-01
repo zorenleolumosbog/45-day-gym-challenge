@@ -22,7 +22,7 @@
                                 <div class="questionair_main_contents_all_page">
                                     <div class="questionair_page_choose_gender personal_infor_all">
                                         <div class="ppcg_title">
-                                            <h3>Gym Experience</h3>
+                                            <h3>How Active Are You?</h3>
                                         </div>
                                         <div class="qp_contents_all perinfor_pagem">
                                             <div class="gym_experi_contents_main">
@@ -30,28 +30,28 @@
                                                     <div class="gp_gender_vtwo_single">
                                                         <div class="qp_gender_vtwo_main gymp_vth_main">
                                                             <p class="gym_p">Choose</p>
-                                                            <div class="gp_gender_vtwo_single gym_plabel" @click="input.gymExperience = 'less than 12 months'">
-                                                                <input v-model="input.gymExperience" 
-                                                                type="radio" value="less than 12 months" 
-                                                                id="gym_radio1" class="input-hidden" :checked="input.gymExperience === 'less than 12 months'"/>
+                                                            <div class="gp_gender_vtwo_single gym_plabel" @click="input.howActiveAreYou = 'i dont exercise'">
+                                                                <input v-model="input.howActiveAreYou" 
+                                                                type="radio" value="i dont exercise" 
+                                                                id="gym_radio1" class="input-hidden" :checked="input.howActiveAreYou === 'i dont exercise'"/>
                                                                 <label for="gym_radio1">
-                                                                    <span class="gpgvts_title">Less Than 12 Month</span>
+                                                                    <span class="gpgvts_title">I don't exercise</span>
                                                                 </label>
                                                             </div>
-                                                            <div class="gp_gender_vtwo_single gym_plabel" @click="input.gymExperience = '12-36 months'">
-                                                                <input v-model="input.gymExperience" 
-                                                                    type="radio" valuue="12-36 months"
-                                                                    id="gym_radio2" class="input-hidden" :checked="input.gymExperience === '12-36 months'"/>
+                                                            <div class="gp_gender_vtwo_single gym_plabel" @click="input.howActiveAreYou = 'i exercise occasionally'">
+                                                                <input v-model="input.howActiveAreYou" 
+                                                                    type="radio" valuue="i exercise occasionally"
+                                                                    id="gym_radio2" class="input-hidden" :checked="input.howActiveAreYou === 'i exercise occasionally'"/>
                                                                 <label for="gym_radio2">
-                                                                    <span class="gpgvts_title">12-36 Month</span>
+                                                                    <span class="gpgvts_title">I exercise occasionally</span>
                                                                 </label>
                                                             </div>
-                                                            <div class="gp_gender_vtwo_single gym_plabel" @click="input.gymExperience = '36 months and over'">
-                                                                <input v-model="input.gymExperience" 
-                                                                    type="radio" value="36 months and over"
-                                                                    id="gym_radio3" class="input-hidden" :checked="input.gymExperience === '36 months and over'"/>
+                                                            <div class="gp_gender_vtwo_single gym_plabel" @click="input.howActiveAreYou = 'i exercise frequently'">
+                                                                <input v-model="input.howActiveAreYou" 
+                                                                    type="radio" value="i exercise frequently"
+                                                                    id="gym_radio3" class="input-hidden" :checked="input.howActiveAreYou === 'i exercise frequently'"/>
                                                                 <label for="gym_radio3">
-                                                                    <span class="gpgvts_title">36 Month and over</span>
+                                                                    <span class="gpgvts_title">I exercise frequently</span>
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -91,13 +91,13 @@ export default {
     data() {
         return {
             input: {
-                gymExperience: userStore.profile.gymExperience
+                howActiveAreYou: userStore.profile.howActiveAreYou
             }
         }
     },
     methods: {
         next() {
-            userStore.setGymExperience(this.input.gymExperience);
+            userStore.setHowActiveAreYou(this.input.howActiveAreYou);
 
             this.$router.push({ name: 'hours-sleep' });
         }

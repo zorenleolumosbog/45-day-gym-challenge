@@ -454,6 +454,9 @@
                   <tr>
                     <td class="content-cell">
                       <div class="f-fallback">
+                        <div style="text-align: center;">
+                          <img src="https://join.epictransformationchallenge.com/assets/logo-fec1043e.png" style="padding-bottom: 20px;width: 120px;">
+                        </div>
                         <h1>Hi, {{ $name }}!</h1>
                         <p>For reference, here's your reset passwor link:</p>
                         <table class="attributes" width="100%" cellpadding="0" cellspacing="0" role="presentation">

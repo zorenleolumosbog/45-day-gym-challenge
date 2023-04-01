@@ -42,16 +42,15 @@
                                 </div>
                             </div>
                             <div class="rsrbc_form_box">
-                                <label for="current_week"><span>Current Week</span></label>
+                                <label for="current_week"><span>Start of Week</span></label>
                                 <div class="input_rtext">
                                     <input type="number" v-model="input.current_week" id="current_week">
                                 </div>
                             </div>
-                            <h4 class="mt-5">Google Analytics</h4>
                             <div class="rsrbc_form_box">
-                                <label for="google_analytics_id"><span>Google Analytics Tracking ID</span></label>
+                                <label for="end_of_week"><span>End of Week</span></label>
                                 <div class="input_rtext">
-                                    <input type="text" v-model="input.google_analytics_id" id="google_analytics_id">
+                                    <input type="number" v-model="input.end_of_week" id="end_of_week">
                                 </div>
                             </div>
                         </div>
@@ -210,10 +209,10 @@ export default {
     data() {
         return {
             input: {
-                google_analytics_id: '',
                 start_datetime: '',
                 end_datetime: '',
                 current_week:'',
+                end_of_week: '',
                 week1_description:'',
                 week2_description:'',
                 week3_description:'',
@@ -257,10 +256,10 @@ export default {
     },
     methods: {
         setOptions(data: any) {
-            this.input.google_analytics_id = this.findRecord('name', data, 'google_analytics_id')?.value;
             this.input.start_datetime = this.findRecord('name', data, 'start_datetime')?.value;
             this.input.end_datetime = this.findRecord('name', data, 'end_datetime')?.value;
             this.input.current_week = this.findRecord('name', data, 'current_week')?.value;
+            this.input.end_of_week = this.findRecord('name', data, 'end_of_week')?.value;
             this.input.week1_description = this.findRecord('name', data, 'week1_description')?.value;
             this.input.week2_description = this.findRecord('name', data, 'week2_description')?.value;
             this.input.week3_description = this.findRecord('name', data, 'week3_description')?.value;
@@ -304,7 +303,6 @@ export default {
 
             const object = self.input;
             for (const index in object) {
-                counter++;
                 axios.patch(`${process.env.API_URL}/option-update-value-by-name`, {
                         name: index,
                         value: object[index]
@@ -314,6 +312,7 @@ export default {
                     },
                 })
                 .then(response => {
+                    counter++;
                     if(counter === 22) {
                         self.validation.loading = false;
                         self.validation.success.message = 'Successfully updated!';
@@ -324,8 +323,6 @@ export default {
                 .catch(error => {
                     self.validation.loading = false;
                     self.validation.errors = error.response.data.errors;
-                    
-                    return true;
                 });
             }
         }

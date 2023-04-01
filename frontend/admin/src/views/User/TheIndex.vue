@@ -159,8 +159,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="rp_form_single mb-4">
-                                                <label for="rpfs3">Gym Experience</label>
-                                                <input type="text" readonly :value="selectedRecord?.profile?.gym_experience">
+                                                <label for="rpfs3">How Active Are You?</label>
+                                                <input type="text" readonly :value="selectedRecord?.profile?.how_active_are_you">
                                             </div>
                                         </div>
                                     </div>

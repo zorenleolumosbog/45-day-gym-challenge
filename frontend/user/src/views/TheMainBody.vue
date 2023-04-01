@@ -75,7 +75,7 @@
                                     <div class="right_site_time_remaining_main">
                                         <div class="right_site_upload_photo">
                                             <div class="rsup_title">
-                                                <h4>Upload Your Photo</h4>
+                                                <h4>Upload Your Photo For This Week</h4>
                                             </div>
                                             <div class="rsup_items_all">
                                                 <div class="rsup_item_single">

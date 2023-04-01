@@ -22,7 +22,7 @@ class UserProfileResource extends JsonResource
             'height' => $this->height,
             'current_weight' => $this->current_weight,
             'desired_weight_goal' => $this->desired_weight_goal,
-            'gym_experience' => $this->gym_experience,
+            'how_active_are_you' => $this->how_active_are_you,
             'hours_of_sleep_at_night' => $this->hours_of_sleep_at_night,
             'stress_level_out_of_10' => $this->stress_level_out_of_10,
             'medications_supplements' => $this->medications_supplements,

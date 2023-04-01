@@ -22,7 +22,7 @@ class UserProfile extends Model
         'height',
         'current_weight',
         'desired_weight_goal',
-        'gym_experience',
+        'how_active_are_you',
         'hours_of_sleep_at_night',
         'stress_level_out_of_10',
         'medications_supplements',

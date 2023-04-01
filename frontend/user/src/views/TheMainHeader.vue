@@ -214,9 +214,9 @@
                                             <div class="col-md-6">
                                                 <div class="rp_form_single mb-4">
                                                     <label for="rpfs3">Gym Experience</label>
-                                                    <select v-model="input.gymExperience">
-                                                        <option v-for="gymExperience in selectOptions.gymExperience" :key="gymExperience" :value="gymExperience">
-                                                            {{ gymExperience }}
+                                                    <select v-model="input.howActiveAreYou">
+                                                        <option v-for="howActiveAreYou in selectOptions.howActiveAreYou" :key="howActiveAreYou" :value="howActiveAreYou">
+                                                            {{ howActiveAreYou }}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -278,7 +278,7 @@ export default {
                 height: '',
                 currentWeight: '',
                 desiredWeightGoal: '',
-                gymExperience: '',
+                howActiveAreYou: '',
                 hoursOfSleepAtNight: '',
                 stressLevelOutOf10: '',
                 medicationsSupplements: '',
@@ -288,8 +288,8 @@ export default {
             selectOptions : {
                 gender: ['male', 'female'],
                 stressLevelOutOf10: [1,2,3,4,5,6,7,8,9,10],
-                hoursOfSleepAtNight: ['4-6 hours', '7-8 hours', '8 hours above'],
-                gymExperience: ['less than 12 months', '12-36 months', '36 months and over']
+                hoursOfSleepAtNight: ['4-6 hours', '7-8 hours', '9+ hours'],
+                howActiveAreYou: ['i dont exercise', 'i exercise occasionally', 'i exercise frequently']
             },
             validation: {
                 loading: false,
@@ -366,7 +366,7 @@ export default {
             this.input.height = this.user?.profile.height;
             this.input.currentWeight = this.user?.profile.current_weight;
             this.input.desiredWeightGoal = this.user?.profile.desired_weight_goal;
-            this.input.gymExperience = this.user?.profile.gym_experience;
+            this.input.howActiveAreYou = this.user?.profile.how_active_are_you;
             this.input.hoursOfSleepAtNight = this.user?.profile.hours_of_sleep_at_night;
             this.input.stressLevelOutOf10 = this.user?.profile.stress_level_out_of_10;
             this.input.medicationsSupplements = this.user?.profile.medications_supplements;
@@ -414,7 +414,7 @@ export default {
                     height: self.input.height,
                     current_weight: self.input.currentWeight,
                     desired_weight_goal: self.input.desiredWeightGoal,
-                    gym_experience: self.input.gymExperience,
+                    how_active_are_you: self.input.howActiveAreYou,
                     hours_of_sleep_at_night: self.input.hoursOfSleepAtNight,
                     stress_level_out_of_10: self.input.stressLevelOutOf10,
                     medications_supplements: self.input.medicationsSupplements,

@@ -8,7 +8,7 @@
                             <div class="register_page_form_sec">
                                 <div class="register_page_form_header">
                                     <a href="#"><img src="@/assets/images/logo.png" alt=""></a>
-                                    <h3>Login for the 45 day contest</h3>
+                                    <h3>User Login</h3>
                                 </div>
                                 <div class="register_page_form">
                                     <div v-if="validation.error.message" class="alert alert-danger alert-dismissible fade show" role="alert">

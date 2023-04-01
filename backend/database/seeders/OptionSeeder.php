@@ -40,6 +40,12 @@ class OptionSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
+                'name' => 'end_of_week',
+                'value' => 7,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
                 'name' => 'week1_description',
                 'value' => 'Week 1 description here',
                 'created_at' => Carbon::now(),

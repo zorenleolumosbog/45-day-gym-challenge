@@ -107,7 +107,7 @@ export default {
                 height: userStore.profile.height,
                 current_weight: userStore.profile.currentWeight,
                 desired_weight_goal: userStore.profile.desiredWeightGoal,
-                gym_experience: userStore.profile.gymExperience,
+                how_active_are_you: userStore.profile.howActiveAreYou,
                 hours_of_sleep_at_night: userStore.profile.hoursOfSleepAtNight,
                 stress_level_out_of_10: userStore.profile.stressLevelOutOf10,
                 medications_supplements: userStore.profile.medicationsSupplements,

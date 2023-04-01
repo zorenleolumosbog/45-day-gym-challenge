@@ -454,8 +454,11 @@
                   <tr>
                     <td class="content-cell">
                       <div class="f-fallback">
-                        <h1>Welcome, {{ $name }}!</h1>
-                        <p>Thanks for trying Epic Transformation Challenge. We’re thrilled to have you on board.</p>
+                        <div style="text-align: center;">
+                          <img src="https://join.epictransformationchallenge.com/assets/logo-fec1043e.png" style="padding-bottom: 20px;width: 120px;">
+                        </div>
+                        <h1>Hi, {{ $name }}!</h1>
+                        <p>Welcome to the Epic Transformation Challenge. We’re thrilled to have you on board.</p>
                         <p>For reference, here's your login information:</p>
                         <table class="attributes" width="100%" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>

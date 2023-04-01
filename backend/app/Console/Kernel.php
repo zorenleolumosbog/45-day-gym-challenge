@@ -15,18 +15,23 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->call(function () {
-            $start_datetime = Option::where('name', 'start_datetime')->first();
-            $start_datetime->update([
-                'value' => Carbon::today()->toDateString()
-            ]);
+            $start_of_week = Option::where('name', 'current_week')->first()?->value;
+            $end_of_week = Option::where('name', 'end_of_week')->first()?->value;
             
-            $end_datetime = Option::where('name', 'end_datetime')->first();
-            $end_datetime->update([
-                'value' => Carbon::today()->addDays(7)->toDateString()
-            ]);
-
-            Option::where('name', 'current_week')
-                ->increment('value', 1, ['updated_at' => Carbon::now()]);
+            if($start_of_week < $end_of_week) {
+                $start_datetime = Option::where('name', 'start_datetime')->first();
+                $start_datetime->update([
+                    'value' => Carbon::today()->toDateString()
+                ]);
+                
+                $end_datetime = Option::where('name', 'end_datetime')->first();
+                $end_datetime->update([
+                    'value' => Carbon::today()->addDays(7)->toDateString()
+                ]);
+    
+                Option::where('name', 'current_week')
+                    ->increment('value', 1, ['updated_at' => Carbon::now()]);
+            }
         });
     }
 

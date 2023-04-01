@@ -46,12 +46,12 @@
                                                                     <span class="gpgvts_title">7-8 hours</span>
                                                                 </label>
                                                             </div>
-                                                            <div class="gp_gender_vtwo_single gym_plabel" @click="input.hoursOfSleepAtNight = '8 hours above'">
+                                                            <div class="gp_gender_vtwo_single gym_plabel" @click="input.hoursOfSleepAtNight = '9+ hours'">
                                                                 <input v-model="input.hoursOfSleepAtNight" 
-                                                                    type="radio" value="8 hours above"
-                                                                    id="hs_id3" class="input-hidden" :checked="input.hoursOfSleepAtNight === '8 hours above'"/>
+                                                                    type="radio" value="9+ hours"
+                                                                    id="hs_id3" class="input-hidden" :checked="input.hoursOfSleepAtNight === '9+ hours'"/>
                                                                 <label for="hs_id3">
-                                                                    <span class="gpgvts_title">8 hours Above</span>
+                                                                    <span class="gpgvts_title">9+ hours</span>
                                                                 </label>
                                                             </div>
                                                         </div>
