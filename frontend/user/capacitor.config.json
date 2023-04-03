@@ -1,0 +1,6 @@
+{
+  "appId": "com.epictransformationchallenge.join",
+  "appName": "epic-transformation-challenge",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}

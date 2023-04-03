@@ -158,7 +158,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <input @click='cancelEditPosting' style="background: #f52e62 !important;" type="submit" value="CANCEL">
+                                                            <input :disabled="validation.loading" @click='cancelEditPosting' style="background: #f52e62 !important;" type="submit" value="CANCEL">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -391,20 +391,55 @@ export default {
                 day: 'numeric' 
             });
         },
+        validatePhotoAttachment(file: any) {
+            const imageFormat = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']
+            if(!imageFormat.includes(file.type)) {
+                this.validation.errors = {
+                    file_weekly_photo: [
+                        "The file weekly photo field must be an image.",
+                        "The file weekly photo field must be a file of type: jpg, jpeg, png."
+                    ]
+                };
+                
+                document.getElementById('app')?.scrollIntoView({ behavior: 'smooth' });
+                return false;
+            }
+
+            if(file.size > 25000000) {
+                this.validation.errors = {
+                        file_weekly_photo: [
+                        "The file weekly photo field must be equal or lessern than 25mb.",
+                    ]
+                };
+                
+                document.getElementById('app')?.scrollIntoView({ behavior: 'smooth' });
+                return false;
+            }
+            
+            this.validation.errors = null;
+
+            return true;
+        },
         handleFileFrontPhotoAttachment(event: any) {
             const file = event.target.files[0];
-            this.input.files.frontPhoto.src = URL.createObjectURL(file);
-            this.input.files.frontPhoto.file = file;
+            if(this.validatePhotoAttachment(file)) {
+                this.input.files.frontPhoto.src = URL.createObjectURL(file);
+                this.input.files.frontPhoto.file = file;
+            }
         },
         handleFileSidePhotoAttachment(event: any) {
             const file = event.target.files[0];
-            this.input.files.sidePhoto.src = URL.createObjectURL(file);
-            this.input.files.sidePhoto.file = file;
+            if(this.validatePhotoAttachment(file)) {
+                this.input.files.sidePhoto.src = URL.createObjectURL(file);
+                this.input.files.sidePhoto.file = file;
+            }
         },
         handleFileBackPhotoAttachment(event: any) {
             const file = event.target.files[0];
-            this.input.files.backPhoto.src = URL.createObjectURL(file);
-            this.input.files.backPhoto.file = file;
+            if(this.validatePhotoAttachment(file)) {
+                this.input.files.backPhoto.src = URL.createObjectURL(file);
+                this.input.files.backPhoto.file = file;
+            }
         },
         parseInteger(weekNumber: any) {
             if(weekNumber) {
@@ -450,9 +485,9 @@ export default {
             const formData = new FormData();
             const object = this.input.files;
             for (const file in object) {
-                formData.append('user_weekly_attachment_id', weeklyAttachment.id);
-                formData.append('file_weekly_photo', object[file].file);
-                formData.append('description', object[file].description);
+                formData.set('user_weekly_attachment_id', weeklyAttachment.id);
+                formData.set('file_weekly_photo', object[file].file);
+                formData.set('description', object[file].description);
 
                 axios.post(`${process.env.API_URL}/user-weekly-attachment-details`, formData, {
                     headers: {
@@ -562,12 +597,12 @@ export default {
             const object = this.input.files;
             for (const file in object) {
                 
-                formData.append('_method', 'PUT');
-                formData.append('user_weekly_attachment_id', weeklyAttachment.id);
+                formData.set('_method', 'PUT');
+                formData.set('user_weekly_attachment_id', weeklyAttachment.id);
                 if(object[file].file) {
-                    formData.append('file_weekly_photo', object[file].file);
+                    formData.set('file_weekly_photo', object[file].file);
                 }
-                formData.append('description', object[file].description);
+                formData.set('description', object[file].description);
 
                 axios.post(`${process.env.API_URL}/user-weekly-attachment-details/${object[file].id}`, formData, {
                     headers: {
@@ -597,6 +632,8 @@ export default {
                     
                     document.getElementById('app')?.scrollIntoView({ behavior: 'smooth' });
                 });
+
+                formData.delete('file_weekly_photo');
             }
         }
     }

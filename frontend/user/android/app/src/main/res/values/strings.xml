@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">epic-transformation-challenge</string>
+    <string name="title_activity_main">epic-transformation-challenge</string>
+    <string name="package_name">com.epictransformationchallenge.join</string>
+    <string name="custom_url_scheme">com.epictransformationchallenge.join</string>
+</resources>
