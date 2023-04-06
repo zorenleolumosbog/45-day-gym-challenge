@@ -21,12 +21,12 @@ class Kernel extends ConsoleKernel
             if($start_of_week < $end_of_week) {
                 $start_datetime = Option::where('name', 'start_datetime')->first();
                 $start_datetime->update([
-                    'value' => Carbon::today()->toDateString()
+                    'value' => Carbon::now()->startOfWeek()->toDateString()
                 ]);
                 
                 $end_datetime = Option::where('name', 'end_datetime')->first();
                 $end_datetime->update([
-                    'value' => Carbon::today()->addDays(7)->toDateString()
+                    'value' => Carbon::now()->endOfWeek()->toDateString()
                 ]);
     
                 Option::where('name', 'current_week')

@@ -16,20 +16,14 @@ class OptionSeeder extends Seeder
     {
         Option::insert([
             [
-                'name' => 'google_analytics_id',
-                'value' => '#',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
                 'name' => 'start_datetime',
-                'value' => Carbon::today()->toDateString(),
+                'value' => Carbon::now()->startOfWeek()->toDateString(),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 'name' => 'end_datetime',
-                'value' => Carbon::today()->addDays(7)->toDateString(),
+                'value' => Carbon::now()->endOfWeek()->toDateString(),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
