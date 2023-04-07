@@ -26,7 +26,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $users = User::when($request->search, function ($query) use($request) {
-                    $query->where('name', 'LIKE', '%'.$request->search.'%');
+                    $query->where('name', 'LIKE', '%'.$request->search.'%')
+                        ->orWhere('email', 'LIKE', '%'.$request->search.'%');
                 })
                 ->when($request->date_from && $request->date_to, function ($query) use($request) {
                     $query->whereDate('created_at', '>=', $request->date_from)
@@ -34,6 +35,7 @@ class UserController extends Controller
                 })
                 ->when($request->search && $request->date_from && $request->date_to, function ($query) use($request) {
                     $query->where('name', 'LIKE', '%'.$request->search.'%')
+                            ->orWhere('email', 'LIKE', '%'.$request->search.'%')
                             ->whereDate('created_at', '>=', $request->date_from)
                             ->whereDate('created_at', '<=', $request->date_to);
                 })
