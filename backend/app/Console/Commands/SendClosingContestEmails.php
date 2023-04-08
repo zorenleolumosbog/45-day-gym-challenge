@@ -35,7 +35,8 @@ class SendClosingContestEmails extends Command
         $hour_schedule = Option::where('name', 'closing_hour_schedule')->first()?->value;
         
         if($today->dayOfWeek == $weekday_schedule && $today->hour == $hour_schedule) {
-            $users = User::all();
+            $users = User::whereNull('is_admin')->get();
+            
             foreach ($users as $user) {
                 $contest = [
                     'name' => $user->name,
