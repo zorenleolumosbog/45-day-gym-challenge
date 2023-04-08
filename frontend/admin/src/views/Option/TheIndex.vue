@@ -28,29 +28,143 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 mb-5">
-                            <h4>Current Timer</h4>
-                            <div class="rsrbc_form_box">
-                                <label for="start_datetime"><span>Start Date Time</span></label>
+                            <h4>Weekly Contest Timer</h4>
+                            <div class="rsrbc_form_box d-none">
+                                <label for="start_datetime"><span>Start of Week Date</span></label>
                                 <div class="input_rtext">
                                     <input type="date" v-model="input.start_datetime" id="start_datetime">
                                 </div>
                             </div>
-                            <div class="rsrbc_form_box">
-                                <label for="end_datetime"><span>End Date Time</span></label>
+                            <div class="rsrbc_form_box d-none">
+                                <label for="end_datetime"><span>End of Week Date</span></label>
                                 <div class="input_rtext">
                                     <input type="date" v-model="input.end_datetime" id="end_datetime">
                                 </div>
                             </div>
                             <div class="rsrbc_form_box">
-                                <label for="current_week"><span>Start of Week</span></label>
+                                <label for="current_week"><span>Current Week Number</span></label>
                                 <div class="input_rtext">
                                     <input type="number" v-model="input.current_week" id="current_week">
                                 </div>
                             </div>
                             <div class="rsrbc_form_box">
-                                <label for="end_of_week"><span>End of Week</span></label>
+                                <label for="end_of_week"><span>End of Week Number</span></label>
                                 <div class="input_rtext">
                                     <input type="number" v-model="input.end_of_week" id="end_of_week">
+                                </div>
+                            </div>
+                            <h4 class="mt-5">Closing Contest Email</h4>
+                            <div class="rsrbc_form_box">
+                                <label for="weekday_schedule"><span>Weekday Schedule</span></label>
+                                <div class="rp_form_single input_rtext" style="margin-top: 0px">
+                                    <select v-model="input.closing_weekday_schedule" id="weekday_schedule">
+                                        <option value="0">
+                                            Sunday (0)
+                                        </option>
+                                        <option value="1">
+                                            Monday (1)
+                                        </option>
+                                        <option value="2">
+                                            Tuesday (2)
+                                        </option>
+                                        <option value="3">
+                                            Wednesday (3)
+                                        </option>
+                                        <option value="4">
+                                            Thursday (4)
+                                        </option>
+                                        <option value="5">
+                                            Friday (5)
+                                        </option>
+                                        <option value="6">
+                                            Saturday (6)
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="rsrbc_form_box">
+                                <label for="hour_schedule"><span>Hour Schedule</span></label>
+                                <div class="rp_form_single input_rtext" style="margin-top: 0px">
+                                    <select v-model="input.closing_hour_schedule" id="hour_schedule">
+                                        <option value="0">
+                                            12:00 a.m. Midnight (0)
+                                        </option>
+                                        <option value="1">
+                                            1:00 a.m. (1)
+                                        </option>
+                                        <option value="2">
+                                            2:00 a.m. (2)
+                                        </option>
+                                        <option value="3">
+                                            3:00 a.m. (3)
+                                        </option>
+                                        <option value="4">
+                                            4:00 a.m. (4)
+                                        </option>
+                                        <option value="5">
+                                            5:00 a.m. (5)
+                                        </option>
+                                        <option value="6">
+                                            6:00 a.m. (6)
+                                        </option>
+                                        <option value="7">
+                                            7:00 a.m. (7)
+                                        </option>
+                                        <option value="8">
+                                            8:00 a.m. (8)
+                                        </option>
+                                        <option value="9">
+                                            9:00 a.m. (9)
+                                        </option>
+                                        <option value="10">
+                                            10:00 a.m. (10)
+                                        </option>
+                                        <option value="11">
+                                            11:00 a.m. (11)
+                                        </option>
+                                        <option value="12">
+                                            12:00 p.m. Noon (12)
+                                        </option>
+                                        <option value="13">
+                                            1:00 p.m. (13)
+                                        </option>
+                                        <option value="14">
+                                            2:00 p.m. (14)
+                                        </option>
+                                        <option value="15">
+                                            3:00 p.m. (15)
+                                        </option>
+                                        <option value="16">
+                                            4:00 p.m. (16)
+                                        </option>
+                                        <option value="17">
+                                            5:00 p.m. (17)
+                                        </option>
+                                        <option value="18">
+                                            6:00 p.m. (18)
+                                        </option>
+                                        <option value="19">
+                                            7:00 p.m. (19)
+                                        </option>
+                                        <option value="20">
+                                            8:00 p.m. (20)
+                                        </option>
+                                        <option value="21">
+                                            9:00 p.m. (21)
+                                        </option>
+                                        <option value="22">
+                                            10:00 p.m. (22)
+                                        </option>
+                                        <option value="23">
+                                            11:00 p.m. (23)
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="rsrbc_form_box">
+                                <label for="email_body"><span>Email Body</span></label>
+                                <div class="input_rtext">
+                                    <textarea v-model="input.closing_email_body" rows="15" id="email_body"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -213,6 +327,9 @@ export default {
                 end_datetime: '',
                 current_week:'',
                 end_of_week: '',
+                closing_weekday_schedule: '',
+                closing_hour_schedule: '',
+                closing_email_body: '',
                 week1_description:'',
                 week2_description:'',
                 week3_description:'',
@@ -278,6 +395,9 @@ export default {
             this.input.link_twitter = this.findRecord('name', data, 'link_twitter')?.value;
             this.input.link_youtube = this.findRecord('name', data, 'link_youtube')?.value;
             this.input.link_linkedin = this.findRecord('name', data, 'link_linkedin')?.value;
+            this.input.closing_weekday_schedule = this.findRecord('name', data, 'closing_weekday_schedule')?.value;
+            this.input.closing_hour_schedule = this.findRecord('name', data, 'closing_hour_schedule')?.value;
+            this.input.closing_email_body = this.findRecord('name', data, 'closing_email_body')?.value;
         },
         findRecord(key: string, heystack: any, needle: string) {
             let response = heystack.filter((el: any) => {

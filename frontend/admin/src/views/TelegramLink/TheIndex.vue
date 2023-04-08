@@ -199,9 +199,17 @@ export default {
             return localeStore.toLocaleDateNowString;
         },
         getToLocaleDateString(dateString: string) {
-            localeStore.setToLocaleDateString(dateString);
+            if(!dateString) {
+                return '';
+            }
 
-            return localeStore.toLocaleDateString;
+            const event = new Date(dateString);
+            
+            return event.toLocaleDateString(undefined, {  
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
         },
         resetRecord() {
             this.input.link = '';

@@ -31,6 +31,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <div class=" float-right rsrbc_form_btn">
+                            <button :disabled="selectedUserIds.length <= 0" type="submit" data-toggle="modal" data-target="#bulkAssignUserTelegramLinkModal" class="px-4">Assign Telegram Link</button>
+                        </div>
+                    </div>
+                </div>
                 <div v-if="validation.showTableLoader" style="margin-top: -22px; margin-left: -22px">
                     <table-loader></table-loader>
                 </div>
@@ -38,6 +46,7 @@
                     <table v-if='!validation.showTableLoader && records' class="table">
                         <thead>
                             <tr>
+                                <th scope="col"><input :checked="validation.isSelectAll" type="checkbox" @click="toggleSelectAll"></th>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
@@ -45,13 +54,14 @@
                                 <th scope="col">Last Login</th>
                                 <th scope="col">Date Registered</th>
                                 <th scope="col">View</th>
-                                <th scope="col">Edit Tel. Link</th>
+                                <th scope="col">Assign Tel. Link</th>
                                 <!-- <th scope="col">Delete</th> -->
                             </tr>
                         </thead>
                         <tbody>
                             <template v-for="record in records.data" :key="record">
                                 <tr v-if="!record.is_admin">
+                                    <td><input type="checkbox" :value="record.id" v-model="selectedUserIds"></td>
                                     <th scope="row">{{ record.id }}</th>
                                     <td>{{ record.name }}</td>
                                     <td>{{ record.email }}</td>
@@ -190,6 +200,57 @@
                     <div class="modal-footer">
                         <div class="register_page_form_btn cancel">
                             <input @click="validation.showProfile = false" type="submit" data-dismiss="modal" value="Close">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </teleport>
+    <teleport to="body">
+        <!-- Modal -->
+        <div class="modal fade" id="bulkAssignUserTelegramLinkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Bulk Assigning User Telegram Link</h4>
+                        <button @click="resetRecord" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="h1">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="register_page_form mx-4">
+                            <div v-if="validation.success.message" class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{ validation.success.message }}</strong>
+                                <button @click="validation.success.message = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div v-if="validation.errors" class="mt-4 mb-4 alert alert-danger alert-dismissible fade show" role="alert">
+                                <p v-for="(error, key) in validation.errors" :key="key">
+                                    <strong>{{ error[0] }}</strong>
+                                </p>
+                                <button @click="validation.errors = null" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="rp_form_single mb-4">
+                                <label for="rpfs3">Enter Telegram Link</label>
+                                <select v-model="input.telegramLinkId">
+                                    <option :value="telegramRecord.id" v-for="telegramRecord in telegramRecords?.data" :key="telegramRecord">{{ telegramRecord.link }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="register_page_form_btn">
+                            <input :disabled="input.telegramLinkId === ''" v-if="!validation.loading" type="submit" @click="updateBulkRecord" value="Update">
+                            <button v-if="validation.loading" type="submit" disabled>
+                                <span class="spinner-border spinner-border-large" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </button>
+                        </div>
+                        <div class="register_page_form_btn cancel">
+                            <input @click="resetRecord" type="submit" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
                 </div>
@@ -339,11 +400,13 @@ export default {
             records: null,
             telegramRecords: null,
             selectedRecord: null,
+            selectedUserIds: [],
             pagination: {
                 current: 1,
                 limit: 10
             },
             validation: {
+                isSelectAll: false,
                 showProfile: false,
                 loading: false,
                 showTableLoader: false,
@@ -397,7 +460,9 @@ export default {
             this.input.telegramLinkId = '';
             this.validation.success.message = null;
             this.validation.errors = null;
+            this.validation.isSelectAll = false;
             this.selectedRecord = null;
+            this.selectedUserIds = [];
         },
         getRecord(id: number) {
             selectedRecordStore.findRecord('id', this.records.data, id);
@@ -465,6 +530,39 @@ export default {
                 self.validation.success.message = null;
             });
         },
+        updateBulkRecord() {
+            let counter = 0;
+            let self = this;
+
+            this.selectedUserIds.forEach(function (item: any) {
+                self.validation.loading = true;
+                
+                axios.put(`${process.env.API_URL}/users/${item}`, {
+                    telegram_link_id: self.input.telegramLinkId
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${authStore.accessToken}`,
+                    }
+                })
+                .then(function (response) {
+                    counter++;
+                    if(counter === self.selectedUserIds.length) {
+                        self.validation.loading = false;
+                        self.validation.success.message = 'Successfully updated!'
+                        self.validation.errors = null;
+                        self.validation.isSelectAll = false;
+                        self.selectedUserIds = [];
+
+                        self.getRecords();
+                    }
+                })
+                .catch(function (error) {
+                    self.validation.loading = false;
+                    self.validation.errors = error.response.data.errors;
+                    self.validation.success.message = null;
+                });
+            });
+        },
         deleteRecord() {
             let self = this;
             self.validation.loading = true;
@@ -489,6 +587,20 @@ export default {
         },
         search() {
             this.getRecords();
+        },
+        toggleSelectAll() {
+            if(this.validation.isSelectAll) {
+                this.validation.isSelectAll = false;
+                this.selectedUserIds = [];
+            } else {
+                this.validation.isSelectAll = true;
+
+                let self = this;
+                this.records.data.forEach(function (item: any) {
+                    if(!item?.is_admin)
+                        self.selectedUserIds.push(item?.id)
+                });
+            }
         }
     }
 }
