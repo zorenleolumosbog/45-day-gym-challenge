@@ -64,25 +64,25 @@
                                 <div class="rp_form_single input_rtext" style="margin-top: 0px">
                                     <select v-model="input.closing_weekday_schedule" id="weekday_schedule">
                                         <option value="0">
-                                            Sunday (0)
+                                            Sunday
                                         </option>
                                         <option value="1">
-                                            Monday (1)
+                                            Monday
                                         </option>
                                         <option value="2">
-                                            Tuesday (2)
+                                            Tuesday
                                         </option>
                                         <option value="3">
-                                            Wednesday (3)
+                                            Wednesday
                                         </option>
                                         <option value="4">
-                                            Thursday (4)
+                                            Thursday
                                         </option>
                                         <option value="5">
-                                            Friday (5)
+                                            Friday
                                         </option>
                                         <option value="6">
-                                            Saturday (6)
+                                            Saturday
                                         </option>
                                     </select>
                                 </div>
@@ -92,76 +92,76 @@
                                 <div class="rp_form_single input_rtext" style="margin-top: 0px">
                                     <select v-model="input.closing_hour_schedule" id="hour_schedule">
                                         <option value="0">
-                                            12:00 a.m. Midnight (0)
+                                            12:00 a.m. Midnight
                                         </option>
                                         <option value="1">
-                                            1:00 a.m. (1)
+                                            1:00 a.m.
                                         </option>
                                         <option value="2">
-                                            2:00 a.m. (2)
+                                            2:00 a.m.
                                         </option>
                                         <option value="3">
-                                            3:00 a.m. (3)
+                                            3:00 a.m.
                                         </option>
                                         <option value="4">
-                                            4:00 a.m. (4)
+                                            4:00 a.m.
                                         </option>
                                         <option value="5">
-                                            5:00 a.m. (5)
+                                            5:00 a.m.
                                         </option>
                                         <option value="6">
-                                            6:00 a.m. (6)
+                                            6:00 a.m.
                                         </option>
                                         <option value="7">
-                                            7:00 a.m. (7)
+                                            7:00 a.m.
                                         </option>
                                         <option value="8">
-                                            8:00 a.m. (8)
+                                            8:00 a.m.
                                         </option>
                                         <option value="9">
-                                            9:00 a.m. (9)
+                                            9:00 a.m.
                                         </option>
                                         <option value="10">
-                                            10:00 a.m. (10)
+                                            10:00 a.m.
                                         </option>
                                         <option value="11">
-                                            11:00 a.m. (11)
+                                            11:00 a.m.
                                         </option>
                                         <option value="12">
-                                            12:00 p.m. Noon (12)
+                                            12:00 p.m. Noon
                                         </option>
                                         <option value="13">
-                                            1:00 p.m. (13)
+                                            1:00 p.m.
                                         </option>
                                         <option value="14">
-                                            2:00 p.m. (14)
+                                            2:00 p.m.
                                         </option>
                                         <option value="15">
-                                            3:00 p.m. (15)
+                                            3:00 p.m.
                                         </option>
                                         <option value="16">
-                                            4:00 p.m. (16)
+                                            4:00 p.m.
                                         </option>
                                         <option value="17">
-                                            5:00 p.m. (17)
+                                            5:00 p.m.
                                         </option>
                                         <option value="18">
-                                            6:00 p.m. (18)
+                                            6:00 p.m.
                                         </option>
                                         <option value="19">
-                                            7:00 p.m. (19)
+                                            7:00 p.m.
                                         </option>
                                         <option value="20">
-                                            8:00 p.m. (20)
+                                            8:00 p.m.
                                         </option>
                                         <option value="21">
-                                            9:00 p.m. (21)
+                                            9:00 p.m
                                         </option>
                                         <option value="22">
-                                            10:00 p.m. (22)
+                                            10:00 p.m.
                                         </option>
                                         <option value="23">
-                                            11:00 p.m. (23)
+                                            11:00 p.m.
                                         </option>
                                     </select>
                                 </div>
