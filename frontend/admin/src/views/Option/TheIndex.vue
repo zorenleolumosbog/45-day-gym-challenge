@@ -3,7 +3,7 @@
     <div class="home_right_site">
         <div class="right_site_header">
             <h4>Manage Options</h4>
-            <p>{{ getToLocaleDateNowString() }}</p>
+            <p><i @click="userGuideInformation = 'User options refer to the various settings that are available to a user when interacting with the system. These include weekly contest timer, content closing email sending schedule, weeks description for each week number and additional links to display on the user dashboard menus.'" class="fa-solid fa-circle-info ml-2" data-toggle="modal" data-target="#informationModal"></i></p>
         </div>
         <!-- Start Time Remaining Section -->
         <div class="right_site_time_remaining_main">
@@ -42,18 +42,23 @@
                                 </div>
                             </div>
                             <div class="rsrbc_form_box">
-                                <label for="current_week"><span>Current Week Number</span></label>
+                                <label for="current_week"><span>Current Week Number<i @click="userGuideInformation = 'The current week number refers to the numerical identification of a specific week within the contest. A 0 value will stop all the posting, and the value of this field will be incremented by 1 automatically by the system during first day of the week. It will stop incrementing when the value is not lesser than the end of the week number.'" class="fa-solid fa-circle-info ml-2" data-toggle="modal" data-target="#informationModal"></i></span></label>
                                 <div class="input_rtext">
                                     <input type="number" v-model="input.current_week" id="current_week">
                                 </div>
                             </div>
                             <div class="rsrbc_form_box">
-                                <label for="end_of_week"><span>End of Week Number</span></label>
+                                <label for="end_of_week"><span>End of Week Number<i @click="userGuideInformation = 'The end of week number refers to the numerical identification of a specific week for the closing of the contest.'" class="fa-solid fa-circle-info ml-2" data-toggle="modal" data-target="#informationModal"></i></span></label>
                                 <div class="input_rtext">
                                     <input type="number" v-model="input.end_of_week" id="end_of_week">
                                 </div>
                             </div>
-                            <h4 class="mt-5">Closing Contest Email</h4>
+                            <h4 class="mt-5" style="font-size: 16px;">Closing Contest Email
+                                <span class="h4">
+                                    <i @click="userGuideInformation = 'The closing contest email is an email scheduling refers to the process of setting a specific weekday and hour for an email to be sent. This feature allows admin to compose an email and choose when it will be delivered, rather than sending it immediately.'" class="fa-solid fa-circle-info ml-2" data-toggle="modal" data-target="#informationModal">
+                                    </i>
+                                </span>
+                            </h4>
                             <div class="rsrbc_form_box">
                                 <label for="weekday_schedule"><span>Weekday Schedule</span></label>
                                 <div class="rp_form_single input_rtext" style="margin-top: 0px">
@@ -169,7 +174,12 @@
                             </div>
                         </div>
                         <div class="col-md-3 mb-5">
-                            <h4>Weeks Description</h4>
+                            <h4>Weeks Description
+                                <span class="h4">
+                                    <i @click="userGuideInformation = 'A week description typically refers to an overview of the contest that occurred during a particular week number.'" class="fa-solid fa-circle-info ml-2" data-toggle="modal" data-target="#informationModal">
+                                    </i>
+                                </span>
+                            </h4>
                             <div class="rsrbc_form_box">
                                 <label for="week1_description"><span>Week 1</span></label>
                                 <div class="input_rtext">
@@ -189,7 +199,7 @@
                                 </div>
                             </div>
                             <div class="rsrbc_form_box">
-                                <label for="week4_description"><span>Week 41</span></label>
+                                <label for="week4_description"><span>Week 4</span></label>
                                 <div class="input_rtext">
                                     <input type="text" v-model="input.week4_description" id="week4_description">
                                 </div>
@@ -214,7 +224,12 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <h4>Links</h4>
+                            <h4>Links
+                                <span class="h4">
+                                    <i @click="userGuideInformation = 'Enter a valid hyperlink that will be linked to the user\'s left sidebar menu dashboard.'" class="fa-solid fa-circle-info ml-2" data-toggle="modal" data-target="#informationModal">
+                                    </i>
+                                </span>
+                            </h4>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="rsrbc_form_box">
@@ -305,6 +320,7 @@
         </div>
     </div>
     <!--####################### End Right Site #######################-->
+    <user-guide :information="userGuideInformation"></user-guide>
 </template>
 
 <script lang="ts">
@@ -315,10 +331,12 @@ const authStore = userAuth();
 const localeStore = userLocale();
 
 import InputLoader from '../../components/InputLoader.vue';
+import UserGuide from '../../components/UserGuide.vue';
 
 export default {
     components: {
-        InputLoader
+        InputLoader,
+        UserGuide
     },
     data() {
         return {
@@ -349,6 +367,7 @@ export default {
                 link_youtube: '',
                 link_linkedin: ''
             },
+            userGuideInformation: '',
             validation: {
                 loading: false,
                 success: {

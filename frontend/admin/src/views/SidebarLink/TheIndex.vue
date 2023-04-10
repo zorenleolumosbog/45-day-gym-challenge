@@ -3,7 +3,7 @@
     <div class="home_right_site">
         <div class="right_site_header">
             <h4>Manage Sidebar Links</h4>
-            <p>{{ getToLocaleDateNowString() }}</p>
+            <p><i @click="userGuideInformation = 'Add, Edit, and Delete sidebar links with titles, hyperlinks, background colors, and icons to be displayed dynamically on the user\'s left sidebar menu dashboard.'" class="fa-solid fa-circle-info ml-2" data-toggle="modal" data-target="#informationModal"></i></p>
         </div>
         <!-- Start Time Remaining Section -->
         <div class="right_site_time_remaining_main">
@@ -166,6 +166,7 @@
             </div>
         </div>
     </teleport>
+    <user-guide :information="userGuideInformation"></user-guide>
 </template>
 
 <script lang="ts">
@@ -179,12 +180,14 @@ const localeStore = userLocale();
 import TableLoader from '../../components/TableLoader.vue';
 import InputLoader from '../../components/InputLoader.vue';
 import ThePagination from '../../components/ThePagination.vue';
+import UserGuide from '../../components/UserGuide.vue';
 
 export default {
     components: {
         TableLoader,
         InputLoader,
-        ThePagination
+        ThePagination,
+        UserGuide
     },
     data() {
         return {
@@ -197,6 +200,7 @@ export default {
                     icon: null
                 },
             },
+            userGuideInformation: '',
             records: null,
             selectedRecord: null,
             pagination: {

@@ -115,8 +115,6 @@ import { userAuth } from '../stores/index';
 const authStore = userAuth();
 
 export default {
-    components: {
-    },
     data() {
         return {
             input: {

@@ -3,7 +3,7 @@
     <div class="home_right_site">
         <div class="right_site_header">
             <h4>Manage Users</h4>
-            <p>{{ getToLocaleDateNowString() }}</p>
+            <p><i @click="userGuideInformation = 'Search and filter users, assign telegram links for each user, and view user profiles and weekly users\' uploaded photos.'" class="fa-solid fa-circle-info ml-2" data-toggle="modal" data-target="#informationModal"></i></p>
         </div>
         <!-- Start Time Remaining Section -->
         <div class="right_site_time_remaining_main">
@@ -364,6 +364,7 @@
             </div>
         </div>
     </teleport>
+    <user-guide :information="userGuideInformation"></user-guide>
 </template>
 
 <script lang="ts">
@@ -379,13 +380,15 @@ import WeeklyAttachment from './WeeklyAttachment.vue';
 import TableLoader from '../../components/TableLoader.vue';
 import InputLoader from '../../components/InputLoader.vue';
 import ThePagination from '../../components/ThePagination.vue';
+import UserGuide from '../../components/UserGuide.vue';
 
 export default {
     components: {
         WeeklyAttachment,
         TableLoader,
         InputLoader,
-        ThePagination
+        ThePagination,
+        UserGuide
     },
     data() {
         return {
@@ -397,6 +400,7 @@ export default {
                 dateTo: '',
                 search: ''
             },
+            userGuideInformation: '',
             records: null,
             telegramRecords: null,
             selectedRecord: null,
