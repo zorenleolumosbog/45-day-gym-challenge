@@ -470,7 +470,8 @@ export default {
 </script>
 
 <style scoped>
-    .rsrbc_form_box input {
+    .rsrbc_form_box input,
+    .rsrbc_form_box select {
         width: 100%;
         height: 44px;
     }
