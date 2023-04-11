@@ -7,10 +7,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       redirect: { name: 'users' },
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/TheMain.vue')
     },
     {
       path: '/login',
@@ -30,34 +26,22 @@ const router = createRouter({
     {
       path: '/users',
       name: 'users',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/TheMain.vue')
+      component: () => import('../views/User/TheIndex.vue')
     },
     {
       path: '/telegram-links',
       name: 'telegram-links',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/TheMain.vue')
+      component: () => import('../views/TelegramLink/TheIndex.vue')
     },
     {
       path: '/sidebar-links',
       name: 'sidebar-links',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/TheMain.vue')
+      component: () => import('../views/SidebarLink/TheIndex.vue')
     },
     {
       path: '/options',
       name: 'options',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/TheMain.vue')
+      component: () => import('../views/Option/TheIndex.vue')
     }
   ]
 })

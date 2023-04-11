@@ -6,7 +6,7 @@
                 <div class="left_site_menu">
                     <ul>
                         <li>
-                            <router-link to="/users" @click="setComponent('the-user')">
+                            <router-link to="/users" @click="setComponent()">
                                 <span class="lsmmw">
                                     <img src="@/assets/images/Profile.png" alt="">
                                     <span>Users</span>
@@ -14,7 +14,7 @@
                             </router-link>
                         </li>
                         <li>
-                            <router-link to="/telegram-links" @click="setComponent('the-telegram-link')">
+                            <router-link to="/telegram-links" @click="setComponent()">
                                 <span class="lsmmw">
                                     <img src="@/assets/images/telegram.png" alt="">
                                     <span>Telegram Links</span>
@@ -22,7 +22,7 @@
                             </router-link>
                         </li>
                         <li>
-                            <router-link to="/sidebar-links" @click="setComponent('the-sidebar-link')">
+                            <router-link to="/sidebar-links" @click="setComponent()">
                                 <span class="lsmmw">
                                     <img src="@/assets/images/weight.png" alt="">
                                     <span>Sidebar Links</span>
@@ -30,7 +30,7 @@
                             </router-link>
                         </li>
                         <li>
-                            <router-link to="/options" @click="setComponent('the-option')">
+                            <router-link to="/options" @click="setComponent()">
                                 <span class="lsmmw">
                                     <img src="@/assets/images/weight.png" alt="">
                                     <span>Options</span>
@@ -56,32 +56,11 @@
 import $ from 'jquery'
 
 export default {
-    mounted() {
-        switch (this.$route.name) {
-            case 'users':
-                this.$emit('component', 'the-user');
-                break;
-            case 'telegram-links':
-                this.$emit('component', 'the-telegram-link');
-                break;
-            case 'sidebar-links':
-                this.$emit('component', 'the-sidebar-link');
-                break;
-            case 'options':
-                this.$emit('component', 'the-option');
-                break;
-        
-            default:
-                break;
-        }
-    },
     methods: {
-        setComponent(selectedComponent: string) {
+        setComponent() {
             $('.home_page_main_left_site').slideToggle(300)
 		    $('.header_mobile_menu').toggleClass('menu_icon_fixed')
             $('#nav-icon1,#nav-icon2,#nav-icon3,#nav-icon4').toggleClass('open')
-
-            this.$emit('component', selectedComponent);
         }
     }
 }

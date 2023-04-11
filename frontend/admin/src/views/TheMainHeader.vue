@@ -122,6 +122,7 @@ export default {
                 newPassword: '',
                 newPasswordConfirmation: '',
             },
+            user: null,
             validation: {
                 loading: false,
                 success: {
@@ -131,7 +132,25 @@ export default {
             }
         }
     },
-    props: ['user'],
+    mounted() {
+        let self = this;
+
+        axios.get(`${process.env.API_URL}/users/${authStore.userId}`, {
+            headers: {
+                Authorization: `Bearer ${authStore.accessToken}`,
+            },
+        })
+        .then(response => {
+            if(!response.data.data.is_admin) {
+                self.$router.push({ name: 'login' });
+            }
+
+            self.user = response.data.data;
+        })
+        .catch(error => {
+            self.$router.push({ name: 'login' });
+        });
+    },
     methods:{
         toggleMenuIcon() {
             $('.home_page_main_left_site').slideToggle(300)
