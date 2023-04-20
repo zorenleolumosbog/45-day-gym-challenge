@@ -15,7 +15,7 @@ class SidebarLinkResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+            'id' => (string) $this->id,
             'title' => $this->title,
             'link' => $this->link,
             'bg_color' => $this->bg_color,
@@ -24,7 +24,7 @@ class SidebarLinkResource extends JsonResource
             'mime_type' => $this->mime_type,
             'path' => $this->path,
             'url' => $this->url,
-            'size' => $this->size,
+            'size' => (string) $this->size,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at

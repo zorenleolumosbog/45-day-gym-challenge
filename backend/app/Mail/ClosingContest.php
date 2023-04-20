@@ -14,6 +14,7 @@ class ClosingContest extends Mailable
     use Queueable, SerializesModels;
 
     public $name;
+    public $email_subject;
     public $email_body;
 
     /**
@@ -22,6 +23,7 @@ class ClosingContest extends Mailable
     public function __construct($contest)
     {
         $this->name = $contest['name'];
+        $this->email_subject = $contest['email_subject'];
         $this->email_body = $contest['email_body'];
     }
 
@@ -31,7 +33,7 @@ class ClosingContest extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Epic Transformation Challenge - Closing Contest',
+            subject: $this->email_subject,
         );
     }
 

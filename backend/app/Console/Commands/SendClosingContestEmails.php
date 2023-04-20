@@ -30,20 +30,26 @@ class SendClosingContestEmails extends Command
      */
     public function handle(): void
     {
-        $today = Carbon::now('America/New_York');
-        $weekday_schedule = Option::where('name', 'closing_weekday_schedule')->first()?->value;
-        $hour_schedule = Option::where('name', 'closing_hour_schedule')->first()?->value;
+        $start_of_week = Option::where('name', 'current_week')->first()?->value;
+        $end_of_week = Option::where('name', 'end_of_week')->first()?->value;
         
-        if($today->dayOfWeek == $weekday_schedule && $today->hour == $hour_schedule) {
-            $users = User::whereNull('is_admin')->get();
+        if($start_of_week < $end_of_week) {
+            $today = Carbon::now('America/New_York');
+            $weekday_schedule = Option::where('name', 'closing_weekday_schedule')->first()?->value;
+            $hour_schedule = Option::where('name', 'closing_hour_schedule')->first()?->value;
             
-            foreach ($users as $user) {
-                $contest = [
-                    'name' => $user->name,
-                    'email_body' => Option::where('name', 'closing_email_body')->first()?->value
-                ];
-
-                Mail::to($user->email)->send(new ClosingContest($contest));
+            if($today->dayOfWeek == $weekday_schedule && $today->hour == $hour_schedule) {
+                $users = User::whereNull('is_admin')->get();
+                
+                foreach ($users as $user) {
+                    $contest = [
+                        'name' => $user->name,
+                        'email_subject' => Option::where('name', 'closing_email_subject')->first()?->value,
+                        'email_body' => Option::where('name', 'closing_email_body')->first()?->value
+                    ];
+    
+                    Mail::to($user->email)->send(new ClosingContest($contest));
+                }
             }
         }
     }

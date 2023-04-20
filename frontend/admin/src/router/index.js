@@ -41,7 +41,30 @@ const router = createRouter({
     {
       path: '/options',
       name: 'options',
-      component: () => import('../views/Option/TheIndex.vue')
+      redirect: { name: 'weekly-contest' },
+      component: () => import('../views/Option/TheIndex.vue'),
+      children: [
+        {
+          path: 'weekly-contest',
+          name: 'weekly-contest',
+          component: () => import('../views/Option/TheIndex.vue')
+        },
+        {
+          path: 'weeks-description',
+          name: 'weeks-description',
+          component: () => import('../views/Option/TheIndex.vue')
+        },
+        {
+          path: 'links',
+          name: 'links',
+          component: () => import('../views/Option/TheIndex.vue')
+        },
+        {
+          path: 'closing-contest-email',
+          name: 'closing-contest-email',
+          component: () => import('../views/Option/TheIndex.vue')
+        }
+      ]
     }
   ]
 })

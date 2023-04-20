@@ -29,8 +29,24 @@
                                 </button>
                             </div>
                             <div class="row">
-                                <div class="col-md-3 mb-5">
-                                    <h4>Weekly Contest Timer</h4>
+                                <div class="col-md-12">
+                                    <ul class="nav justify-content-center mb-5">
+                                        <li class="nav-item">
+                                            <router-link  class="nav-link" to="/options/weekly-contest">Weekly Contest</router-link>
+                                        </li>
+                                        <li class="nav-item">
+                                            <router-link  class="nav-link" to="/options/weeks-description">Weeks Description</router-link>
+                                        </li>
+                                        <li class="nav-item">
+                                            <router-link  class="nav-link" to="/options/links">Links</router-link>
+                                        </li>
+                                        <li class="nav-item">
+                                            <router-link  class="nav-link" to="/options/closing-contest-email">Closing Contest Email</router-link>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-3 col-sm-3 mb-5" v-if="$route.name === 'weekly-contest'">
+                                    <h4>Weekly Contest</h4>
                                     <div class="rsrbc_form_box d-none">
                                         <label for="start_datetime"><span>Start of Week Date</span></label>
                                         <div class="input_rtext">
@@ -55,6 +71,8 @@
                                             <input type="number" v-model="input.end_of_week" id="end_of_week">
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-md-6" v-if="$route.name === 'closing-contest-email'">
                                     <h4 class="mt-5" style="font-size: 16px;">Closing Contest Email
                                         <span class="h4">
                                             <i @click="userGuideInformation = 'The closing contest email is an email scheduling refers to the process of setting a specific weekday and hour for an email to be sent. This feature allows admin to compose an email and choose when it will be delivered, rather than sending it immediately.'" class="fa-solid fa-circle-info ml-2" data-toggle="modal" data-target="#informationModal">
@@ -169,13 +187,19 @@
                                         </div>
                                     </div>
                                     <div class="rsrbc_form_box">
+                                        <label for="email_subject"><span>Email Subject</span></label>
+                                        <div class="input_rtext">
+                                            <input type="text" v-model="input.closing_email_subject" id="email_subject">
+                                        </div>
+                                    </div>
+                                    <div class="rsrbc_form_box">
                                         <label for="email_body"><span>Email Body</span></label>
                                         <div class="input_rtext">
-                                            <textarea v-model="input.closing_email_body" rows="15" id="email_body"></textarea>
+                                            <textarea v-model="input.closing_email_body" style="height: 226px;" id="email_body"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 mb-5">
+                                <div class="col-md-8 mb-5" v-if="$route.name === 'weeks-description'">
                                     <h4>Weeks Description
                                         <span class="h4">
                                             <i @click="userGuideInformation = 'A week description typically refers to an overview of the contest that occurred during a particular week number.'" class="fa-solid fa-circle-info ml-2" data-toggle="modal" data-target="#informationModal">
@@ -225,7 +249,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12" v-if="$route.name === 'links'">
                                     <h4>Links
                                         <span class="h4">
                                             <i @click="userGuideInformation = 'Enter a valid hyperlink that will be linked to the user\'s left sidebar menu dashboard.'" class="fa-solid fa-circle-info ml-2" data-toggle="modal" data-target="#informationModal">
@@ -354,6 +378,7 @@ export default {
                 end_of_week: '',
                 closing_weekday_schedule: '',
                 closing_hour_schedule: '',
+                closing_email_subject: '',
                 closing_email_body: '',
                 week1_description:'',
                 week2_description:'',
@@ -423,6 +448,7 @@ export default {
             this.input.link_linkedin = this.findRecord('name', data, 'link_linkedin')?.value;
             this.input.closing_weekday_schedule = this.findRecord('name', data, 'closing_weekday_schedule')?.value;
             this.input.closing_hour_schedule = this.findRecord('name', data, 'closing_hour_schedule')?.value;
+            this.input.closing_email_subject = this.findRecord('name', data, 'closing_email_subject')?.value;
             this.input.closing_email_body = this.findRecord('name', data, 'closing_email_body')?.value;
         },
         findRecord(key: string, heystack: any, needle: string) {
@@ -481,5 +507,20 @@ export default {
     .rsrbc_form_box select {
         width: 100%;
         height: 44px;
+    }
+    ul.nav.justify-content-center.mb-5 {
+        border-bottom: 2px solid #501585;
+    }
+    .nav-link {
+        padding: 11px 24px;
+    }
+    .left_site_menu ul li a:hover, .lsm_active, .router-link-active {
+        background: #501585;
+        color: #fff;
+    }
+    .left_site_menu ul li a:hover ::after, 
+    .lsm_active::after, 
+    .router-link-active::after {
+        background: transparent;
     }
 </style>

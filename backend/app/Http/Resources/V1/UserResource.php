@@ -25,7 +25,7 @@ class UserResource extends JsonResource
         }
 
         return [
-            'id' => $this->id,
+            'id' => (string) $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'desired_weight_goal_percentage' => (string) $percentage,

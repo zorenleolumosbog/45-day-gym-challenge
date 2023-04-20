@@ -52,6 +52,12 @@ class OptionSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
+                'name' => 'closing_email_subject',
+                'value' => '',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
                 'name' => 'closing_email_body',
                 'value' => '',
                 'created_at' => Carbon::now(),
